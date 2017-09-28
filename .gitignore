@@ -1,0 +1,9 @@
+#backend
+backend/build
+backend/.gradle
+backend/*.iml
+backend/out
+backend/.idea
+backend/*.iml
+backend/*.ipr
+backend/*.iws
