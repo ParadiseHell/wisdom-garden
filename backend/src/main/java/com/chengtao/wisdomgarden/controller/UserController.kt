@@ -1,29 +1,24 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.entity.User
-import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.PathVariable
+import com.chengtao.wisdomgarden.Login
+import com.chengtao.wisdomgarden.Parameters
+import com.chengtao.wisdomgarden.Register
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.RequestParam
 
-@RestController
+@Controller
 class UserController {
-  @RequestMapping(
-      value = "/user/{UserId}",
-      method = arrayOf(RequestMethod.GET),
-      produces = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE)
-  )
-  fun getUser(@PathVariable("UserId") id: Int): User {
-    return User(id, "ChengTao")
+  @RequestMapping(method = arrayOf(RequestMethod.POST), value = Login.PATH)
+  fun login(@RequestParam(value = Parameters.USER_NAME) userName: String,
+            @RequestParam(value = Parameters.PASSWORD) password: String): String {
+    return ""
   }
 
-  @RequestMapping(
-      value = "/user",
-      method = arrayOf(RequestMethod.GET),
-      produces = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE)
-  )
-  fun getUser(): User {
-    return User((Math.random() * 1000).toInt(), "ChengTao")
+  @RequestMapping(method = arrayOf(RequestMethod.POST), value = Register.PATH)
+  fun register(@RequestParam(value = Parameters.USER_NAME) userName: String,
+               @RequestParam(value = Parameters.PASSWORD) password: String): String {
+    return ""
   }
 }
