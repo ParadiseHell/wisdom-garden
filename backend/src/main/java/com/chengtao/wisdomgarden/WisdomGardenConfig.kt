@@ -4,6 +4,7 @@ interface WisdomGardenConfig {
   companion object {
     const val TITLE: String = "title"
     const val APPLICATION_NAME: String = "智慧园林"
+    const val AUTHOR: String = "程涛"
   }
 }
 

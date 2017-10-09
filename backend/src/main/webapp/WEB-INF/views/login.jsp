@@ -7,7 +7,7 @@
         <div class="card-header"><%=Login.TITLE%>
         </div>
         <div class="card-body">
-            <form>
+            <form method="post" action="/<%=Login.PATH%>">
                 <div class="form-group">
                     <label>
                         <%=Login.LABEL_USER_NAME%>
@@ -21,8 +21,8 @@
                     <input class="form-control" type="password"
                            placeholder="<%=Login.PLACEHOLDER_PASSWORD%>">
                 </div>
-                <a class="btn btn-primary btn-block"
-                   href="/<%=Login.PATH%>">Login</a>
+                <button class="btn btn-primary btn-block" type="submit"><%=Login.TITLE%>
+                </button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="register.jsp">Register an Account</a>
