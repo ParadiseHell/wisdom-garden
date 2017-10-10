@@ -6,10 +6,10 @@ package com.chengtao.wisdomgarden.utils
 class StringUtils {
   companion object {
     fun isStringNull(neededString: String, vararg stringArray: String): Boolean {
-      if (neededString == null || neededString == "") {
+      if (neededString == "") {
         return true
       }
-      return stringArray.any { it == null || it == "" }
+      return stringArray.any { it == "" }
     }
   }
 }

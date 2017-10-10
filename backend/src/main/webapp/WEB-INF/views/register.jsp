@@ -1,70 +1,56 @@
+<%@ page import="com.chengtao.wisdomgarden.Login" %>
+<%@ page import="com.chengtao.wisdomgarden.Parameters" %>
+<%@ page import="com.chengtao.wisdomgarden.Register" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
-  <!-- Bootstrap core CSS-->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom fonts for this template-->
-  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
-</head>
-
+<jsp:include page="head.jsp"/>
 <body class="bg-dark">
-  <div class="container">
+<div class="container">
     <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Register an Account</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputName">First name</label>
-                <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
-              </div>
-              <div class="col-md-6">
-                <label for="exampleInputLastName">Last name</label>
-                <input class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputPassword1">Password</label>
-                <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
-              </div>
-              <div class="col-md-6">
-                <label for="exampleConfirmPassword">Confirm password</label>
-                <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
-              </div>
-            </div>
-          </div>
-          <a class="btn btn-primary btn-block" href="login.jsp">Register</a>
-        </form>
-        <div class="text-center">
-          <a class="d-block small mt-3" href="login.jsp">Login Page</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+        <div class="card-header"><%=Register.TITLE%>
         </div>
-      </div>
+        <div class="card-body">
+            <form action="<%=Register.PATH%>" method="post">
+                <div class="form-group">
+                    <div>
+                        <label><%=Register.USER_NAME%>
+                        </label>
+                        <input class="form-control" type="text"
+                               aria-describedby="nameHelp"
+                               name="<%=Parameters.USER_NAME%>"
+                               placeholder="<%=Register.PLACEHOLDER_USER_NAME%>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label><%=Register.PASSWORD%>
+                            </label>
+                            <input class="form-control" type="password"
+                                   name="<%=Parameters.PASSWORD%>"
+                                   placeholder="<%=Register.PASSWORD%>">
+                        </div>
+                        <div class="col-md-6">
+                            <label><%=Register.CONFIRM_PASSWORD%>
+                            </label>
+                            <input class="form-control" type="password"
+                                   name="<%=Parameters.CONFIRM_PASSWORD%>"
+                                   placeholder="<%=Register.PLACEHOLDER_CONFIRM_PASSWORD%>">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit"><%=Register.TITLE%>
+                </button>
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="<%=Login.PATH%>"><%=Login.TITLE%>
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/popper/popper.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+</div>
+<jsp:include page="foot_js.jsp"/>
 </body>
 
 </html>

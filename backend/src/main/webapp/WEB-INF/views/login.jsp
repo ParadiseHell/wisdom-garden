@@ -1,10 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: chengtao
-  Date: 10/10/17
-  Time: 3:13 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.chengtao.wisdomgarden.Login" %>
+<%@ page import="com.chengtao.wisdomgarden.Parameters" %>
+<%@ page import="com.chengtao.wisdomgarden.Register" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,31 +8,28 @@
 <body class="bg-dark">
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Login</div>
+        <div class="card-header"><%=Login.TITLE%>
+        </div>
         <div class="card-body">
-            <form>
+            <form method="post" action="<%=Login.PATH%>">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input class="form-control" id="exampleInputEmail1" type="email"
-                           aria-describedby="emailHelp" placeholder="Enter email">
+                    <label><%=Login.USER_NAME%>
+                    </label>
+                    <input aria-describedby="nameHelp" class="form-control" type="text" name="<%=Parameters.USER_NAME%>"
+                           placeholder="<%=Login.PLACEHOLDER_USER_NAME%>">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input class="form-control" id="exampleInputPassword1" type="password"
-                           placeholder="Password">
+                    <label><%=Login.PASSWORD%>
+                    </label>
+                    <input class="form-control" type="password" name="<%=Parameters.PASSWORD%>"
+                           placeholder="<%=Login.PLACEHOLDER_PASSWORD%>">
                 </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox"> Remember
-                            Password</label>
-                    </div>
-                </div>
-                <a class="btn btn-primary btn-block" href="index.html">Login</a>
+                <button class="btn btn-primary btn-block" type="submit"><%=Login.TITLE%>
+                </button>
             </form>
             <div class="text-center">
-                <a class="d-block small mt-3" href="register.jsp">Register an Account</a>
-                <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+                <a class="d-block small mt-3" href="<%=Register.PATH%>"><%=Login.REGISTER_ACCOUNT%>
+                </a>
             </div>
         </div>
     </div>
