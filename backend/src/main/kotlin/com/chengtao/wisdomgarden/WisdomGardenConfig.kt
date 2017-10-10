@@ -33,6 +33,8 @@ interface Routers {
     const val INDEX: String = "/"
     const val LOGIN: String = "/login"
     const val REGISTER: String = "/register"
+    const val STATICS: String = "/statics"
+    const val API: String = "/api"
   }
 }
 

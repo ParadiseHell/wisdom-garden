@@ -5,11 +5,11 @@ package com.chengtao.wisdomgarden.utils
  */
 class StringUtils {
   companion object {
-    fun isStringNull(neededString: String, vararg stringArray: String): Boolean {
-      if (neededString == "") {
+    fun isStringNull(neededString: String?, vararg stringArray: String?): Boolean {
+      if (neededString == null || neededString == "") {
         return true
       }
-      return stringArray.any { it == "" }
+      return stringArray.any { it == null || it == "" }
     }
   }
 }
