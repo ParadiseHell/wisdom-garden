@@ -10,6 +10,7 @@ interface WisdomGardenConfig {
   }
 }
 
+//Cookies
 interface Cookies {
   companion object {
     const val USER_NAME: String = "user_name"
@@ -17,6 +18,7 @@ interface Cookies {
   }
 }
 
+//请求参数
 interface Parameters {
   companion object {
     const val USER_NAME: String = "user_name"
@@ -25,36 +27,20 @@ interface Parameters {
   }
 }
 
+//路由
+interface Routers {
+  companion object {
+    const val INDEX: String = "/"
+    const val LOGIN: String = "/login"
+    const val REGISTER: String = "/register"
+  }
+}
+
 //视图
-interface Index {
+interface Views {
   companion object {
-    const val VIEW: String = "index"
-  }
-}
-
-interface Login {
-  companion object {
-    const val VIEW: String = "login"
-    const val PATH: String = "/login"
-    const val TITLE: String = "登录"
-    const val USER_NAME: String = "用户名"
-    const val PLACEHOLDER_USER_NAME: String = "请输入用户名"
-    const val PASSWORD: String = "密码"
-    const val PLACEHOLDER_PASSWORD: String = "请输入密码"
-    const val REGISTER_ACCOUNT: String = "注册账号"
-  }
-}
-
-interface Register {
-  companion object {
-    const val VIEW: String = "register"
-    const val PATH: String = "/register"
-    const val TITLE: String = "注册"
-    const val USER_NAME: String = "用户名"
-    const val PLACEHOLDER_USER_NAME: String = "请输入用户名"
-    const val PASSWORD: String = "密码"
-    const val PLACEHOLDER_PASSWORD: String = "请输入密码"
-    const val CONFIRM_PASSWORD: String = "密码"
-    const val PLACEHOLDER_CONFIRM_PASSWORD: String = "请输入密码"
+    const val INDEX: String = "index"
+    const val LOGIN: String = "login"
+    const val REGISTER: String = "register"
   }
 }

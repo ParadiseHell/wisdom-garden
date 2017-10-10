@@ -1,6 +1,5 @@
-<%@ page import="com.chengtao.wisdomgarden.Login" %>
 <%@ page import="com.chengtao.wisdomgarden.Parameters" %>
-<%@ page import="com.chengtao.wisdomgarden.Register" %>
+<%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,44 +7,38 @@
 <body class="bg-dark">
 <div class="container">
     <div class="card card-register mx-auto mt-5">
-        <div class="card-header"><%=Register.TITLE%>
-        </div>
+        <div class="card-header">注册</div>
         <div class="card-body">
-            <form action="<%=Register.PATH%>" method="post">
+            <form action="<%=Routers.REGISTER%>" method="post">
                 <div class="form-group">
                     <div>
-                        <label><%=Register.USER_NAME%>
-                        </label>
+                        <label>用户名</label>
                         <input class="form-control" type="text"
                                aria-describedby="nameHelp"
                                name="<%=Parameters.USER_NAME%>"
-                               placeholder="<%=Register.PLACEHOLDER_USER_NAME%>">
+                               placeholder="请输入用户名">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label><%=Register.PASSWORD%>
-                            </label>
+                            <label>密码</label>
                             <input class="form-control" type="password"
                                    name="<%=Parameters.PASSWORD%>"
-                                   placeholder="<%=Register.PASSWORD%>">
+                                   placeholder="请输入密码">
                         </div>
                         <div class="col-md-6">
-                            <label><%=Register.CONFIRM_PASSWORD%>
-                            </label>
+                            <label>确认密码</label>
                             <input class="form-control" type="password"
                                    name="<%=Parameters.CONFIRM_PASSWORD%>"
-                                   placeholder="<%=Register.PLACEHOLDER_CONFIRM_PASSWORD%>">
+                                   placeholder="确认密码">
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-block" type="submit"><%=Register.TITLE%>
-                </button>
+                <button class="btn btn-primary btn-block" type="submit">注册</button>
             </form>
             <div class="text-center">
-                <a class="d-block small mt-3" href="<%=Login.PATH%>"><%=Login.TITLE%>
-                </a>
+                <a class="d-block small mt-3" href="<%=Routers.LOGIN%>">登录</a>
             </div>
         </div>
     </div>

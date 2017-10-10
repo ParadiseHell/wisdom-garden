@@ -1,9 +1,8 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.Index
-import com.chengtao.wisdomgarden.Login
 import com.chengtao.wisdomgarden.Parameters
-import com.chengtao.wisdomgarden.Register
+import com.chengtao.wisdomgarden.Routers
+import com.chengtao.wisdomgarden.Views
 import com.chengtao.wisdomgarden.utils.StringUtils
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,35 +14,35 @@ import org.springframework.web.bind.annotation.RequestParam
  */
 @Controller
 class UserController {
-  @RequestMapping(value = Login.PATH, method = arrayOf(RequestMethod.GET))
+  @RequestMapping(value = Routers.LOGIN, method = arrayOf(RequestMethod.GET))
   fun getLoginView(): String {
-    return Login.VIEW
+    return Views.LOGIN
   }
 
-  @RequestMapping(value = Login.PATH, method = arrayOf(RequestMethod.POST))
+  @RequestMapping(value = Routers.LOGIN, method = arrayOf(RequestMethod.POST))
   fun login(@RequestParam(value = Parameters.USER_NAME, defaultValue = "") userName: String,
             @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String): String {
     if (StringUtils.isStringNull(userName, password)) {
-      return Login.VIEW
+      return Views.LOGIN
     }
-    return Index.VIEW
+    return Views.INDEX
   }
 
-  @RequestMapping(value = Register.PATH, method = arrayOf(RequestMethod.GET))
+  @RequestMapping(value = Routers.REGISTER, method = arrayOf(RequestMethod.GET))
   fun getRegisterView(): String {
-    return Register.VIEW
+    return Views.REGISTER
   }
 
-  @RequestMapping(value = Register.PATH, method = arrayOf(RequestMethod.POST))
+  @RequestMapping(value = Routers.REGISTER, method = arrayOf(RequestMethod.POST))
   fun register(@RequestParam(value = Parameters.USER_NAME, defaultValue = "") userName: String,
                @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String,
                @RequestParam(value = Parameters.CONFIRM_PASSWORD, defaultValue = "") confirmPassword: String): String {
     if (StringUtils.isStringNull(userName, password, confirmPassword)) {
-      return Register.VIEW
+      return Views.REGISTER
     }
     if (password != confirmPassword) {
-      return Register.VIEW
+      return Views.REGISTER
     }
-    return Index.VIEW
+    return Views.INDEX
   }
 }
