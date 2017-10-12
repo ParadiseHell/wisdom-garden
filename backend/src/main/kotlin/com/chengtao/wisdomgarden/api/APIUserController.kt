@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class APIUserController {
   @RequestMapping("/api/{name}")
-  fun test(@PathVariable(value = "name") name: String): User {
-    return User(name)
+  fun test(@PathVariable(value = "name") name: String): User? {
+    return null
   }
 }

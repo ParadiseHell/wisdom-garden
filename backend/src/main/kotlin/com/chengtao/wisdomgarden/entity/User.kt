@@ -1,12 +1,16 @@
 package com.chengtao.wisdomgarden.entity
-
 /**
  * Created by chengtao on 10/11/17.
  */
 class User {
-  var name: String? = null
+  var userId: Int? = null
+  var userName: String? = null
+  var type: UserType? = null
+}
 
-  constructor(name: String) {
-    this.name = name
-  }
+/**
+ * 用户类型
+ */
+enum class UserType(val number: Int) {
+  VISITOR(-1), COMMON_USER(0), MANAGER(1)
 }
