@@ -3,7 +3,7 @@ package com.chengtao.wisdomgarden
 /**
  * Created by chengtao on 10/10/17.
  */
-interface WisdomGardenConfig {
+interface ApplicationConfig {
   companion object {
     const val APPLICATION_NAME = "智慧园林"
     const val AUTHOR = "程涛"
@@ -13,6 +13,7 @@ interface WisdomGardenConfig {
 //Cookies
 interface Cookies {
   companion object {
+    const val COOKIES_EXPIRATION_DATE = 60 * 60 * 24
     const val USER_NAME = "user_name"
     const val PASSWORD = "password"
   }

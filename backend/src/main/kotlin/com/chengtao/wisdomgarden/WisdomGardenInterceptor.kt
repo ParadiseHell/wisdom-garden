@@ -1,9 +1,12 @@
 package com.chengtao.wisdomgarden
 
+import com.chengtao.wisdomgarden.db.impl.UserDaoImpl
+import com.chengtao.wisdomgarden.utils.CookieUtils
 import com.chengtao.wisdomgarden.utils.StringUtils
 import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.servlet.ModelAndView
 import java.lang.Exception
+import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -20,29 +23,38 @@ class WisdomGardenInterceptor : HandlerInterceptor {
     UN_INTERCEPTOR_ROUTERS
         .filter { request!!.requestURI.contains(it) }
         .forEach { return true }
-    var cookieUserName: String? = null
-    var cookiePassword: String? = null
+    var userName: String? = null
+    var password: String? = null
+    var cookieUserName: Cookie? = null
+    var cookiePassword: Cookie? = null
     for (cookie in request!!.cookies) {
       if (cookie!!.name == Cookies.USER_NAME) {
-        cookieUserName = cookie.value
+        userName = cookie.value
+        cookieUserName = cookie
       }
       if (cookie.name == Cookies.PASSWORD) {
-        cookiePassword = cookie.value
+        password = cookie.value
+        cookiePassword = cookie
       }
     }
-    if (!StringUtils.isStringNull(cookieUserName, cookiePassword)) {
-      println("没有被拦截")
-      return true
+    if (!StringUtils.isStringNull(userName, password)) {
+      val userDao = UserDaoImpl()
+      //存在用户不拦截
+      if (userDao.isUserExist(userName!!, password!!)) {
+        //重新设置cookie过期时间
+        CookieUtils.addUserNameAndPasswordCookie(cookieUserName!!, cookiePassword!!, response!!)
+        return true
+      }
     }
-    response!!.sendRedirect(Routers.LOGIN)
+    CookieUtils.clear(cookieUserName, response!!)
+    CookieUtils.clear(cookiePassword, response)
+    response.sendRedirect(Routers.LOGIN)
     return false
   }
 
   override fun postHandle(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?, modelAndView: ModelAndView?) {
-    println("处理请求后,渲染页面前")
   }
 
   override fun afterCompletion(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?, ex: Exception?) {
-    println("视图渲染结束了,请求处理完毕")
   }
 }

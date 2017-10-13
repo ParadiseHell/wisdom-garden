@@ -1,4 +1,4 @@
-<%@ page import="com.chengtao.wisdomgarden.WisdomGardenConfig" %><%--
+<%@ page import="com.chengtao.wisdomgarden.ApplicationConfig" %><%--
   Created by IntelliJ IDEA.
   User: chengtao
   Date: 10/10/17
@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="<%=WisdomGardenConfig.APPLICATION_NAME%>">
-    <meta name="author" content="<%=WisdomGardenConfig.AUTHOR%>">
-    <title><%=WisdomGardenConfig.APPLICATION_NAME%>
+    <meta name="description" content="<%=ApplicationConfig.APPLICATION_NAME%>">
+    <meta name="author" content="<%=ApplicationConfig.AUTHOR%>">
+    <title><%=ApplicationConfig.APPLICATION_NAME%>
     </title>
     <link href="../statics/css/bootstrap.min.css" rel="stylesheet">
     <link href="../statics/css/font-awesome.min.css" rel="stylesheet" type="text/css">
