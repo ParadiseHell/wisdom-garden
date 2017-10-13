@@ -13,7 +13,8 @@ class User {
   var createdAt: Date? = null
   var updatedAt: Date? = null
   override fun toString(): String {
-    return "User(userId=$userId, userName=$userName, password=$password, type=$type, createdAt=$createdAt, updatedAt=$updatedAt)"
+    return "User(userId=$userId, userName=$userName, password=$password, type=$type, " +
+        "createdAt=$createdAt, updatedAt=$updatedAt)"
   }
 
 }
@@ -22,6 +23,6 @@ class User {
  * 用户类型
  */
 @Suppress("unused")
-enum class UserType(val typeNumber: Int) {
-  VISITOR(-1), COMMON_USER(0), MANAGER(1)
+enum class UserType(val value: Int) {
+  COMMON_USER(0), MANAGER(1)
 }

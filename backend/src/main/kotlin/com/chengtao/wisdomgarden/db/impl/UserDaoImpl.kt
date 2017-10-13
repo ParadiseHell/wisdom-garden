@@ -83,9 +83,8 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
       user.userName = resultSet.getString(FIELD_USER_NAME)
       user.password = resultSet.getString(FIELD_PASSWORD)
       when (resultSet.getInt(FIELD_TYPE)) {
-        -1 -> user.type = UserType.VISITOR
-        0 -> user.type = UserType.COMMON_USER
-        1 -> user.type = UserType.MANAGER
+        UserType.COMMON_USER.value -> user.type = UserType.COMMON_USER
+        UserType.MANAGER.value -> user.type = UserType.MANAGER
       }
       user.createdAt = resultSet.getDate(FIELD_CREATED_AT)
       user.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
