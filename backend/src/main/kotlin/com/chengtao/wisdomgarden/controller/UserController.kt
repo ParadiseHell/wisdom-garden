@@ -8,9 +8,10 @@ import com.chengtao.wisdomgarden.entity.UserType
 import com.chengtao.wisdomgarden.utils.CookieUtils
 import com.chengtao.wisdomgarden.utils.MD5Util
 import com.chengtao.wisdomgarden.utils.StringUtils
+import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import javax.servlet.http.HttpServletResponse
 
@@ -19,12 +20,13 @@ import javax.servlet.http.HttpServletResponse
  */
 @Controller
 class UserController {
-  @RequestMapping(value = Routers.LOGIN, method = arrayOf(RequestMethod.GET))
+  @GetMapping(Routers.LOGIN)
   fun getLoginView(): String {
+    println("getLoginView")
     return Views.LOGIN
   }
 
-  @RequestMapping(value = Routers.LOGIN, method = arrayOf(RequestMethod.POST))
+  @PostMapping(Routers.LOGIN)
   fun login(@RequestParam(value = Parameters.USER_NAME, defaultValue = "") userName: String,
             @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String,
             response: HttpServletResponse): String {
@@ -35,19 +37,19 @@ class UserController {
         if (userDao.isUserExist(userName, md5Password)) {
           //创建cookies
           CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
-          return Views.INDEX
+          return Routers.INDEX.redirect()
         }
       }
     }
-    return Views.LOGIN
+    return Routers.LOGIN.redirect()
   }
 
-  @RequestMapping(value = Routers.REGISTER, method = arrayOf(RequestMethod.GET))
+  @GetMapping(Routers.REGISTER)
   fun getRegisterView(): String {
     return Views.REGISTER
   }
 
-  @RequestMapping(value = Routers.REGISTER, method = arrayOf(RequestMethod.POST))
+  @PostMapping(Routers.REGISTER)
   fun register(@RequestParam(value = Parameters.USER_NAME, defaultValue = "") userName: String,
                @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String,
                @RequestParam(value = Parameters.CONFIRM_PASSWORD, defaultValue = "") confirmPassword: String,
@@ -59,10 +61,10 @@ class UserController {
         if (userDao.createUser(userName, md5Password, UserType.COMMON_USER.typeNumber) != null) {
           //创建cookies
           CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
-          return Views.INDEX
+          return Routers.INDEX.redirect()
         }
       }
     }
-    return Views.REGISTER
+    return Routers.REGISTER.redirect()
   }
 }
