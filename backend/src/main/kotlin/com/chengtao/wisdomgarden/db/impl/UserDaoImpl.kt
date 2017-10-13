@@ -28,21 +28,21 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   override fun createUser(userName: String, password: String, type: Int): User? {
     val parameters: MutableList<Any> = ArrayList()
     parameters.add(userName)
-    parameters.add(parameters)
+    parameters.add(password)
     parameters.add(type)
     if (executeSQL(INSERT_SQL, parameters)) {
       parameters.clear()
       parameters.add(userName)
       parameters.add(password)
       val result: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters)
-      if (result is User) {
-        return result
+      if (result != null && result is MutableList<*> && result.size > 0) {
+        return result[0] as User?
       }
     }
     return null
   }
 
-  override fun deleteUseByUserId(userId: Int): Boolean {
+  override fun deleteUserByUserId(userId: Int): Boolean {
     return deleteById(TABLE_NAME, FIELD_ID, userId)
   }
 
@@ -66,17 +66,13 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
     parameters.add(password)
     parameters.add(userId)
     if (executeSQL(UPDATE_PASSWORD_SQL, parameters)) {
-      val result: Any? = queryById(TABLE_NAME, FIELD_ID, userId, object : ResultSetConvert {
-        override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-          val userDaoImpl = UserDaoImpl()
-          return userDaoImpl.convertResultSetToAny(resultSet)
-        }
-      })
-      if (result != null && result is MutableList<*> && result.size > 0) {
-        return result[0] as User?
-      }
+      return doQueryUserByUserId(userId)
     }
     return null
+  }
+
+  override fun queryUserByUserId(userId: Int): User? {
+    return doQueryUserByUserId(userId)
   }
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
@@ -97,6 +93,19 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
     }
     if (userList.size > 0) {
       return userList
+    }
+    return null
+  }
+
+  private fun doQueryUserByUserId(userId: Int): User? {
+    val result: Any? = queryById(TABLE_NAME, FIELD_ID, userId, object : ResultSetConvert {
+      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+        val userDaoImpl = UserDaoImpl()
+        return userDaoImpl.convertResultSetToAny(resultSet)
+      }
+    })
+    if (result != null && result is MutableList<*> && result.size > 0) {
+      return result[0] as User?
     }
     return null
   }

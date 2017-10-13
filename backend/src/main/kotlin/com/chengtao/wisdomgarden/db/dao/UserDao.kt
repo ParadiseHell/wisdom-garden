@@ -7,7 +7,8 @@ import com.chengtao.wisdomgarden.entity.User
  */
 interface UserDao {
   fun createUser(userName: String, password: String, type: Int): User?
-  fun deleteUseByUserId(userId: Int): Boolean
+  fun deleteUserByUserId(userId: Int): Boolean
   fun isUserExist(userName: String, password: String): Boolean
   fun updatePassword(userId: Int, password: String): User?
+  fun queryUserByUserId(userId: Int): User?
 }

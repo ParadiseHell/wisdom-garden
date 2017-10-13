@@ -27,9 +27,9 @@ abstract class BaseDaoImpl {
    *　执行sql语句
    *  @param sql : sql字符串
    */
-  fun executeSQL(sql: String): Boolean {
+  protected fun executeSQL(sql: String): Boolean {
     try {
-      return connectionPool!!.getConnection()!!.prepareStatement(sql).execute()
+      return connectionPool!!.getConnection()!!.prepareStatement(sql).executeUpdate() > 0
     } catch (e: Exception) {
       printlnException("executeSQL", e)
     }
@@ -41,11 +41,11 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param parameters : 参数列表
    */
-  fun executeSQL(sql: String, parameters: MutableList<Any>): Boolean {
+  protected fun executeSQL(sql: String, parameters: MutableList<Any>): Boolean {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
-      return ps.execute()
+      return ps.executeUpdate() > 0
     } catch (e: Exception) {
       printlnException("executeSQL", e)
     }
@@ -56,7 +56,7 @@ abstract class BaseDaoImpl {
    * 执行查询
    * @param sql : sql字符串
    */
-  fun executeQuery(sql: String): Any? {
+  protected fun executeQuery(sql: String): Any? {
     try {
       return convertResultSetToAny(
           connectionPool!!.getConnection()!!.prepareStatement(sql).executeQuery()
@@ -72,7 +72,7 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param resultSetConvert : ResultSetConvert接口,用户特殊结果的处理
    */
-  fun executeQuery(sql: String, resultSetConvert: ResultSetConvert): Any? {
+  protected fun executeQuery(sql: String, resultSetConvert: ResultSetConvert): Any? {
     try {
       return resultSetConvert.convertResultSetToAny(
           connectionPool!!.getConnection()!!.prepareStatement(sql).executeQuery()
@@ -88,7 +88,7 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param parameters : 参数列表
    */
-  fun executeQuery(sql: String, parameters: MutableList<Any>): Any? {
+  protected fun executeQuery(sql: String, parameters: MutableList<Any>): Any? {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -105,7 +105,7 @@ abstract class BaseDaoImpl {
    * @param parameters : 参数列表
    * @param resultSetConvert : ResultSetConvert接口,用户特殊结果的处理
    */
-  fun executeQuery(sql: String, parameters: MutableList<Any>, resultSetConvert: ResultSetConvert): Any? {
+  protected fun executeQuery(sql: String, parameters: MutableList<Any>, resultSetConvert: ResultSetConvert): Any? {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -143,7 +143,7 @@ abstract class BaseDaoImpl {
    * @param idFieldName id的字段名
    * @param id id值
    */
-  fun deleteById(tableName: String, idFieldName: String, id: Int): Boolean {
+  protected fun deleteById(tableName: String, idFieldName: String, id: Int): Boolean {
     return executeSQL("DELETE FROM $tableName WHERE $idFieldName = $id")
   }
 
@@ -154,7 +154,7 @@ abstract class BaseDaoImpl {
    * @param id id值
    * @param resultSetConvert  ResultSetConvert接口,用户特殊结果的处理
    */
-  fun queryById(tableName: String, idFieldName: String, id: Int, resultSetConvert: ResultSetConvert): Any? {
+  protected fun queryById(tableName: String, idFieldName: String, id: Int, resultSetConvert: ResultSetConvert): Any? {
     return executeQuery("SELECT * FROM $tableName WHERE $idFieldName = $id LIMIT 1", resultSetConvert)
   }
 
@@ -162,7 +162,7 @@ abstract class BaseDaoImpl {
   /**
    * 将ResultSet转换成所需要的对象
    */
-  abstract fun convertResultSetToAny(resultSet: ResultSet): Any?
+  abstract protected fun convertResultSetToAny(resultSet: ResultSet): Any?
 
   /**
    * ResultSet转换接口,用于特殊的装换
