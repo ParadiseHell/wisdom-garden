@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse
 class UserController {
   @GetMapping(Routers.LOGIN)
   fun getLoginView(): String {
-    println("getLoginView")
     return Views.LOGIN
   }
 

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping
 class IndexController {
   @GetMapping(Routers.INDEX)
   fun getIndex(): String {
-    println("getIndex")
     return Views.INDEX
   }
 }

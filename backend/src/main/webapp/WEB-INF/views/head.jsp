@@ -14,7 +14,8 @@
     <meta name="author" content="<%=ApplicationConfig.AUTHOR%>">
     <title><%=ApplicationConfig.APPLICATION_NAME%>
     </title>
-    <link href="../statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../statics/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="../statics/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="../statics/css/sb-admin.min.css" rel="stylesheet">
+    <link href="../statics/css/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
+    <link href="../statics/css/sb-admin.min.css" rel="stylesheet" type="text/css">
 </head>
