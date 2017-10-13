@@ -2,26 +2,102 @@ package com.chengtao.wisdomgarden.db.impl
 
 import com.chengtao.wisdomgarden.db.dao.UserDao
 import com.chengtao.wisdomgarden.entity.User
+import com.chengtao.wisdomgarden.entity.UserType
 import java.sql.ResultSet
 
 /**
  * Created by chengtao on 10/13/17.
  */
 class UserDaoImpl : BaseDaoImpl(), UserDao {
-  override fun createUser(userName: String, password: String, type: Int): User {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  companion object {
+    const val TABLE_NAME = "user"
+    const val FIELD_ID = "user_id"
+    const val FIELD_USER_NAME = "user_name"
+    const val FIELD_PASSWORD = "password"
+    const val FIELD_TYPE = "user_type"
+    //SQL语句
+    const val INSERT_SQL = "INSERT INTO $TABLE_NAME" +
+        " ($FIELD_USER_NAME,$FIELD_PASSWORD,$FIELD_TYPE)" +
+        " VALUES (?,?,?)"
+    const val QUERY_By_NAME_AND_PASSWORD_SQL = "SELECT * FROM $TABLE_NAME" +
+        " WHERE $FIELD_USER_NAME = ? AND $FIELD_PASSWORD = ?"
+    const val UPDATE_PASSWORD_SQL = "UPDATE $TABLE_NAME SET $FIELD_PASSWORD = ?" +
+        " WHERE $FIELD_ID = ?"
+  }
+
+  override fun createUser(userName: String, password: String, type: Int): User? {
+    val parameters: MutableList<Any> = ArrayList()
+    parameters.add(userName)
+    parameters.add(parameters)
+    parameters.add(type)
+    if (executeSQL(INSERT_SQL, parameters)) {
+      parameters.clear()
+      parameters.add(userName)
+      parameters.add(password)
+      val result: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters)
+      if (result is User) {
+        return result
+      }
+    }
+    return null
   }
 
   override fun deleteUseByUserId(userId: Int): Boolean {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    return deleteById(TABLE_NAME, FIELD_ID, userId)
   }
 
   override fun isUserExist(userName: String, password: String): Boolean {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    val parameters: MutableList<Any> = ArrayList()
+    parameters.add(userName)
+    parameters.add(password)
+    val isExist: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters, object : ResultSetConvert {
+      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+        return resultSet.next()
+      }
+    })
+    if (isExist is Boolean) {
+      return isExist
+    }
+    return false
+  }
+
+  override fun updatePassword(userId: Int, password: String): User? {
+    val parameters: MutableList<Any> = ArrayList()
+    parameters.add(password)
+    parameters.add(userId)
+    if (executeSQL(UPDATE_PASSWORD_SQL, parameters)) {
+      val result: Any? = queryById(TABLE_NAME, FIELD_ID, userId, object : ResultSetConvert {
+        override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+          val userDaoImpl = UserDaoImpl()
+          return userDaoImpl.convertResultSetToAny(resultSet)
+        }
+      })
+      if (result != null && result is MutableList<*> && result.size > 0) {
+        return result[0] as User?
+      }
+    }
+    return null
   }
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    val userList: MutableList<User> = ArrayList()
+    while (resultSet.next()) {
+      val user = User()
+      user.userId = resultSet.getInt(FIELD_ID)
+      user.userName = resultSet.getString(FIELD_USER_NAME)
+      user.password = resultSet.getString(FIELD_PASSWORD)
+      when (resultSet.getInt(FIELD_TYPE)) {
+        -1 -> user.type = UserType.VISITOR
+        0 -> user.type = UserType.COMMON_USER
+        1 -> user.type = UserType.MANAGER
+      }
+      user.createdAt = resultSet.getDate(FIELD_CREATED_AT)
+      user.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
+      userList.add(user)
+    }
+    if (userList.size > 0) {
+      return userList
+    }
+    return null
   }
-
 }

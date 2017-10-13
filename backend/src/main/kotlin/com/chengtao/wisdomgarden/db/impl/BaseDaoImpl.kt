@@ -10,6 +10,13 @@ import java.sql.ResultSet
  */
 @Suppress("unused", "MemberVisibilityCanPrivate")
 abstract class BaseDaoImpl {
+  companion object {
+    //必有字段
+    const val FIELD_CREATED_AT = "created_at"
+    const val FIELD_UPDATED_AT = "updated_at"
+  }
+
+  //其他
   private var connectionPool: ConnectionPool? = null
 
   constructor() {
@@ -34,7 +41,7 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param parameters : 参数列表
    */
-  fun executeSQL(sql: String, parameters: List<Any>): Boolean {
+  fun executeSQL(sql: String, parameters: MutableList<Any>): Boolean {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -81,7 +88,7 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param parameters : 参数列表
    */
-  fun executeQuery(sql: String, parameters: List<Any>): Any? {
+  fun executeQuery(sql: String, parameters: MutableList<Any>): Any? {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -98,7 +105,7 @@ abstract class BaseDaoImpl {
    * @param parameters : 参数列表
    * @param resultSetConvert : ResultSetConvert接口,用户特殊结果的处理
    */
-  fun executeQuery(sql: String, parameters: List<Any>, resultSetConvert: ResultSetConvert): Any? {
+  fun executeQuery(sql: String, parameters: MutableList<Any>, resultSetConvert: ResultSetConvert): Any? {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -114,7 +121,7 @@ abstract class BaseDaoImpl {
    * @param ps PreparedStatement
    * @param parameters 参数列表
    */
-  protected fun initPreparedStatementWithParameters(ps: PreparedStatement, parameters: List<Any>) {
+  protected fun initPreparedStatementWithParameters(ps: PreparedStatement, parameters: MutableList<Any>) {
     for ((index, value) in parameters.withIndex()) {
       when (value) {
         is String -> ps.setString(index + 1, value)
@@ -132,12 +139,23 @@ abstract class BaseDaoImpl {
   //默认提供的一些数据库相关操方法
   /**
    * 通过id删除记录
-   * @param datSheetName 数据表名
+   * @param tableName 数据表名
    * @param idFieldName id的字段名
    * @param id id值
    */
-  fun deleteById(datSheetName: String, idFieldName: String, id: Int): Boolean {
-    return executeSQL("DELETE FROM $datSheetName WHERE $idFieldName = $id")
+  fun deleteById(tableName: String, idFieldName: String, id: Int): Boolean {
+    return executeSQL("DELETE FROM $tableName WHERE $idFieldName = $id")
+  }
+
+  /**
+   *通过id查询
+   * @param tableName 数据表名
+   * @param idFieldName id的字段名
+   * @param id id值
+   * @param resultSetConvert  ResultSetConvert接口,用户特殊结果的处理
+   */
+  fun queryById(tableName: String, idFieldName: String, id: Int, resultSetConvert: ResultSetConvert): Any? {
+    return executeQuery("SELECT * FROM $tableName WHERE $idFieldName = $id LIMIT 1", resultSetConvert)
   }
 
   //抽象方法
