@@ -1,5 +1,6 @@
-package com.chengtao.wisdomgarden.db
+package com.chengtao.wisdomgarden.db.impl
 
+import com.chengtao.wisdomgarden.db.ConnectionPool
 import java.sql.Date
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -8,7 +9,7 @@ import java.sql.ResultSet
  * Created by chengtao on 10/13/17.
  */
 @Suppress("unused", "MemberVisibilityCanPrivate")
-abstract class BaseDao {
+abstract class BaseDaoImpl {
   private var connectionPool: ConnectionPool? = null
 
   constructor() {
