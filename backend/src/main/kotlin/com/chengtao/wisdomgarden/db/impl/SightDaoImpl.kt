@@ -42,31 +42,32 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   }
 
   override fun updateSight(id: Int, name: String?, description: String?, latitude: Float?, longitude: Float?): Sight? {
-    if (StringUtils.isStringNull(name, description) && latitude == null && longitude == null) {
+    if (StringUtils.isStringNull(name) && StringUtils.isStringNull(description) && latitude == null && longitude == null) {
       return null
     }
     var updateSQL = "UPDATE $TABLE_NAME SET "
-    val paramters = ArrayList<Any>()
+    val parameters = ArrayList<Any>()
     if (name != null && name != "") {
       updateSQL += "$FIELD_NAME = ?,"
-      paramters.add(name)
+      parameters.add(name)
     }
     if (description != null && description != "") {
       updateSQL += "$FIELD_DESCRIPTION = ?,"
-      paramters.add(description)
+      parameters.add(description)
     }
     if (latitude != null) {
       updateSQL += "$FIELD_LATITUDE = ?,"
-      paramters.add(latitude)
+      parameters.add(latitude)
     }
     if (longitude != null) {
       updateSQL += "$FIELD_LONGITUDE = ?,"
-      paramters.add(longitude)
+      parameters.add(longitude)
     }
     if (updateSQL.contains(",")) {
-      updateSQL.removeRange(updateSQL.length - 1, updateSQL.length - 1)
+      updateSQL = updateSQL.removeRange(updateSQL.length - 1, updateSQL.length)
       updateSQL += " WHERE $FIELD_ID = $id"
-      if (executeSQL(updateSQL, paramters)) {
+      println(updateSQL)
+      if (executeSQL(updateSQL, parameters)) {
         return querySightById(id)
       }
     }

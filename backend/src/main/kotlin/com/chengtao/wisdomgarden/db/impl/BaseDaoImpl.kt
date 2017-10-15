@@ -127,6 +127,8 @@ abstract class BaseDaoImpl {
         is String -> ps.setString(index + 1, value)
         is Int -> ps.setInt(index + 1, value)
         is Boolean -> ps.setBoolean(index + 1, value)
+        is Float -> ps.setFloat(index + 1, value)
+        is Double -> ps.setDouble(index + 1, value)
         is Date -> ps.setDate(index + 1, value)
       }
     }
