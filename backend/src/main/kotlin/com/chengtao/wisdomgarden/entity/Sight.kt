@@ -14,9 +14,10 @@ class Sight {
   var createdAt: Date? = null
   var updatedAt: Date? = null
   var files: ArrayList<SightFile>? = null
+  var ecology: Ecology? = null
   override fun toString(): String {
-    return "Sight(id=$id, name=$name, description=$description, latitude=$latitude, " +
-        "longitude=$longitude, createdAt=$createdAt, updatedAt=$updatedAt, files=$files)"
+    return "Sight(id=$id, name=$name, description=$description, latitude=$latitude, longitude=$longitude, " +
+        "createdAt=$createdAt, updatedAt=$updatedAt, files=$files, ecology=$ecology)"
   }
 
 }
