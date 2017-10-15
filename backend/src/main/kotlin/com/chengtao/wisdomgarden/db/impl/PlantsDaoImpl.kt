@@ -103,7 +103,10 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
         plants.description = resultSet.getString(FIELD_DESCRIPTION)
         plants.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         plants.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
-        //TODO 获取植物文件以及植物对应的景点
+        if (plants.plantsId != null) {
+          plants.files = PlantsFileDaoImpl().queryPlantsAllFiles(plants.plantsId!!)
+          //TODO 获取植物对应的景点
+        }
         plantsList.add(plants)
       }
       resultSet.close()
