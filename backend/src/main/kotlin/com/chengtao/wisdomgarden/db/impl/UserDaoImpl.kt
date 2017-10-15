@@ -104,11 +104,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   }
 
   private fun doQueryUserByUserId(userId: Int): User? {
-    val result: Any? = queryById(TABLE_NAME, FIELD_ID, userId, object : ResultSetConvert {
-      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-        return UserDaoImpl().convertResultSetToAny(resultSet)
-      }
-    })
+    val result: Any? = queryById(TABLE_NAME, FIELD_ID, userId)
     if (result != null && result is ArrayList<*> && result.size > 0) {
       return result[0] as User?
     }

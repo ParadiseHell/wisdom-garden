@@ -13,7 +13,7 @@ class Sight {
   var longitude: Float? = null
   var createdAt: Date? = null
   var updatedAt: Date? = null
-  var files: MutableList<SightFile>? = null
+  var files: ArrayList<SightFile>? = null
   override fun toString(): String {
     return "Sight(id=$id, name=$name, description=$description, latitude=$latitude, " +
         "longitude=$longitude, createdAt=$createdAt, updatedAt=$updatedAt, files=$files)"

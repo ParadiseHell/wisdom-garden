@@ -75,11 +75,7 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   }
 
   override fun querySightById(id: Int): Sight? {
-    val result: Any? = queryById(TABLE_NAME, FIELD_ID, id, object : ResultSetConvert {
-      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-        return SightDaoImpl().convertResultSetToAny(resultSet)
-      }
-    })
+    val result: Any? = queryById(TABLE_NAME, FIELD_ID, id)
     if (result != null && result is ArrayList<*> && result.size > 0) {
       return result[0] as Sight?
     }
@@ -97,11 +93,7 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   }
 
   override fun queryAllSight(): ArrayList<Sight>? {
-    val result = queryAll(TABLE_NAME, object : ResultSetConvert {
-      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-        return SightDaoImpl().convertResultSetToAny(resultSet)
-      }
-    })
+    val result = queryAll(TABLE_NAME)
     if (result != null && result is ArrayList<*>) {
       return result as ArrayList<Sight>
     }

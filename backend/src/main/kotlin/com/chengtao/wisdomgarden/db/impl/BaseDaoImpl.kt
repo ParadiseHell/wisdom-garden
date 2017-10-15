@@ -154,10 +154,28 @@ abstract class BaseDaoImpl {
    * @param tableName 数据表名
    * @param idFieldName id的字段名
    * @param id id值
+   */
+  protected fun queryById(tableName: String, idFieldName: String, id: Int): Any? {
+    return executeQuery("SELECT * FROM $tableName WHERE $idFieldName = $id LIMIT 1")
+  }
+
+  /**
+   *通过id查询
+   * @param tableName 数据表名
+   * @param idFieldName id的字段名
+   * @param id id值
    * @param resultSetConvert  ResultSetConvert接口,用户特殊结果的处理
    */
   protected fun queryById(tableName: String, idFieldName: String, id: Int, resultSetConvert: ResultSetConvert): Any? {
     return executeQuery("SELECT * FROM $tableName WHERE $idFieldName = $id LIMIT 1", resultSetConvert)
+  }
+
+  /**
+   * 查询所有
+   * @param tableName 数据表名
+   */
+  protected fun queryAll(tableName: String): Any? {
+    return executeQuery("SELECT * FROM $tableName")
   }
 
   /**
