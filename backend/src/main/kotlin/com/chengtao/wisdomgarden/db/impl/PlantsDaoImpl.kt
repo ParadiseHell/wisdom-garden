@@ -4,6 +4,7 @@ import com.chengtao.wisdomgarden.db.dao.PlantsDao
 import com.chengtao.wisdomgarden.db.dao.PlantsFileDao
 import com.chengtao.wisdomgarden.db.dao.PlantsToSightDao
 import com.chengtao.wisdomgarden.entity.Plants
+import com.chengtao.wisdomgarden.utils.StringUtils
 import java.sql.ResultSet
 
 /**
@@ -41,11 +42,23 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
   }
 
   override fun deletePlantsById(plantsId: Int): Boolean {
-    return deleteById(TABLE_NAME, FIELD_ID, plantsId)
+    val deleteSuccess = deleteById(TABLE_NAME, FIELD_ID, plantsId)
+    if (deleteSuccess) {
+      //删除该植物的所有文件
+      val plantsFileDao: PlantsFileDao = PlantsFileDaoImpl()
+      plantsFileDao.deleteAllPlantsFiles(plantsId)
+      //删除该植物所对应的所有景点
+      val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
+      plantsToSightDao.deleteAllPlantsSight(plantsId)
+    }
+    return deleteSuccess
   }
 
   override fun updatePlants(plantsId: Int, name: String?, description: String?, sightIds: ArrayList<Int>?): Plants? {
-    var updateSQL = "UPDATE TABLE $TABLE_NAME SET "
+    if (StringUtils.isStringNull(name, description) && sightIds == null) {
+      return null
+    }
+    var updateSQL = "UPDATE $TABLE_NAME SET "
     val parameters = ArrayList<Any>()
     var updateSuccess = false
     if (name != null && name != "") {
@@ -59,13 +72,13 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     if (updateSQL.contains(",")) {
       updateSQL = updateSQL.removeRange(updateSQL.length - 1, updateSQL.length)
       updateSQL += " WHERE $FIELD_ID = $plantsId"
+      println(updateSQL)
       if (executeSQL(updateSQL, parameters)) {
         updateSuccess = true
       }
     }
     if (updateSuccess) {
       if (sightIds != null) {
-        //TODO 先删除之前的植物与景点的对应关系再插入最新的数据
         val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
         if (!plantsToSightDao.updatePlantsSights(plantsId, sightIds)) {
           updateSuccess = false
