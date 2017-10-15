@@ -120,7 +120,9 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         sight.longitude = resultSet.getFloat(FIELD_LONGITUDE)
         sight.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         sight.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
-        //TODO 获取文件
+        if (sight.id != null) {
+          sight.files = SightFileDaoImpl().querySightFiles(sight.id!!)
+        }
         resultList.add(sight)
       }
       resultSet.close()

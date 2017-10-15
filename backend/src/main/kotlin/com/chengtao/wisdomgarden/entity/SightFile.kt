@@ -5,7 +5,7 @@ package com.chengtao.wisdomgarden.entity
  */
 class SightFile {
   var sightId: Int? = null
-  var name: Sight? = null
+  var name: String? = null
   var category: FileCategory? = null
   var url: String? = null
   override fun toString(): String {

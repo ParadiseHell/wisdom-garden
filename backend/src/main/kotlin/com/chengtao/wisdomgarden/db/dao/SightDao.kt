@@ -11,5 +11,5 @@ interface SightDao {
   fun updateSight(id: Int, name: String? = null, description: String? = null, latitude: Float? = null, longitude: Float? = null): Sight?
   fun querySightById(id: Int): Sight?
   fun querySightByName(name: String): Sight?
-  fun queryAllSight(): MutableList<Sight>?
+  fun queryAllSight(): ArrayList<Sight>?
 }
