@@ -26,7 +26,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   }
 
   override fun createUser(userName: String, password: String, type: Int): User? {
-    val parameters: MutableList<Any> = ArrayList()
+    val parameters = ArrayList<Any>()
     parameters.add(userName)
     parameters.add(password)
     parameters.add(type)
@@ -35,7 +35,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
       parameters.add(userName)
       parameters.add(password)
       val result: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters)
-      if (result != null && result is MutableList<*> && result.size > 0) {
+      if (result != null && result is ArrayList<*> && result.size > 0) {
         return result[0] as User?
       }
     }
@@ -47,7 +47,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   }
 
   override fun isUserExist(userName: String, password: String): Boolean {
-    val parameters: MutableList<Any> = ArrayList()
+    val parameters = ArrayList<Any>()
     parameters.add(userName)
     parameters.add(password)
     val isExist: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters, object : ResultSetConvert {
@@ -62,7 +62,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   }
 
   override fun updatePassword(userId: Int, password: String): User? {
-    val parameters: MutableList<Any> = ArrayList()
+    val parameters = ArrayList<Any>()
     parameters.add(password)
     parameters.add(userId)
     if (executeSQL(UPDATE_PASSWORD_SQL, parameters)) {
@@ -76,22 +76,29 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   }
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-    val userList: MutableList<User> = ArrayList()
-    while (resultSet.next()) {
-      val user = User()
-      user.userId = resultSet.getInt(FIELD_ID)
-      user.userName = resultSet.getString(FIELD_USER_NAME)
-      user.password = resultSet.getString(FIELD_PASSWORD)
-      when (resultSet.getInt(FIELD_TYPE)) {
-        UserType.COMMON_USER.value -> user.type = UserType.COMMON_USER
-        UserType.MANAGER.value -> user.type = UserType.MANAGER
+    try {
+      val userList = ArrayList<User>()
+      while (resultSet.next()) {
+        val user = User()
+        user.userId = resultSet.getInt(FIELD_ID)
+        user.userName = resultSet.getString(FIELD_USER_NAME)
+        user.password = resultSet.getString(FIELD_PASSWORD)
+        when (resultSet.getInt(FIELD_TYPE)) {
+          UserType.COMMON_USER.value -> user.type = UserType.COMMON_USER
+          UserType.MANAGER.value -> user.type = UserType.MANAGER
+        }
+        user.createdAt = resultSet.getDate(FIELD_CREATED_AT)
+        user.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
+        userList.add(user)
       }
-      user.createdAt = resultSet.getDate(FIELD_CREATED_AT)
-      user.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
-      userList.add(user)
-    }
-    if (userList.size > 0) {
-      return userList
+      resultSet.close()
+      if (userList.size > 0) {
+        return userList
+      }
+    } catch (e: Exception) {
+      printlnException("convertResultSetToAny", e)
+    } finally {
+      resultSet.close()
     }
     return null
   }
@@ -99,11 +106,10 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
   private fun doQueryUserByUserId(userId: Int): User? {
     val result: Any? = queryById(TABLE_NAME, FIELD_ID, userId, object : ResultSetConvert {
       override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-        val userDaoImpl = UserDaoImpl()
-        return userDaoImpl.convertResultSetToAny(resultSet)
+        return UserDaoImpl().convertResultSetToAny(resultSet)
       }
     })
-    if (result != null && result is MutableList<*> && result.size > 0) {
+    if (result != null && result is ArrayList<*> && result.size > 0) {
       return result[0] as User?
     }
     return null

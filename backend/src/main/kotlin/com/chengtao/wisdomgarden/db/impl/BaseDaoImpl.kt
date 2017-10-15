@@ -41,7 +41,7 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param parameters : 参数列表
    */
-  protected fun executeSQL(sql: String, parameters: MutableList<Any>): Boolean {
+  protected fun executeSQL(sql: String, parameters: ArrayList<Any>): Boolean {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -88,7 +88,7 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    * @param parameters : 参数列表
    */
-  protected fun executeQuery(sql: String, parameters: MutableList<Any>): Any? {
+  protected fun executeQuery(sql: String, parameters: ArrayList<Any>): Any? {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -105,7 +105,7 @@ abstract class BaseDaoImpl {
    * @param parameters : 参数列表
    * @param resultSetConvert : ResultSetConvert接口,用户特殊结果的处理
    */
-  protected fun executeQuery(sql: String, parameters: MutableList<Any>, resultSetConvert: ResultSetConvert): Any? {
+  protected fun executeQuery(sql: String, parameters: ArrayList<Any>, resultSetConvert: ResultSetConvert): Any? {
     try {
       val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
       initPreparedStatementWithParameters(ps, parameters)
@@ -121,7 +121,7 @@ abstract class BaseDaoImpl {
    * @param ps PreparedStatement
    * @param parameters 参数列表
    */
-  protected fun initPreparedStatementWithParameters(ps: PreparedStatement, parameters: MutableList<Any>) {
+  protected fun initPreparedStatementWithParameters(ps: PreparedStatement, parameters: ArrayList<Any>) {
     for ((index, value) in parameters.withIndex()) {
       when (value) {
         is String -> ps.setString(index + 1, value)
@@ -132,7 +132,7 @@ abstract class BaseDaoImpl {
     }
   }
 
-  private fun printlnException(methodName: String, e: Exception) {
+  protected fun printlnException(methodName: String, e: Exception) {
     println(methodName + ":" + e.message)
   }
 
@@ -156,6 +156,15 @@ abstract class BaseDaoImpl {
    */
   protected fun queryById(tableName: String, idFieldName: String, id: Int, resultSetConvert: ResultSetConvert): Any? {
     return executeQuery("SELECT * FROM $tableName WHERE $idFieldName = $id LIMIT 1", resultSetConvert)
+  }
+
+  /**
+   * 查询所有
+   * @param tableName 数据表名
+   * @param resultSetConvert  ResultSetConvert接口,用户特殊结果的处理
+   */
+  protected fun queryAll(tableName: String, resultSetConvert: ResultSetConvert): Any? {
+    return executeQuery("SELECT * FROM $tableName", resultSetConvert)
   }
 
   //抽象方法
