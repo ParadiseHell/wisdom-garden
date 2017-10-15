@@ -74,14 +74,18 @@ class SightFileDaoImpl : BaseDaoImpl(), SightFileDao {
         sightFile.url = resultSet.getString(FIELD_URL)
         sightFileList.add(sightFile)
       }
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
       if (sightFileList.size > 0) {
         return sightFileList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
     }
     return null
   }

@@ -1,6 +1,8 @@
 package com.chengtao.wisdomgarden.db.impl
 
 import com.chengtao.wisdomgarden.db.dao.PlantsDao
+import com.chengtao.wisdomgarden.db.dao.PlantsFileDao
+import com.chengtao.wisdomgarden.db.dao.PlantsToSightDao
 import com.chengtao.wisdomgarden.entity.Plants
 import java.sql.ResultSet
 
@@ -95,6 +97,8 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
     val plantsList = ArrayList<Plants>()
+    val plantsFileDao: PlantsFileDao = PlantsFileDaoImpl()
+    val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
     try {
       while (resultSet.next()) {
         val plants = Plants()
@@ -104,19 +108,23 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
         plants.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         plants.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
         if (plants.plantsId != null) {
-          plants.files = PlantsFileDaoImpl().queryPlantsAllFiles(plants.plantsId!!)
-          //TODO 获取植物对应的景点
+          plants.files = plantsFileDao.queryPlantsAllFiles(plants.plantsId!!)
+          plants.sights = plantsToSightDao.queryPlantsAllSights(plants.plantsId!!)
         }
         plantsList.add(plants)
       }
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
       if (plantsList.size > 0) {
         return plantsList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
     }
     return null
   }
@@ -132,12 +140,16 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
         try {
           resultSet.next()
           val id = resultSet.getInt(FIELD_ID)
-          resultSet.close()
+          if (!resultSet.isClosed) {
+            resultSet.close()
+          }
           return id
         } catch (e: Exception) {
           printlnException("queryPlantsIdByName", e)
         } finally {
-          resultSet.close()
+          if (!resultSet.isClosed) {
+            resultSet.close()
+          }
         }
         return -1
       }

@@ -71,13 +71,18 @@ class PlantsFileDaoImpl : BaseDaoImpl(), PlantsFileDao {
         plantsFile.url = resultSet.getString(FIELD_URL)
         plantsFileList.add(plantsFile)
       }
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
       if (plantsFileList.size > 0) {
         return plantsFileList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
     }
     return null
   }

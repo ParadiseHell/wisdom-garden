@@ -91,14 +91,18 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
         user.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
         userList.add(user)
       }
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
       if (userList.size > 0) {
         return userList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      resultSet.close()
+      if (!resultSet.isClosed) {
+        resultSet.close()
+      }
     }
     return null
   }
