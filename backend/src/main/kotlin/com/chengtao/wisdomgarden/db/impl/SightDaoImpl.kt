@@ -117,18 +117,14 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         }
         resultList.add(sight)
       }
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
       if (resultList.size > 0) {
         return resultList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
     }
     return null
   }

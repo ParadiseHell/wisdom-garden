@@ -30,7 +30,12 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     parameters.add(description)
     if (executeSQL(INSERT_SQL, parameters)) {
       val plantsId = queryPlantsIdByName(name)
-      //TODO 插入植物所对应的景点,出错后通过id删除该植物以及植物和景点对应表的相关记录
+      val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
+      if (!plantsToSightDao.insertPlantsSights(plantsId, sightIds)) {
+        deletePlantsById(plantsId)
+        return null
+      }
+      return queryPlantsById(plantsId)
     }
     return null
   }
@@ -61,6 +66,10 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     if (updateSuccess) {
       if (sightIds != null) {
         //TODO 先删除之前的植物与景点的对应关系再插入最新的数据
+        val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
+        if (!plantsToSightDao.updatePlantsSights(plantsId, sightIds)) {
+          updateSuccess = false
+        }
       }
     }
     if (updateSuccess) {
@@ -113,18 +122,14 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
         }
         plantsList.add(plants)
       }
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
       if (plantsList.size > 0) {
         return plantsList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
     }
     return null
   }
@@ -140,16 +145,12 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
         try {
           resultSet.next()
           val id = resultSet.getInt(FIELD_ID)
-          if (!resultSet.isClosed) {
-            resultSet.close()
-          }
+          resultSet.close()
           return id
         } catch (e: Exception) {
           printlnException("queryPlantsIdByName", e)
         } finally {
-          if (!resultSet.isClosed) {
-            resultSet.close()
-          }
+          resultSet.close()
         }
         return -1
       }

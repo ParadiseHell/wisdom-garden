@@ -3,7 +3,6 @@ package com.chengtao.wisdomgarden.db.impl
 import com.chengtao.wisdomgarden.db.dao.PlantsFileDao
 import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.PlantsFile
-import com.chengtao.wisdomgarden.entity.SightFile
 import java.sql.ResultSet
 
 /**
@@ -71,18 +70,14 @@ class PlantsFileDaoImpl : BaseDaoImpl(), PlantsFileDao {
         plantsFile.url = resultSet.getString(FIELD_URL)
         plantsFileList.add(plantsFile)
       }
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
       if (plantsFileList.size > 0) {
         return plantsFileList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
     }
     return null
   }

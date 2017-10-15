@@ -82,18 +82,14 @@ class PlantsToSightDaoImpl : BaseDaoImpl(), PlantsToSightDao {
           sightList.add(sight)
         }
       }
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
       if (sightList.size > 0) {
         return sightList
       }
     } catch (e: Exception) {
       printlnException("convertResultSetToAny", e)
     } finally {
-      if (!resultSet.isClosed) {
-        resultSet.close()
-      }
+      resultSet.close()
     }
     return null
   }
