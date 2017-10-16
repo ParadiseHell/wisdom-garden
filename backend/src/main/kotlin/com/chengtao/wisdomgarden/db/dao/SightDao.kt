@@ -13,6 +13,8 @@ interface SightDao {
   fun querySightByName(name: String): Sight?
   fun queryAllSight(): ArrayList<Sight>?
   fun querySightCount(): Int
+  fun queryEntranceSightId(): Int
+  fun queryExitSightId(): Int
   fun existEntrance(): Boolean
   fun existExit(): Boolean
 }

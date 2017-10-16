@@ -29,8 +29,8 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         "$FIELD_LATITUDE,$FIELD_LONGITUDE) VALUES (?,?,?,?,?)"
     const val QUERY_BY_NAME_SQL = "SELECT * FROM $TABLE_NAME WHERE $FIELD_NAME = ? LIMIT 1"
     const val QUERY_SIGHT_COUNT_SQL = "SELECT count(*) as $FIELD_COUNT FROM $TABLE_NAME"
-    const val EXIST_ENTRANCE_SIGHT_SQL = "SELECT count(*) as $FIELD_COUNT FROM $TABLE_NAME WHERE $FIELD_TYPE = 1"
-    const val EXIST_EXIT_SIGHT_SQL = "SELECT count(*) as $FIELD_COUNT FROM $TABLE_NAME WHERE $FIELD_TYPE = 2"
+    const val QUERY_ENTRANCE_SIGHT_ID = "SELECT $FIELD_ID FROM $TABLE_NAME WHERE $FIELD_TYPE = 1"
+    const val QUERY_EXIT_SIGHT_ID = "SELECT $FIELD_ID FROM $TABLE_NAME WHERE $FIELD_TYPE = 2"
   }
 
   override fun createSight(type: Int, name: String, description: String, latitude: Float, longitude: Float): Sight? {
@@ -124,36 +124,42 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
     return 0
   }
 
-  override fun existEntrance(): Boolean {
-    val result = executeQuery(EXIST_ENTRANCE_SIGHT_SQL, object : ResultSetConvert {
+  override fun queryEntranceSightId(): Int {
+    val result = executeQuery(QUERY_ENTRANCE_SIGHT_ID, object : ResultSetConvert {
       override fun convertResultSetToAny(resultSet: ResultSet): Any? {
         if (resultSet.next()) {
-          val count = resultSet.getInt(FIELD_COUNT)
-          return count > 0
+          return resultSet.getInt(FIELD_ID)
         }
-        return false
+        return -1
       }
     })
-    if (result != null && result is Boolean) {
+    if (result != null && result is Int) {
       return result
     }
-    return false
+    return -1
+  }
+
+  override fun queryExitSightId(): Int {
+    val result = executeQuery(QUERY_EXIT_SIGHT_ID, object : ResultSetConvert {
+      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+        if (resultSet.next()) {
+          return resultSet.getInt(FIELD_ID)
+        }
+        return -1
+      }
+    })
+    if (result != null && result is Int) {
+      return result
+    }
+    return -1
+  }
+
+  override fun existEntrance(): Boolean {
+    return queryEntranceSightId() > 0
   }
 
   override fun existExit(): Boolean {
-    val result = executeQuery(EXIST_EXIT_SIGHT_SQL, object : ResultSetConvert {
-      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
-        if (resultSet.next()) {
-          val count = resultSet.getInt(FIELD_COUNT)
-          return count > 0
-        }
-        return false
-      }
-    })
-    if (result != null && result is Boolean) {
-      return result
-    }
-    return false
+    return queryExitSightId() > 0
   }
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
