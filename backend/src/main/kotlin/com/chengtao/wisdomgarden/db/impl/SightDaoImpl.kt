@@ -34,6 +34,19 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   }
 
   override fun createSight(type: Int, name: String, description: String, latitude: Float, longitude: Float): Sight? {
+    if (type == SightType.ENTRANCE.value) {//入口
+      if (existEntrance()) {//存在入口
+        return null
+      }
+    } else if (type == SightType.EXIT.value) {//出口
+      if (existExit()) {//存在出口
+        return null
+      }
+    } else {//其他景点
+      if (!(existEntrance() && existExit())) {//不存在入口和出口
+        return null
+      }
+    }
     val parameters = ArrayList<Any>()
     parameters.add(type)
     parameters.add(name)
@@ -47,7 +60,18 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   }
 
   override fun deleteSightById(id: Int): Boolean {
-    return deleteById(TABLE_NAME, FIELD_ID, id)
+    val result = deleteById(TABLE_NAME, FIELD_ID, id)
+    if (id == queryEntranceSightId() || id == queryExitSightId()) {//出口或者入口
+      //删除所有线路
+      RouteDaoImpl().deleteAllRoutes()
+    }
+    //删除文件和景点对应关系
+    SightFileDaoImpl().deleteAllSightFiles(id)
+    //删除生态和景点对应关系
+    EcologyDaoImpl().deleteEcologyBySightId(id)
+    //删除植物和景点对应关系
+    PlantsToSightDaoImpl().deletePlantsAllSights(id)
+    return result
   }
 
   override fun updateSight(id: Int, name: String?, description: String?, latitude: Float?, longitude: Float?): Sight? {
@@ -172,9 +196,11 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         sight.id = resultSet.getInt(FIELD_ID)
         val type = resultSet.getInt(FIELD_TYPE)
         when (type) {
-          SightType.OTHER.value -> sight.type = SightType.OTHER
           SightType.ENTRANCE.value -> sight.type = SightType.ENTRANCE
           SightType.EXIT.value -> sight.type = SightType.EXIT
+        }
+        if (sight.type == null) {
+          sight.type = SightType.OTHER
         }
         sight.name = resultSet.getString(FIELD_NAME)
         sight.description = resultSet.getString(FIELD_DESCRIPTION)

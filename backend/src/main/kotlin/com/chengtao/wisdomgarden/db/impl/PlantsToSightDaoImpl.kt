@@ -46,6 +46,10 @@ class PlantsToSightDaoImpl : BaseDaoImpl(), PlantsToSightDao {
     return deleteById(TABLE_NAME, FIELD_PLANTS_ID, plantsId)
   }
 
+  override fun deletePlantsAllSights(sightId: Int): Boolean {
+    return deleteById(TABLE_NAME, FIELD_SIGHT_ID, sightId)
+  }
+
   override fun updatePlantsSights(plantsId: Int, sightIds: ArrayList<Int>): Boolean {
     //先删除所有的植物与景点的对应关系
     deleteAllPlantsSight(plantsId)

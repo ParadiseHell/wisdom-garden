@@ -150,6 +150,14 @@ abstract class BaseDaoImpl {
   }
 
   /**
+   * 通过id删除记录
+   * @param tableName 数据表名
+   */
+  protected fun deleteAll(tableName: String): Boolean {
+    return executeSQL("TRUNCATE TABLE $tableName")
+  }
+
+  /**
    *通过id查询
    * @param tableName 数据表名
    * @param idFieldName id的字段名

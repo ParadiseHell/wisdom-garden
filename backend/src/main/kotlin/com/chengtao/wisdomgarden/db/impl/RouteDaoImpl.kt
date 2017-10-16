@@ -47,6 +47,10 @@ class RouteDaoImpl : BaseDaoImpl(), RouteDao {
     return deleteById(TABLE_NAME, FIELD_ID, routeId)
   }
 
+  override fun deleteAllRoutes(): Boolean {
+    return deleteAll(TABLE_NAME)
+  }
+
   override fun updateRoute(routeId: Int, name: String?, description: String?, sightIds: ArrayList<Int>?): Route? {
     if (StringUtils.isStringNull(name, description) && sightIds == null) {
       return null
