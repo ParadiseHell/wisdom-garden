@@ -31,9 +31,15 @@ interface Parameters {
 //路由
 interface Routers {
   companion object {
+    //页面
     const val INDEX = "/"
     const val LOGIN = "/login"
     const val REGISTER = "/register"
+    const val SIGHT = "/sight"
+    const val PLANTS = "/plants"
+    const val ROUTE = "/route"
+    const val SERVICE = "/service"
+    //其他
     const val STATICS = "/statics"
     const val API = "/api"
   }
@@ -45,5 +51,9 @@ interface Views {
     const val INDEX = "index"
     const val LOGIN = "login"
     const val REGISTER = "register"
+    const val SIGHT = "sight"
+    const val PLANTS = "plants"
+    const val ROUTE = "route"
+    const val SERVICE = "service"
   }
 }
