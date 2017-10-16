@@ -31,13 +31,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
     parameters.add(password)
     parameters.add(type)
     if (executeSQL(INSERT_SQL, parameters)) {
-      parameters.clear()
-      parameters.add(userName)
-      parameters.add(password)
-      val result: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters)
-      if (result != null && result is ArrayList<*> && result.size > 0) {
-        return result[0] as User?
-      }
+      queryUserByNameAndPassword(userName, password)
     }
     return null
   }
@@ -73,6 +67,17 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
 
   override fun queryUserByUserId(userId: Int): User? {
     return doQueryUserByUserId(userId)
+  }
+
+  override fun queryUserByNameAndPassword(userName: String, password: String): User? {
+    val parameters = ArrayList<Any>()
+    parameters.add(userName)
+    parameters.add(password)
+    val result: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters)
+    if (result != null && result is ArrayList<*> && result.size > 0) {
+      return result[0] as User?
+    }
+    return null
   }
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {

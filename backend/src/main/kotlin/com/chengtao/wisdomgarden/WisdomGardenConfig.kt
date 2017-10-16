@@ -28,6 +28,13 @@ interface Parameters {
   }
 }
 
+//属性
+interface Attributes{
+  companion object {
+    const val MESSAGE = "message"
+  }
+}
+
 //路由
 interface Routers {
   companion object {
@@ -39,9 +46,12 @@ interface Routers {
     const val PLANTS = "/plants"
     const val ROUTE = "/route"
     const val SERVICE = "/service"
-    //其他
+    //静态资源
     const val STATICS = "/statics"
+    //API
     const val API = "/api"
+    //其他
+    const val LOGOUT = "/logout"
   }
 }
 

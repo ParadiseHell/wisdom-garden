@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -20,8 +21,13 @@ import javax.servlet.http.HttpServletResponse
  */
 @Controller
 class UserController {
+  //登录
   @GetMapping(Routers.LOGIN)
-  fun getLoginView(): String {
+  fun getLoginView(request: HttpServletRequest, response: HttpServletResponse): String {
+    val cookies = request.cookies
+    cookies?.forEach {
+      CookieUtils.clear(it, response)
+    }
     return Views.LOGIN
   }
 
@@ -43,6 +49,7 @@ class UserController {
     return Routers.LOGIN.redirect()
   }
 
+  //注册
   @GetMapping(Routers.REGISTER)
   fun getRegisterView(): String {
     return Views.REGISTER
@@ -57,13 +64,25 @@ class UserController {
       val md5Password = MD5Util.md5(password)
       if (md5Password != null) {
         val userDao = UserDaoImpl()
-        if (userDao.createUser(userName, md5Password, UserType.COMMON_USER.value) != null) {
-          //创建cookies
-          CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
-          return Routers.INDEX.redirect()
+        if (userDao.queryUserByNameAndPassword(userName, md5Password) == null) {
+          if (userDao.createUser(userName, md5Password, UserType.COMMON_USER.value) != null) {
+            //创建cookies
+            CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
+            return Routers.INDEX.redirect()
+          }
         }
       }
     }
     return Routers.REGISTER.redirect()
+  }
+
+  //登出
+  @GetMapping(Routers.LOGOUT)
+  fun logout(request: HttpServletRequest, response: HttpServletResponse): String {
+    val cookies = request.cookies
+    cookies?.forEach {
+      CookieUtils.clear(it, response)
+    }
+    return Routers.INDEX.redirect()
   }
 }

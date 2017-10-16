@@ -16,40 +16,48 @@ import javax.servlet.http.HttpServletResponse
 class WisdomGardenInterceptor : HandlerInterceptor {
   companion object {
     val UN_INTERCEPTOR_ROUTERS: Array<String> =
-        arrayOf(Routers.LOGIN, Routers.REGISTER, Routers.STATICS, Routers.API)
+        arrayOf(Routers.LOGIN, Routers.REGISTER, Routers.STATICS, Routers.API, Routers.LOGOUT)
   }
 
   override fun preHandle(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?): Boolean {
-    UN_INTERCEPTOR_ROUTERS
-        .filter { request!!.requestURI.contains(it) }
-        .forEach { return true }
-    var userName: String? = null
-    var password: String? = null
-    var cookieUserName: Cookie? = null
-    var cookiePassword: Cookie? = null
-    for (cookie in request!!.cookies) {
-      if (cookie!!.name == Cookies.USER_NAME) {
-        userName = cookie.value
-        cookieUserName = cookie
+    if (request != null && response != null) {
+      UN_INTERCEPTOR_ROUTERS
+          .filter { request.requestURI.contains(it) }
+          .forEach { return true }
+      var userName: String? = null
+      var password: String? = null
+      var cookieUserName: Cookie? = null
+      var cookiePassword: Cookie? = null
+      val cookies = request.cookies
+      if (cookies != null) {
+        for (cookie in cookies) {
+          if (cookie != null) {
+            if (cookie.name == Cookies.USER_NAME) {
+              userName = cookie.value
+              cookieUserName = cookie
+            }
+            if (cookie.name == Cookies.PASSWORD) {
+              password = cookie.value
+              cookiePassword = cookie
+            }
+          }
+        }
       }
-      if (cookie.name == Cookies.PASSWORD) {
-        password = cookie.value
-        cookiePassword = cookie
+      if (!StringUtils.isStringNull(userName, password)) {
+        val userDao = UserDaoImpl()
+        //存在用户不拦截
+        if (userDao.isUserExist(userName!!, password!!)) {
+          //重新设置cookie过期时间
+          CookieUtils.addUserNameAndPasswordCookie(cookieUserName!!, cookiePassword!!, response!!)
+          return true
+        }
       }
+      CookieUtils.clear(cookieUserName, response)
+      CookieUtils.clear(cookiePassword, response)
+      response.sendRedirect(Routers.LOGIN)
+      return false
     }
-    if (!StringUtils.isStringNull(userName, password)) {
-      val userDao = UserDaoImpl()
-      //存在用户不拦截
-      if (userDao.isUserExist(userName!!, password!!)) {
-        //重新设置cookie过期时间
-        CookieUtils.addUserNameAndPasswordCookie(cookieUserName!!, cookiePassword!!, response!!)
-        return true
-      }
-    }
-    CookieUtils.clear(cookieUserName, response!!)
-    CookieUtils.clear(cookiePassword, response)
-    response.sendRedirect(Routers.LOGIN)
-    return false
+    return true
   }
 
   override fun postHandle(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?, modelAndView: ModelAndView?) {

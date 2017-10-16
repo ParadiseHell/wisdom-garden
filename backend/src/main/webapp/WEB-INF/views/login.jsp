@@ -29,6 +29,8 @@
         </div>
     </div>
 </div>
-<jsp:include page="foot_js.jsp"/>
+<jsp:include page="foot.jsp">
+    <jsp:param name="justIncludeJsFiles" value="true"/>
+</jsp:include>
 </body>
 </html>

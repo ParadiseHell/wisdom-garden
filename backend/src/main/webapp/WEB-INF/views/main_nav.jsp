@@ -83,7 +83,7 @@
                 </form>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                <a class="nav-link" data-toggle="modal" data-target="#logoutModal">
                     <i class="fa fa-fw fa-sign-out"></i>登出</a>
             </li>
         </ul>

@@ -23,7 +23,7 @@ object CookieUtils {
 
   fun clear(cookie: Cookie?, response: HttpServletResponse) {
     if (cookie != null) {
-      cookie.maxAge = -1
+      cookie.maxAge = 0
       response.addCookie(cookie)
     }
   }

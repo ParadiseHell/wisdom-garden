@@ -11,4 +11,5 @@ interface UserDao {
   fun isUserExist(userName: String, password: String): Boolean
   fun updatePassword(userId: Int, password: String): User?
   fun queryUserByUserId(userId: Int): User?
+  fun queryUserByNameAndPassword(userName: String, password: String): User?
 }
