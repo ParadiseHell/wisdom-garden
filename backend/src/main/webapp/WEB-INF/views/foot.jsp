@@ -1,4 +1,5 @@
 <%@ page import="com.chengtao.wisdomgarden.ApplicationConfig" %>
+<%@ page import="com.chengtao.wisdomgarden.Attributes" %>
 <%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%--
   Created by IntelliJ IDEA.
@@ -59,3 +60,15 @@
 <script src="../statics/js/sb-admin.min.js" type="text/javascript"></script>
 <script src="../statics/js/sb-admin-datatables.min.js" type="text/javascript"></script>
 <script src="../statics/js/sb-admin-charts.min.js" type="text/javascript"></script>
+<script src="../statics/js/simply-toast.min.js" type="text/javascript"></script>
+<%
+    Object message = session.getAttribute(Attributes.MESSAGE);
+    session.setAttribute(Attributes.MESSAGE, null);
+    if (message != null && message instanceof String) {
+%>
+<script>
+  $.simplyToast('<%=(String)message%>', 'danger');
+</script>
+<%
+    }
+%>

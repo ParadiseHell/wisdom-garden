@@ -1,8 +1,6 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.Parameters
-import com.chengtao.wisdomgarden.Routers
-import com.chengtao.wisdomgarden.Views
+import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.impl.UserDaoImpl
 import com.chengtao.wisdomgarden.entity.UserType
 import com.chengtao.wisdomgarden.utils.CookieUtils
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpSession
 
 /**
  * Created by chengtao on 10/10/17.
@@ -34,7 +33,7 @@ class UserController {
   @PostMapping(Routers.LOGIN)
   fun login(@RequestParam(value = Parameters.USER_NAME, defaultValue = "") userName: String,
             @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String,
-            response: HttpServletResponse): String {
+            response: HttpServletResponse, session: HttpSession): String {
     if (!StringUtils.isStringNull(userName, password)) {
       val md5Password = MD5Util.md5(password)
       if (md5Password != null) {
@@ -43,8 +42,12 @@ class UserController {
           //创建cookies
           CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
           return Routers.INDEX.redirect()
+        } else {
+          session.setAttribute(Attributes.MESSAGE, Errors.USER_NAME_AND_PASSWORD_ERROR)
         }
       }
+    } else {
+      session.setAttribute(Attributes.MESSAGE, Errors.PARAMETERS_ERROR)
     }
     return Routers.LOGIN.redirect()
   }
@@ -59,7 +62,7 @@ class UserController {
   fun register(@RequestParam(value = Parameters.USER_NAME, defaultValue = "") userName: String,
                @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String,
                @RequestParam(value = Parameters.CONFIRM_PASSWORD, defaultValue = "") confirmPassword: String,
-               response: HttpServletResponse): String {
+               response: HttpServletResponse, session: HttpSession): String {
     if (!StringUtils.isStringNull(userName, password, confirmPassword) && password == confirmPassword) {
       val md5Password = MD5Util.md5(password)
       if (md5Password != null) {
@@ -69,9 +72,15 @@ class UserController {
             //创建cookies
             CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
             return Routers.INDEX.redirect()
+          } else {
+            session.setAttribute(Attributes.MESSAGE, Errors.UNKNOWN_ERROR)
           }
+        } else {
+          session.setAttribute(Attributes.MESSAGE, Errors.USER_IS_EXIST_ERROR)
         }
       }
+    } else {
+      session.setAttribute(Attributes.MESSAGE, Errors.PARAMETERS_ERROR)
     }
     return Routers.REGISTER.redirect()
   }

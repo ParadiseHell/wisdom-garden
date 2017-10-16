@@ -29,9 +29,19 @@ interface Parameters {
 }
 
 //属性
-interface Attributes{
+interface Attributes {
   companion object {
     const val MESSAGE = "message"
+  }
+}
+
+//错误
+interface Errors {
+  companion object {
+    const val PARAMETERS_ERROR = "参数错误"
+    const val USER_NAME_AND_PASSWORD_ERROR = "用户名或密码错误"
+    const val USER_IS_EXIST_ERROR = "用户已存在"
+    const val UNKNOWN_ERROR = "未知错误"
   }
 }
 
