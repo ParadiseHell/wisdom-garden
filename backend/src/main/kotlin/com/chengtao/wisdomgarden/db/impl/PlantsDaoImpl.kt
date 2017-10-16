@@ -45,11 +45,9 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     val deleteSuccess = deleteById(TABLE_NAME, FIELD_ID, plantsId)
     if (deleteSuccess) {
       //删除该植物的所有文件
-      val plantsFileDao: PlantsFileDao = PlantsFileDaoImpl()
-      plantsFileDao.deleteAllPlantsFiles(plantsId)
+      PlantsFileDaoImpl().deleteAllPlantsFiles(plantsId)
       //删除该植物所对应的所有景点
-      val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
-      plantsToSightDao.deleteAllPlantsSight(plantsId)
+      PlantsToSightDaoImpl().deleteAllPlantsSight(plantsId)
     }
     return deleteSuccess
   }
