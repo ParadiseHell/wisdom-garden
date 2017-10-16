@@ -7,6 +7,7 @@ import java.util.*
  */
 class Sight {
   var id: Int? = null
+  var type: SightType? = null
   var name: String? = null
   var description: String? = null
   var latitude: Float? = null
@@ -19,5 +20,8 @@ class Sight {
     return "Sight(id=$id, name=$name, description=$description, latitude=$latitude, longitude=$longitude, " +
         "createdAt=$createdAt, updatedAt=$updatedAt, files=$files, ecology=$ecology)"
   }
+}
 
+enum class SightType(val value: Int) {
+  OTHER(0), ENTRANCE(1), EXIT(2)
 }
