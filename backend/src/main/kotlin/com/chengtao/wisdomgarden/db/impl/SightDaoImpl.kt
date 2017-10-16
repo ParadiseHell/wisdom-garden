@@ -1,6 +1,8 @@
 package com.chengtao.wisdomgarden.db.impl
 
+import com.chengtao.wisdomgarden.db.dao.EcologyDao
 import com.chengtao.wisdomgarden.db.dao.SightDao
+import com.chengtao.wisdomgarden.db.dao.SightFileDao
 import com.chengtao.wisdomgarden.entity.Sight
 import com.chengtao.wisdomgarden.utils.StringUtils
 import java.sql.ResultSet
@@ -103,6 +105,8 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
     try {
       val resultList: ArrayList<Sight> = ArrayList()
+      val sightFileDao: SightFileDao = SightFileDaoImpl()
+      val ecologyDao: EcologyDao = EcologyDaoImpl()
       while (resultSet.next()) {
         val sight = Sight()
         sight.id = resultSet.getInt(FIELD_ID)
@@ -113,7 +117,8 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         sight.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         sight.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
         if (sight.id != null) {
-          sight.files = SightFileDaoImpl().querySightFiles(sight.id!!)
+          sight.files = sightFileDao.querySightFiles(sight.id!!)
+          sight.ecology = ecologyDao.queryEcologyBySightId(sight.id!!)
         }
         resultList.add(sight)
       }
