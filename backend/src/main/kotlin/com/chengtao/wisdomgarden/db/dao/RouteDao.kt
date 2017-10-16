@@ -10,5 +10,6 @@ interface RouteDao {
   fun deleteRouteById(routeId: Int): Boolean
   fun updateRoute(routeId: Int, name: String?, description: String?, sightIds: ArrayList<Int>?): Route?
   fun queryRouteById(routeId: Int): Route?
+  fun queryRouteByName(name: String): Route?
   fun queryAllRoutes(): ArrayList<Route>?
 }

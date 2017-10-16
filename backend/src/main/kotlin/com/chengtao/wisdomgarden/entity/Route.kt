@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden.entity
 
-import java.util.*
+import java.sql.Date
+
 
 /**
  * Created by chengtao on 10/15/17.
