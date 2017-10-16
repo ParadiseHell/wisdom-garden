@@ -7,7 +7,10 @@ import com.chengtao.wisdomgarden.entity.Service
  */
 interface ServiceDao {
   fun createService(name: String, latitude: Float, longitude: Float): Service?
-  fun delteServiceById(serviceId: Int): Boolean
+  fun deleteServiceById(serviceId: Int): Boolean
   fun updateService(serviceId: Int, name: String?, latitude: Float?, longitude: Float?): Service?
-  fun queryServiceByLocation(latitude: Float, longitude: Float): ArrayList<Service>?
+  fun queryByServiceId(serviceId: Int): Service?
+  fun queryServiceByLocation(latitude: Float, longitude: Float,range : Float): ArrayList<Service>?
+  fun queryService(name: String, latitude: Float, longitude: Float): Service?
+  fun queryServicesByName(name: String): ArrayList<Service>?
 }
