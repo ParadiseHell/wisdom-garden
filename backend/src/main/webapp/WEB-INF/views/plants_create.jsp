@@ -32,6 +32,17 @@
                               placeholder="请填写植物相关描述"
                               name="<%=Parameters.DESCRIPTION%>"></textarea>
                 </div>
+                <c:if test="${sightList != null && !sightList.isEmpty()}">
+                    <div class="form-group">
+                        <label>选择植物所在景点</label>
+                        <select id="sightSelect" name="states[]" multiple="multiple"
+                                class="form-control">
+                            <c:forEach items="${sightList}" var="sight">
+                                <option value="${sight.id}">${sight.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </c:if>
                 <button type="submit" class="btn btn-success btn-lg btn-block">创建植物</button>
             </form>
         </div>
@@ -48,8 +59,8 @@
             }
           }
         });
+        $('#sightSelect').select2();
       });
-      ;
     </script>
 </div>
 </body>

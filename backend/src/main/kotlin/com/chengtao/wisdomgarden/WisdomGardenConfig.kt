@@ -43,6 +43,7 @@ interface Attributes {
     const val CURRENT_VIEW = "currentView"
     const val VIEW_ROUTER = "viewRouter"
     const val SIGHT_COUNT = "sightCount"
+    const val SIGHT_LIST = "sightList"
     const val PLANTS_COUNT = "plantsCount"
     const val ROUTE_COUNT = "routeCount"
     const val SERVICE_COUNT = "serviceCount"

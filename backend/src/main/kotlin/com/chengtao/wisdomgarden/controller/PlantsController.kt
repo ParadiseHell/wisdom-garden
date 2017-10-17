@@ -1,11 +1,10 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.Errors
-import com.chengtao.wisdomgarden.Parameters
-import com.chengtao.wisdomgarden.Routers
-import com.chengtao.wisdomgarden.Views
+import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.dao.PlantsDao
+import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.PlantsDaoImpl
+import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpSession
 class PlantsController : BaseController() {
   companion object {
     val plantsDao: PlantsDao = PlantsDaoImpl()
+    val sightDao: SightDao = SightDaoImpl()
   }
 
   @GetMapping(Routers.PLANTS)
@@ -37,6 +37,11 @@ class PlantsController : BaseController() {
     val modelAndView = ModelAndView(Views.PLANTS_CREATE)
     initMainModelAndView(modelAndView)
     initNavTitle(modelAndView, "植物", Routers.PLANTS_CREATE)
+    val sightList = sightDao.queryAllSight()
+    if (sightList != null) {
+      println(sightList)
+    }
+    modelAndView.addObject(Attributes.SIGHT_LIST, sightList)
     return modelAndView
   }
 
