@@ -35,6 +35,7 @@
                 <c:if test="${sightList != null && !sightList.isEmpty()}">
                     <div class="form-group">
                         <label>选择植物所在景点</label>
+                        <input type="text" hidden name="sightIds" id="sightIds">
                         <select id="sightSelect" name="states[]" multiple="multiple"
                                 class="form-control">
                             <c:forEach items="${sightList}" var="sight">
@@ -59,7 +60,41 @@
             }
           }
         });
-        $('#sightSelect').select2();
+        var sightIdsInput = $("#sightIds");
+        if (sightIdsInput.length > 0) {//存在景点
+          $('#sightSelect').select2({
+            placeholder: "请选择景点", closeOnSelect: false
+          }).on("select2:selecting", function (e) {
+            console.log('Selecting: ', e.params.args.data);
+            var value = sightIdsInput.val();
+            if (value === "") {
+              value += e.params.args.data.id;
+            } else {
+              value += "," + e.params.args.data.id;
+            }
+            console.log("Selecting:" + value);
+            sightIdsInput.val(value);
+          }).on("select2:unselecting", function (e) {
+            var value = sightIdsInput.val();
+            var splitStr = e.params.args.data.id + ",";
+            if (value.indexOf(splitStr) < 0) {//没有带逗号的字符串
+              splitStr = e.params.args.data.id;
+            }
+            var items = value.split(splitStr);
+            value = items.join("");
+            if (value.length % 2 === 0) {//id数组字符串只能为单数
+              value = value.substring(0, value.length - 1);
+            }
+            console.log("unselecting:" + value);
+            sightIdsInput.val(value);
+          }).on("select2:select", function (evt) {//静止排序
+            var element = evt.params.data.element;
+            var $element = $(element);
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+          });
+        }
       });
     </script>
 </div>
