@@ -31,7 +31,7 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
     parameters.add(password)
     parameters.add(type)
     if (executeSQL(INSERT_SQL, parameters)) {
-      queryUserByNameAndPassword(userName, password)
+      return queryUserByNameAndPassword(userName, password)
     }
     return null
   }

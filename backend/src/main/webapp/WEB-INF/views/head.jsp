@@ -20,3 +20,9 @@
     <link href="../statics/css/sb-admin.min.css" rel="stylesheet" type="text/css">
     <link href="../statics/css/simply-toast.min.css" rel="stylesheet" type="text/css">
 </head>
+<style type="text/css">
+    label.error{
+        color: red;
+        margin-top: 2px;
+    }
+</style>

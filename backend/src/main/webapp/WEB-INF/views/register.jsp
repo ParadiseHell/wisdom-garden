@@ -9,7 +9,7 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">注册</div>
         <div class="card-body">
-            <form action="<%=Routers.REGISTER%>" method="post">
+            <form action="<%=Routers.REGISTER%>" method="post" id="registerForm">
                 <div class="form-group">
                     <div>
                         <label>用户名</label>
@@ -25,7 +25,7 @@
                             <label>密码</label>
                             <input class="form-control" type="password"
                                    name="<%=Parameters.PASSWORD%>"
-                                   placeholder="请输入密码">
+                                   placeholder="请输入密码" id="password">
                         </div>
                         <div class="col-md-6">
                             <label>确认密码</label>
@@ -46,6 +46,20 @@
 <jsp:include page="foot.jsp">
     <jsp:param name="justIncludeJsFiles" value="true"/>
 </jsp:include>
+<script type="text/javascript">
+  $().ready(function () {
+    $("#registerForm").validate({
+      rules: {
+        userName: {
+          required: true, minlength: 2, maxlength: 20
+        }, password: {
+          required: true, minlength: 6, maxlength: 20
+        },confirmPassword:{
+          required: true, minlength: 6, maxlength: 20,equalTo:"#password"
+        }
+      }
+    });
+  });
+</script>
 </body>
-
 </html>

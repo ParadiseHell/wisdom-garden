@@ -22,9 +22,9 @@ interface Cookies {
 //请求参数
 interface Parameters {
   companion object {
-    const val USER_NAME = "user_name"
+    const val USER_NAME = "userName"
     const val PASSWORD = "password"
-    const val CONFIRM_PASSWORD = "confirm_password"
+    const val CONFIRM_PASSWORD = "confirmPassword"
     const val FILE = "file"
     const val FILE_CATEGORY = "file_category"
   }

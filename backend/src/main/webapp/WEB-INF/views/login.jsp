@@ -9,7 +9,7 @@
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">登录</div>
         <div class="card-body">
-            <form method="post" action="<%=Routers.LOGIN%>">
+            <form method="post" action="<%=Routers.LOGIN%>" id="loginForm" data-toggle="validator">
                 <div class="form-group">
                     <label>用户名</label>
                     <input aria-describedby="nameHelp" class="form-control" type="text"
@@ -32,5 +32,18 @@
 <jsp:include page="foot.jsp">
     <jsp:param name="justIncludeJsFiles" value="true"/>
 </jsp:include>
+<script type="text/javascript">
+  $().ready(function () {
+    $("#loginForm").validate({
+      rules: {
+        userName: {
+          required: true, minlength: 2, maxlength: 20
+        }, password: {
+          required: true, minlength: 6, maxlength: 20
+        }
+      }
+    });
+  });
+</script>
 </body>
 </html>

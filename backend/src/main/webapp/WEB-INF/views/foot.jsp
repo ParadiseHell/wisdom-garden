@@ -61,6 +61,8 @@
 <script src="../statics/js/sb-admin-datatables.min.js" type="text/javascript"></script>
 <script src="../statics/js/sb-admin-charts.min.js" type="text/javascript"></script>
 <script src="../statics/js/simply-toast.min.js" type="text/javascript"></script>
+<script src="../statics/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../statics/js/messages_zh.min.js" type="text/javascript"></script>
 <%
     Object message = session.getAttribute(Attributes.MESSAGE);
     session.setAttribute(Attributes.MESSAGE, null);

@@ -8,6 +8,11 @@ object StringUtils {
     if (neededString == null || neededString == "") {
       return true
     }
-    return stringArray.any { it == null || it == "" }
+    stringArray.forEach {
+      if (it == null || it == "") {
+        return true
+      }
+    }
+    return false
   }
 }

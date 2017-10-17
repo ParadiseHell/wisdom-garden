@@ -63,6 +63,7 @@ class UserController {
                @RequestParam(value = Parameters.PASSWORD, defaultValue = "") password: String,
                @RequestParam(value = Parameters.CONFIRM_PASSWORD, defaultValue = "") confirmPassword: String,
                response: HttpServletResponse, session: HttpSession): String {
+    println("userName:$userName->password:$password->confirmPassword:$confirmPassword")
     if (!StringUtils.isStringNull(userName, password, confirmPassword) && password == confirmPassword) {
       val md5Password = MD5Util.md5(password)
       if (md5Password != null) {
