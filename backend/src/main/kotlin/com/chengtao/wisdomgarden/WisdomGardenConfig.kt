@@ -39,7 +39,8 @@ interface Parameters {
 //属性
 interface Attributes {
   companion object {
-    const val MESSAGE = "message"
+    const val ERROR_MESSAGE = "errorMessage"
+    const val SUCCESS_MESSAGE = "successMessage"
     const val CURRENT_VIEW = "currentView"
     const val VIEW_ROUTER = "viewRouter"
     const val SIGHT_COUNT = "sightCount"

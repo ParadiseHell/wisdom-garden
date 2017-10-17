@@ -59,28 +59,28 @@ class SightController : BaseController() {
           SightCateGory.ENTRANCE.value -> {
             if (sightDao.existEntrance()) {
               canCreate = false
-              session.setAttribute(Attributes.MESSAGE, Errors.ENTRANCE_SIGHT_EXIST)
+              session.setAttribute(Attributes.ERROR_MESSAGE, Errors.ENTRANCE_SIGHT_EXIST)
             }
           }
           SightCateGory.EXIT.value -> {
             if (sightDao.existExit()) {
               canCreate = false
-              session.setAttribute(Attributes.MESSAGE, Errors.EXIT_SIGHT_EXIST)
+              session.setAttribute(Attributes.ERROR_MESSAGE, Errors.EXIT_SIGHT_EXIST)
             }
           }
         }
         if (canCreate) {
           if (sightDao.createSight(category, name, description, latitude, longitude) == null) {
-            session.setAttribute(Attributes.MESSAGE, Errors.UNKNOWN_ERROR)
+            session.setAttribute(Attributes.ERROR_MESSAGE, Errors.UNKNOWN_ERROR)
           } else {
-            session.setAttribute(Attributes.MESSAGE, "创建景点成功")
+            session.setAttribute(Attributes.SUCCESS_MESSAGE, "创建景点成功")
           }
         }
       } else {
-        session.setAttribute(Attributes.MESSAGE, Errors.SIGHT_IS_EXIST)
+        session.setAttribute(Attributes.ERROR_MESSAGE, Errors.SIGHT_IS_EXIST)
       }
     } else {
-      session.setAttribute(Attributes.MESSAGE, Errors.PARAMETERS_ERROR)
+      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
     }
     return Routers.SIGHT_CREATE.redirect()
   }

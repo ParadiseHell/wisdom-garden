@@ -43,11 +43,11 @@ class UserController {
           CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
           return Routers.INDEX.redirect()
         } else {
-          session.setAttribute(Attributes.MESSAGE, Errors.USER_NAME_AND_PASSWORD_ERROR)
+          session.setAttribute(Attributes.ERROR_MESSAGE, Errors.USER_NAME_AND_PASSWORD_ERROR)
         }
       }
     } else {
-      session.setAttribute(Attributes.MESSAGE, Errors.PARAMETERS_ERROR)
+      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
     }
     return Routers.LOGIN.redirect()
   }
@@ -74,14 +74,14 @@ class UserController {
             CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
             return Routers.INDEX.redirect()
           } else {
-            session.setAttribute(Attributes.MESSAGE, Errors.UNKNOWN_ERROR)
+            session.setAttribute(Attributes.ERROR_MESSAGE, Errors.UNKNOWN_ERROR)
           }
         } else {
-          session.setAttribute(Attributes.MESSAGE, Errors.USER_IS_EXIST_ERROR)
+          session.setAttribute(Attributes.ERROR_MESSAGE, Errors.USER_IS_EXIST_ERROR)
         }
       }
     } else {
-      session.setAttribute(Attributes.MESSAGE, Errors.PARAMETERS_ERROR)
+      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
     }
     return Routers.REGISTER.redirect()
   }

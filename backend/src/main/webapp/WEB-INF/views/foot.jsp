@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.chengtao.wisdomgarden.ApplicationConfig" %>
 <%@ page import="com.chengtao.wisdomgarden.Attributes" %>
 <%@ page import="com.chengtao.wisdomgarden.Routers" %>
@@ -64,12 +65,19 @@
 <script src="../statics/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="../statics/js/messages_zh.min.js" type="text/javascript"></script>
 <%
-    Object message = session.getAttribute(Attributes.MESSAGE);
-    session.setAttribute(Attributes.MESSAGE, null);
-    if (message != null && message instanceof String) {
+    Object errorMessage = session.getAttribute(Attributes.ERROR_MESSAGE);
+    Object successMessage = session.getAttribute(Attributes.SUCCESS_MESSAGE);
+    session.setAttribute(Attributes.ERROR_MESSAGE, null);
+    session.setAttribute(Attributes.SUCCESS_MESSAGE, null);
+    if (errorMessage != null && errorMessage instanceof String) {
 %>
 <script>
-  $.simplyToast('<%=(String)message%>', 'danger');
+  $.simplyToast('<%=(String)errorMessage%>', 'danger');
+</script>
+<%
+} else if (successMessage != null && successMessage instanceof String) {%>
+<script>
+  $.simplyToast('<%=(String)successMessage%>', 'success');
 </script>
 <%
     }
