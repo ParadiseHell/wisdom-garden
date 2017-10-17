@@ -1,6 +1,9 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.*
+import com.chengtao.wisdomgarden.Errors
+import com.chengtao.wisdomgarden.Parameters
+import com.chengtao.wisdomgarden.Routers
+import com.chengtao.wisdomgarden.Views
 import com.chengtao.wisdomgarden.db.dao.PlantsDao
 import com.chengtao.wisdomgarden.db.impl.PlantsDaoImpl
 import com.chengtao.wisdomgarden.utils.StringUtils
@@ -38,22 +41,22 @@ class PlantsController : BaseController() {
   }
 
   @PostMapping(Routers.PLANTS)
-  fun createPlants(@RequestParam(value = Parameters.PLANTS_NAME) name: String,
-                   @RequestParam(value = Parameters.PLANTS_DESCRIPTION) description: String,
+  fun createPlants(@RequestParam(value = Parameters.NAME) name: String,
+                   @RequestParam(value = Parameters.DESCRIPTION) description: String,
                    session: HttpSession): String {
     println("name:$name,description:$description")
     if (!StringUtils.isStringNull(name, description)) {
       if (plantsDao.queryPlantsByName(name) == null) {
         if (plantsDao.createPlants(name, description) != null) {
-          session.setAttribute(Attributes.SUCCESS_MESSAGE, "创建植物成功")
+          addSuccessMessage(session, "创建植物成功")
         } else {
-          session.setAttribute(Attributes.ERROR_MESSAGE, Errors.UNKNOWN_ERROR)
+          addErrorMessage(session, Errors.UNKNOWN_ERROR)
         }
       } else {
-        session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PLANTS_IS_EXIST)
+        addErrorMessage(session, "植物已存在")
       }
     } else {
-      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
+      addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
     return Routers.PLANTS_CREATE.redirect()
   }

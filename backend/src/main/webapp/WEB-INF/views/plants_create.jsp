@@ -23,14 +23,14 @@
                     <div class="form-row">
                         <label>植物名称</label>
                         <input type="text" class="form-control"
-                               placeholder="请输入植物名称" name="<%=Parameters.PLANTS_NAME%>">
+                               placeholder="请输入植物名称" name="<%=Parameters.NAME%>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label>植物描述</label>
                     <textarea class="form-control" rows="5"
                               placeholder="请填写植物相关描述"
-                              name="<%=Parameters.PLANTS_DESCRIPTION%>"></textarea>
+                              name="<%=Parameters.DESCRIPTION%>"></textarea>
                 </div>
                 <button type="submit" class="btn btn-success btn-lg btn-block">创建植物</button>
             </form>

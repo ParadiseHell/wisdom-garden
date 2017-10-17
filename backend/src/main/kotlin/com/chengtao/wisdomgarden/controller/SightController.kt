@@ -43,12 +43,19 @@ class SightController : BaseController() {
     return sightAndModelView
   }
 
+  @GetMapping(Routers.SIGHT_CREATE)
+  fun getCreateSightView(): ModelAndView {
+    val sightCreateModelView = ModelAndView(Views.SIGHT_CREATE)
+    initNavTitle(sightCreateModelView, "创建景点", Routers.SIGHT_CREATE)
+    return sightCreateModelView
+  }
+
   @PostMapping(Routers.SIGHT)
-  fun createSight(@RequestParam(value = Parameters.SIGHT_NAME) name: String,
-                  @RequestParam(value = Parameters.SIGHT_CATEGORY, defaultValue = "-1") category: Int,
-                  @RequestParam(value = Parameters.SIGHT_LATITUDE, defaultValue = "360") latitude: Float,
-                  @RequestParam(value = Parameters.SIGHT_LONGITUDE, defaultValue = "360") longitude: Float,
-                  @RequestParam(value = Parameters.SIGHT_DESCRIPTION) description: String,
+  fun createSight(@RequestParam(value = Parameters.NAME) name: String,
+                  @RequestParam(value = Parameters.CATEGORY, defaultValue = "-1") category: Int,
+                  @RequestParam(value = Parameters.LATITUDE, defaultValue = "360") latitude: Float,
+                  @RequestParam(value = Parameters.LONGITUDE, defaultValue = "360") longitude: Float,
+                  @RequestParam(value = Parameters.DESCRIPTION) description: String,
                   session: HttpSession): String {
     println("name:$name,category:$category,latitude:$latitude,longitude:$longitude,description:$description")
     if (!StringUtils.isStringNull(name, description) && (category in 0..2) && latitude.isLatitude()
@@ -59,37 +66,30 @@ class SightController : BaseController() {
           SightCateGory.ENTRANCE.value -> {
             if (sightDao.existEntrance()) {
               canCreate = false
-              session.setAttribute(Attributes.ERROR_MESSAGE, Errors.ENTRANCE_SIGHT_EXIST)
+              addErrorMessage(session, "入口已存在")
             }
           }
           SightCateGory.EXIT.value -> {
             if (sightDao.existExit()) {
               canCreate = false
-              session.setAttribute(Attributes.ERROR_MESSAGE, Errors.EXIT_SIGHT_EXIST)
+              addErrorMessage(session, "出口已存在")
             }
           }
         }
         if (canCreate) {
           if (sightDao.createSight(category, name, description, latitude, longitude) == null) {
-            session.setAttribute(Attributes.ERROR_MESSAGE, Errors.UNKNOWN_ERROR)
+            addErrorMessage(session, Errors.UNKNOWN_ERROR)
           } else {
-            session.setAttribute(Attributes.SUCCESS_MESSAGE, "创建景点成功")
+            addSuccessMessage(session, "创建景点成功")
           }
         }
       } else {
-        session.setAttribute(Attributes.ERROR_MESSAGE, Errors.SIGHT_IS_EXIST)
+        addErrorMessage(session, "景点已存在")
       }
     } else {
-      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
+      addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
     return Routers.SIGHT_CREATE.redirect()
-  }
-
-  @GetMapping(Routers.SIGHT_CREATE)
-  fun getCreateSightView(): ModelAndView {
-    val sightCreateModelView = ModelAndView(Views.SIGHT_CREATE)
-    initNavTitle(sightCreateModelView, "创建景点", Routers.SIGHT_CREATE)
-    return sightCreateModelView
   }
 
   @PostMapping(Routers.SIGHT_UPLOAD_FILE)

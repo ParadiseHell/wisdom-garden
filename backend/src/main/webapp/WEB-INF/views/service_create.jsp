@@ -18,43 +18,25 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <div class="card-body">
-            <form action="<%=Routers.SIGHT%>" method="post" id="sightForm">
+            <form action="<%=Routers.SERVICE%>" method="post" id="sightForm">
                 <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <label>景点名称</label>
-                            <input type="text" class="form-control"
-                                   placeholder="请输入景点名称" name="<%=Parameters.NAME%>">
-                        </div>
-                        <div class="col-6">
-                            <label>景点类型</label>
-                            <select class="form-control" name="<%=Parameters.CATEGORY%>">
-                                <option value="1">入口</option>
-                                <option value="2">出口</option>
-                                <option value="0">其他</option>
-                            </select>
-                        </div>
-                    </div>
+                    <label>服务设施名称</label>
+                    <input type="text" class="form-control"
+                           placeholder="请输入服务设施名称" name="<%=Parameters.NAME%>">
                 </div>
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-6">
-                            <label>景点经度</label>
+                            <label>服务设施经度</label>
                             <input type="number" class="form-control"
-                                   placeholder="请输入景点经度" name="<%=Parameters.LONGITUDE%>"/>
+                                   placeholder="请输入服务设施经度" name="<%=Parameters.LONGITUDE%>"/>
                         </div>
                         <div class="col-6">
-                            <label>景点纬度</label>
+                            <label>服务设施纬度</label>
                             <input type="number" class="form-control"
-                                   placeholder="请输入景点纬度" name="<%=Parameters.LATITUDE%>"/>
+                                   placeholder="请输入服务设施纬度" name="<%=Parameters.LATITUDE%>"/>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>景点描述</label>
-                    <textarea class="form-control" rows="5"
-                              placeholder="请填写景点相关描述"
-                              name="<%=Parameters.DESCRIPTION%>"></textarea>
                 </div>
                 <button type="submit" class="btn btn-success btn-lg btn-block">创建景点</button>
             </form>
@@ -67,14 +49,10 @@
           rules: {
             name: {
               required: true, minlength: 2, maxlength: 30
-            }, category: {
-              required: true, number: true
             }, latitude: {
               required: true, number: true, range: [-90, 90]
             }, longitude: {
               required: true, number: true, range: [-180, 180]
-            }, description: {
-              required: true
             }
           }
         });

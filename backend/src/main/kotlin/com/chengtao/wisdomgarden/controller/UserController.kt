@@ -1,6 +1,9 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.*
+import com.chengtao.wisdomgarden.Errors
+import com.chengtao.wisdomgarden.Parameters
+import com.chengtao.wisdomgarden.Routers
+import com.chengtao.wisdomgarden.Views
 import com.chengtao.wisdomgarden.db.impl.UserDaoImpl
 import com.chengtao.wisdomgarden.entity.UserType
 import com.chengtao.wisdomgarden.utils.CookieUtils
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpSession
  * Created by chengtao on 10/10/17.
  */
 @Controller
-class UserController {
+class UserController : BaseController() {
   //登录
   @GetMapping(Routers.LOGIN)
   fun getLoginView(request: HttpServletRequest, response: HttpServletResponse): String {
@@ -43,11 +46,11 @@ class UserController {
           CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
           return Routers.INDEX.redirect()
         } else {
-          session.setAttribute(Attributes.ERROR_MESSAGE, Errors.USER_NAME_AND_PASSWORD_ERROR)
+          addErrorMessage(session, "用户名或密码错误")
         }
       }
     } else {
-      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
+      addErrorMessage(session, "用户已存在")
     }
     return Routers.LOGIN.redirect()
   }
@@ -74,14 +77,14 @@ class UserController {
             CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
             return Routers.INDEX.redirect()
           } else {
-            session.setAttribute(Attributes.ERROR_MESSAGE, Errors.UNKNOWN_ERROR)
+            addErrorMessage(session, Errors.UNKNOWN_ERROR)
           }
         } else {
-          session.setAttribute(Attributes.ERROR_MESSAGE, Errors.USER_IS_EXIST_ERROR)
+          addErrorMessage(session, "用户已存在")
         }
       }
     } else {
-      session.setAttribute(Attributes.ERROR_MESSAGE, Errors.PARAMETERS_ERROR)
+      addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
     return Routers.REGISTER.redirect()
   }

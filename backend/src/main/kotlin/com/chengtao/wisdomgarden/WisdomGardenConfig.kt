@@ -27,15 +27,11 @@ interface Parameters {
     const val CONFIRM_PASSWORD = "confirmPassword"
     const val FILE = "file"
     const val FILE_CATEGORY = "file_category"
-    //景点
-    const val SIGHT_NAME = "name"
-    const val SIGHT_CATEGORY = "category"
-    const val SIGHT_LATITUDE = "latitude"
-    const val SIGHT_LONGITUDE = "longitude"
-    const val SIGHT_DESCRIPTION = "description"
-    //
-    const val PLANTS_NAME = "name"
-    const val PLANTS_DESCRIPTION = "description"
+    const val NAME = "name"
+    const val CATEGORY = "category"
+    const val LATITUDE = "latitude"
+    const val LONGITUDE = "longitude"
+    const val DESCRIPTION = "description"
   }
 }
 
@@ -57,15 +53,7 @@ interface Attributes {
 interface Errors {
   companion object {
     const val PARAMETERS_ERROR = "参数错误"
-    const val USER_NAME_AND_PASSWORD_ERROR = "用户名或密码错误"
-    const val USER_IS_EXIST_ERROR = "用户已存在"
     const val UNKNOWN_ERROR = "未知错误"
-    //景点
-    const val SIGHT_IS_EXIST = "景点已存在"
-    const val ENTRANCE_SIGHT_EXIST = "入口已存在"
-    const val EXIT_SIGHT_EXIST = "出口已存在"
-    //植物
-    const val PLANTS_IS_EXIST = "植物已存在"
   }
 }
 
@@ -92,6 +80,7 @@ interface Routers {
     const val PLANTS_CREATE = "/plants/create"
     const val ROUTE = "/route"
     const val SERVICE = "/service"
+    const val SERVICE_CREATE = "/service/create"
     //静态资源
     const val STATICS = "/statics"
     //API
@@ -113,5 +102,6 @@ interface Views {
     const val PLANTS_CREATE = "plants_create"
     const val ROUTE = "route"
     const val SERVICE = "service"
+    const val SERVICE_CREATE = "service_create"
   }
 }
