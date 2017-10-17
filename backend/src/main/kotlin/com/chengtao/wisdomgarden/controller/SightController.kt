@@ -51,7 +51,7 @@ class SightController : BaseController() {
                   @RequestParam(value = Parameters.SIGHT_DESCRIPTION) description: String,
                   session: HttpSession): String {
     println("name:$name,category:$category,latitude:$latitude,longitude:$longitude,description:$description")
-    if (!StringUtils.isStringNull(name, description) && (category in 0..1) && latitude.isLatitude()
+    if (!StringUtils.isStringNull(name, description) && (category in 0..2) && latitude.isLatitude()
         && longitude.isLongitude()) {
       if (sightDao.querySightByName(name) == null) {
         var canCreate = true
@@ -72,6 +72,8 @@ class SightController : BaseController() {
         if (canCreate) {
           if (sightDao.createSight(category, name, description, latitude, longitude) == null) {
             session.setAttribute(Attributes.MESSAGE, Errors.UNKNOWN_ERROR)
+          } else {
+            session.setAttribute(Attributes.MESSAGE, "创建景点成功")
           }
         }
       } else {

@@ -21,7 +21,7 @@ class ConnectionPool {
 
   companion object {
     //mySQL手动配置
-    const val MYSQL_JDBC_URL = "jdbc:mysql://127.0.0.1:3306/wisdom_garden?characterEncoding=utf8"
+    const val MYSQL_JDBC_URL = "jdbc:mysql://127.0.0.1:3306/wisdom_garden?useUnicode=true&characterEncoding=UTF-8"
     const val MYSQL_DRIVER_CLASS = "com.mysql.jdbc.Driver"
     const val MYSQL_USER = "root"
     const val MYSQL_PASSWORD = "root"
