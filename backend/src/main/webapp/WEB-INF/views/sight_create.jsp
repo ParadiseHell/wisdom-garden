@@ -73,9 +73,9 @@
               required: true, number: true, range: [-90, 90]
             }, longitude: {
               required: true, number: true, range: [-180, 180]
+            }, description: {
+              required: true
             }
-          }, description: {
-            required: true
           }
         });
       });

@@ -33,6 +33,9 @@ interface Parameters {
     const val SIGHT_LATITUDE = "latitude"
     const val SIGHT_LONGITUDE = "longitude"
     const val SIGHT_DESCRIPTION = "description"
+    //
+    const val PLANTS_NAME = "name"
+    const val PLANTS_DESCRIPTION = "description"
   }
 }
 
@@ -61,6 +64,8 @@ interface Errors {
     const val SIGHT_IS_EXIST = "景点已存在"
     const val ENTRANCE_SIGHT_EXIST = "入口已存在"
     const val EXIT_SIGHT_EXIST = "出口已存在"
+    //植物
+    const val PLANTS_IS_EXIST = "植物已存在"
   }
 }
 
@@ -84,6 +89,7 @@ interface Routers {
     const val SIGHT_CREATE = "/sight/create"
     const val SIGHT_UPLOAD_FILE = "/sight/upload"
     const val PLANTS = "/plants"
+    const val PLANTS_CREATE = "/plants/create"
     const val ROUTE = "/route"
     const val SERVICE = "/service"
     //静态资源
@@ -104,6 +110,7 @@ interface Views {
     const val SIGHT = "sight"
     const val SIGHT_CREATE = "sight_create"
     const val PLANTS = "plants"
+    const val PLANTS_CREATE = "plants_create"
     const val ROUTE = "route"
     const val SERVICE = "service"
   }

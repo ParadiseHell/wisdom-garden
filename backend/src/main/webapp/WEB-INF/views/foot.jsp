@@ -82,3 +82,13 @@
 <%
     }
 %>
+<c:if test="${not empty errorMessage}">
+    <script>
+      $.simplyToast('${errorMessage}', 'danger');
+    </script>
+</c:if>
+<c:if test="${not empty successMessage}">
+    <script>
+      $.simplyToast('${successMessage}', 'success');
+    </script>
+</c:if>
