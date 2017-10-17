@@ -8,8 +8,9 @@ import com.chengtao.wisdomgarden.entity.Plants
 interface PlantsDao {
   fun createPlants(name: String, description: String, sightIds: ArrayList<Int>): Plants?
   fun deletePlantsById(plantsId: Int): Boolean
-  fun updatePlants(plantsId: Int,name: String?, description: String?, sightIds: ArrayList<Int>?): Plants?
+  fun updatePlants(plantsId: Int, name: String?, description: String?, sightIds: ArrayList<Int>?): Plants?
   fun queryPlantsById(plantsId: Int): Plants?
   fun queryPlantsByName(name: String): Plants?
   fun queryAllPlants(): ArrayList<Plants>?
+  fun queryPlantsCount(): Int
 }

@@ -13,4 +13,5 @@ interface RouteDao {
   fun queryRouteById(routeId: Int): Route?
   fun queryRouteByName(name: String): Route?
   fun queryAllRoutes(): ArrayList<Route>?
+  fun queryAllRoutesCount(): Int
 }

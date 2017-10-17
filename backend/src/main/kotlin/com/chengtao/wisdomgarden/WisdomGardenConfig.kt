@@ -25,6 +25,8 @@ interface Parameters {
     const val USER_NAME = "user_name"
     const val PASSWORD = "password"
     const val CONFIRM_PASSWORD = "confirm_password"
+    const val FILE = "file"
+    const val FILE_CATEGORY = "file_category"
   }
 }
 
@@ -32,6 +34,12 @@ interface Parameters {
 interface Attributes {
   companion object {
     const val MESSAGE = "message"
+    const val CURRENT_VIEW = "currentView"
+    const val VIEW_ROUTER = "viewRouter"
+    const val SIGHT_COUNT = "sightCount"
+    const val PLANTS_COUNT = "plantsCount"
+    const val ROUTE_COUNT = "routeCount"
+    const val SERVICE_COUNT = "serviceCount"
   }
 }
 
@@ -45,6 +53,15 @@ interface Errors {
   }
 }
 
+//静态资源
+interface UploadFilePath {
+  companion object {
+    const val UPLOAD_IMAGES = "/upload/images"
+    const val UPLOAD_AUDIO = "/upload/audio"
+    const val UPLOAD_VIDEO = "/upload/video"
+  }
+}
+
 //路由
 interface Routers {
   companion object {
@@ -53,6 +70,8 @@ interface Routers {
     const val LOGIN = "/login"
     const val REGISTER = "/register"
     const val SIGHT = "/sight"
+    const val SIGHT_CREATE = "/sight/create"
+    const val SIGHT_UPLOAD_FILE = "/sight/upload"
     const val PLANTS = "/plants"
     const val ROUTE = "/route"
     const val SERVICE = "/service"
@@ -72,6 +91,7 @@ interface Views {
     const val LOGIN = "login"
     const val REGISTER = "register"
     const val SIGHT = "sight"
+    const val SIGHT_CREATE = "sight-create"
     const val PLANTS = "plants"
     const val ROUTE = "route"
     const val SERVICE = "service"

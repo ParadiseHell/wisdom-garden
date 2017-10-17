@@ -115,6 +115,10 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     return null
   }
 
+  override fun queryPlantsCount(): Int {
+    return queryCount(TABLE_NAME)
+  }
+
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
     val plantsList = ArrayList<Plants>()
     val plantsFileDao: PlantsFileDao = PlantsFileDaoImpl()

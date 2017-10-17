@@ -195,6 +195,21 @@ abstract class BaseDaoImpl {
     return executeQuery("SELECT * FROM $tableName", resultSetConvert)
   }
 
+  protected fun queryCount(tableName: String): Int {
+    val result = executeQuery("SELECT count(*) as count FROM $tableName", object : ResultSetConvert {
+      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+        if (resultSet.next()) {
+          return resultSet.getInt("count")
+        }
+        return 0
+      }
+    })
+    if (result != null && result is Int) {
+      return result
+    }
+    return 0
+  }
+
   //抽象方法
   /**
    * 将ResultSet转换成所需要的对象

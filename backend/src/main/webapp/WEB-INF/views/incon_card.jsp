@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.chengtao.wisdomgarden.Routers" %><%--
   Created by IntelliJ IDEA.
   User: chengtao
@@ -17,7 +18,9 @@
                 <div class="card-body-icon">
                     <i class="fa fa-fw fa-area-chart"></i>
                 </div>
-                <div class="mr-5">10个景点</div>
+                <div class="mr-5">
+                    ${sightCount}个景点
+                </div>
             </div>
             <a class="card-footer text-white clearfix small z-1" href="<%=Routers.SIGHT%>">
                 <span class="float-left"><%=detail%></span>
@@ -33,10 +36,12 @@
                 <div class="card-body-icon">
                     <i class="fa fa-pagelines"></i>
                 </div>
-                <div class="mr-5">100种植物</div>
+                <div class="mr-5">
+                    ${plantsCount}种植物
+                </div>
             </div>
             <a class="card-footer text-white clearfix small z-1" href="<%=Routers.PLANTS%>">
-                <span class="float-left">><%=detail%></span>
+                <span class="float-left"><%=detail%></span>
                 <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
@@ -49,10 +54,12 @@
                 <div class="card-body-icon">
                     <i class="fa fa-map"></i>
                 </div>
-                <div class="mr-5">3条线路</div>
+                <div class="mr-5">
+                    ${routeCount}条线路
+                </div>
             </div>
             <a class="card-footer text-white clearfix small z-1" href="<%=Routers.ROUTE%>">
-                <span class="float-left">><%=detail%></span>
+                <span class="float-left"><%=detail%></span>
                 <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
@@ -65,11 +72,13 @@
                 <div class="card-body-icon">
                     <i class="fa fa-globe"></i>
                 </div>
-                <div class="mr-5">10种服务设施</div>
+                <div class="mr-5">
+                    ${serviceCount}种服务设施
+                </div>
             </div>
             <a class="card-footer text-white clearfix small z-1"
                href="<%=Routers.SERVICE%>">
-                <span class="float-left">><%=detail%></span>
+                <span class="float-left"><%=detail%></span>
                 <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>

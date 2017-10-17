@@ -39,4 +39,8 @@
       <bean class="com.chengtao.wisdomgarden.WisdomGardenInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>
+  <!--上传文件-->
+  <bean id="multipartResolver"
+      class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+  </bean>
 </beans>

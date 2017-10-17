@@ -111,6 +111,10 @@ class ServiceDaoImpl : BaseDaoImpl(), ServiceDao {
     return null
   }
 
+  override fun queryAllServicesCount(): Int {
+    return queryCount(TABLE_NAME)
+  }
+
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
     try {
       val serviceList = ArrayList<Service>()

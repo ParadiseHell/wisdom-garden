@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 class WisdomGardenInterceptor : HandlerInterceptor {
   companion object {
     val UN_INTERCEPTOR_ROUTERS: Array<String> =
-        arrayOf(Routers.LOGIN, Routers.REGISTER, Routers.STATICS, Routers.API, Routers.LOGOUT)
+        arrayOf(Routers.LOGIN, Routers.REGISTER, Routers.STATICS, Routers.API, Routers.LOGOUT, Routers.SIGHT_UPLOAD_FILE)
   }
 
   override fun preHandle(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?): Boolean {
