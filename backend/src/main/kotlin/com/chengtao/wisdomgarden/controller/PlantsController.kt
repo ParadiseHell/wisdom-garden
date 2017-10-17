@@ -36,23 +36,28 @@ class PlantsController : BaseController() {
   fun getPlantsCreateView(): ModelAndView {
     val modelAndView = ModelAndView(Views.PLANTS_CREATE)
     initMainModelAndView(modelAndView)
-    initNavTitle(modelAndView, "植物", Routers.PLANTS_CREATE)
-    val sightList = sightDao.queryAllSight()
-    if (sightList != null) {
-      println(sightList)
-    }
-    modelAndView.addObject(Attributes.SIGHT_LIST, sightList)
+    initNavTitle(modelAndView, "创建植物", Routers.PLANTS_CREATE)
+    modelAndView.addObject(Attributes.SIGHT_LIST, sightDao.queryAllSight())
     return modelAndView
   }
 
   @PostMapping(Routers.PLANTS)
   fun createPlants(@RequestParam(value = Parameters.NAME) name: String,
                    @RequestParam(value = Parameters.DESCRIPTION) description: String,
+                   @RequestParam(value = Parameters.SIGHT_IDS) sightIds: String,
                    session: HttpSession): String {
-    println("name:$name,description:$description")
+    println("name:$name,description:$description,sightIds:$sightIds")
     if (!StringUtils.isStringNull(name, description)) {
+      var sightIdsList: ArrayList<Int>? = null
+      if (sightIds != "") {
+        sightIdsList = ArrayList()
+        val list = sightIds.split(",")
+        list.forEach {
+          sightIdsList!!.add(it.toInt())
+        }
+      }
       if (plantsDao.queryPlantsByName(name) == null) {
-        if (plantsDao.createPlants(name, description) != null) {
+        if (plantsDao.createPlants(name, description, sightIdsList) != null) {
           addSuccessMessage(session, "创建植物成功")
         } else {
           addErrorMessage(session, Errors.UNKNOWN_ERROR)

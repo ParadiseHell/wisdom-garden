@@ -32,6 +32,7 @@ interface Parameters {
     const val LATITUDE = "latitude"
     const val LONGITUDE = "longitude"
     const val DESCRIPTION = "description"
+    const val SIGHT_IDS = "sightIds"
   }
 }
 

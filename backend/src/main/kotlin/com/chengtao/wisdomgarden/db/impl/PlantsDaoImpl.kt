@@ -25,11 +25,20 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     const val QUERY_PLANTS_BY_NAME = "SELECT * FROM $TABLE_NAME WHERE $FIELD_NAME = ?"
   }
 
-  override fun createPlants(name: String, description: String): Plants? {
+  override fun createPlants(name: String, description: String, sightIds: ArrayList<Int>?): Plants? {
     val parameters = ArrayList<Any>()
     parameters.add(name)
     parameters.add(description)
     if (executeSQL(INSERT_SQL, parameters)) {
+      if (sightIds != null) {
+        val plantsId = queryPlantsIdByName(name)
+        val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
+        if (!plantsToSightDao.insertPlantsSights(plantsId, sightIds)) {
+          deletePlantsById(plantsId)
+          return null
+        }
+        return queryPlantsById(plantsId)
+      }
       return queryPlantsByName(name)
     }
     return null
@@ -46,8 +55,8 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
     return deleteSuccess
   }
 
-  override fun updatePlants(plantsId: Int, name: String?, description: String?): Plants? {
-    if (StringUtils.isStringNull(name, description)) {
+  override fun updatePlants(plantsId: Int, name: String?, description: String?, sightIds: ArrayList<Int>?): Plants? {
+    if (StringUtils.isStringNull(name, description) && sightIds == null) {
       return null
     }
     var updateSQL = "UPDATE $TABLE_NAME SET "
@@ -70,6 +79,10 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
       }
     }
     if (updateSuccess) {
+      if (sightIds != null) {
+        val plantsToSightDao: PlantsToSightDao = PlantsToSightDaoImpl()
+        plantsToSightDao.updatePlantsSights(plantsId, sightIds)
+      }
       return queryPlantsById(plantsId)
     }
     return null
