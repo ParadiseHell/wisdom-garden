@@ -6,8 +6,8 @@ import java.sql.Connection
 /**
  * Created by chengtao on 10/12/17.
  */
-class ConnectionPool {
-  private constructor() {
+class ConnectionPool private constructor() {
+  init {
     dataSource = ComboPooledDataSource()
     dataSource!!.jdbcUrl = MYSQL_JDBC_URL
     dataSource!!.driverClass = MYSQL_DRIVER_CLASS
@@ -28,19 +28,10 @@ class ConnectionPool {
     const val MYSQL_ACQUIRE_INCREMENT = 3
     const val MYSQL_INITIAL_POOL_SIZE = 10
     const val MYSQL_MIN_POOL_SIZE = 10
-    const val MYSQL_MAX_POOL_SIZE = 30
+    const val MYSQL_MAX_POOL_SIZE = 100
     //其他
     private var dataSource: ComboPooledDataSource? = null
-    @Volatile
-    var instance: ConnectionPool? = null
-      get() {
-        if (field == null) {
-          synchronized(this) {
-            field = ConnectionPool()
-          }
-        }
-        return field
-      }
+    val instance = ConnectionPool()
   }
 
   fun getConnection(): Connection? {

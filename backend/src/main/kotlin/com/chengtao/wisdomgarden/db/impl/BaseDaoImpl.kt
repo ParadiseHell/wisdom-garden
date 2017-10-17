@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden.db.impl
 
 import com.chengtao.wisdomgarden.db.ConnectionPool
+import java.sql.Connection
 import java.sql.Date
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -28,10 +29,17 @@ abstract class BaseDaoImpl {
    *  @param sql : sql字符串
    */
   protected fun executeSQL(sql: String): Boolean {
+    val connection = connectionPool?.getConnection()
     try {
-      return connectionPool!!.getConnection()!!.prepareStatement(sql).executeUpdate() > 0
+      if (connection != null) {
+        val success = connection.prepareStatement(sql).executeUpdate() > 0
+        connection.close()
+        return success
+      }
     } catch (e: Exception) {
       printlnException("executeSQL", e)
+    } finally {
+      close(connection)
     }
     return false
   }
@@ -42,12 +50,19 @@ abstract class BaseDaoImpl {
    * @param parameters : 参数列表
    */
   protected fun executeSQL(sql: String, parameters: ArrayList<Any>): Boolean {
+    val connection = connectionPool?.getConnection()
     try {
-      val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
-      initPreparedStatementWithParameters(ps, parameters)
-      return ps.executeUpdate() > 0
+      if (connection != null) {
+        val ps: PreparedStatement = connection.prepareStatement(sql)
+        initPreparedStatementWithParameters(ps, parameters)
+        val success = ps.executeLargeUpdate() > 0
+        connection.close()
+        return success
+      }
     } catch (e: Exception) {
       printlnException("executeSQL", e)
+    } finally {
+      close(connection)
     }
     return false
   }
@@ -57,12 +72,18 @@ abstract class BaseDaoImpl {
    * @param sql : sql字符串
    */
   protected fun executeQuery(sql: String): Any? {
+    val connection = connectionPool?.getConnection()
     try {
-      return convertResultSetToAny(
-          connectionPool!!.getConnection()!!.prepareStatement(sql).executeQuery()
-      )
+      if (connection != null) {
+        val resultSet = connection.prepareStatement(sql).executeQuery()
+        val result = convertResultSetToAny(resultSet)
+        connection.close()
+        return result
+      }
     } catch (e: Exception) {
       printlnException("executeQuery", e)
+    } finally {
+      close(connection)
     }
     return null
   }
@@ -73,12 +94,18 @@ abstract class BaseDaoImpl {
    * @param resultSetConvert : ResultSetConvert接口,用户特殊结果的处理
    */
   protected fun executeQuery(sql: String, resultSetConvert: ResultSetConvert): Any? {
+    val connection = connectionPool?.getConnection()
     try {
-      return resultSetConvert.convertResultSetToAny(
-          connectionPool!!.getConnection()!!.prepareStatement(sql).executeQuery()
-      )
+      if (connection != null) {
+        val resultSet = connection.prepareStatement(sql).executeQuery()
+        val result = resultSetConvert.convertResultSetToAny(resultSet)
+        connection.close()
+        return result
+      }
     } catch (e: Exception) {
       printlnException("executeQuery", e)
+    } finally {
+      close(connection)
     }
     return null
   }
@@ -89,12 +116,19 @@ abstract class BaseDaoImpl {
    * @param parameters : 参数列表
    */
   protected fun executeQuery(sql: String, parameters: ArrayList<Any>): Any? {
+    val connection = connectionPool?.getConnection()
     try {
-      val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
-      initPreparedStatementWithParameters(ps, parameters)
-      return convertResultSetToAny(ps.executeQuery())
+      if (connection != null) {
+        val ps: PreparedStatement = connection.prepareStatement(sql)
+        initPreparedStatementWithParameters(ps, parameters)
+        val result = convertResultSetToAny(ps.executeQuery())
+        connection.close()
+        return result
+      }
     } catch (e: Exception) {
       printlnException("executeQuery", e)
+    } finally {
+      close(connection)
     }
     return null
   }
@@ -106,12 +140,19 @@ abstract class BaseDaoImpl {
    * @param resultSetConvert : ResultSetConvert接口,用户特殊结果的处理
    */
   protected fun executeQuery(sql: String, parameters: ArrayList<Any>, resultSetConvert: ResultSetConvert): Any? {
+    val connection = connectionPool?.getConnection()
     try {
-      val ps: PreparedStatement = connectionPool!!.getConnection()!!.prepareStatement(sql)
-      initPreparedStatementWithParameters(ps, parameters)
-      return resultSetConvert.convertResultSetToAny(ps.executeQuery())
+      if (connection != null) {
+        val ps: PreparedStatement = connection.prepareStatement(sql)
+        initPreparedStatementWithParameters(ps, parameters)
+        val result = resultSetConvert.convertResultSetToAny(ps.executeQuery())
+        connection.close()
+        return result
+      }
     } catch (e: Exception) {
       printlnException("executeQuery", e)
+    } finally {
+      close(connection)
     }
     return null
   }
@@ -208,6 +249,15 @@ abstract class BaseDaoImpl {
       return result
     }
     return 0
+  }
+
+  /**
+   * 关闭数据库连接
+   */
+  private fun close(connection: Connection?) {
+    if (connection != null && !connection.isClosed) {
+      connection.close()
+    }
   }
 
   //抽象方法
