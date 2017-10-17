@@ -7,7 +7,7 @@ import java.util.*
  */
 class Sight {
   var id: Int? = null
-  var type: SightType? = null
+  var type: SightCateGory? = null
   var name: String? = null
   var description: String? = null
   var latitude: Float? = null
@@ -22,6 +22,6 @@ class Sight {
   }
 }
 
-enum class SightType(val value: Int) {
+enum class SightCateGory(val value: Int) {
   OTHER(0), ENTRANCE(1), EXIT(2)
 }

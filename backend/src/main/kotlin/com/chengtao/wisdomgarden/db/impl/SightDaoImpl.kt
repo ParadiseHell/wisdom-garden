@@ -4,7 +4,7 @@ import com.chengtao.wisdomgarden.db.dao.EcologyDao
 import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.dao.SightFileDao
 import com.chengtao.wisdomgarden.entity.Sight
-import com.chengtao.wisdomgarden.entity.SightType
+import com.chengtao.wisdomgarden.entity.SightCateGory
 import com.chengtao.wisdomgarden.utils.StringUtils
 import java.sql.ResultSet
 
@@ -32,21 +32,22 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
   }
 
   override fun createSight(type: Int, name: String, description: String, latitude: Float, longitude: Float): Sight? {
-    if (type == SightType.ENTRANCE.value) {//入口
+    val realType: Int
+    if (type == SightCateGory.ENTRANCE.value) {//入口
+      realType = SightCateGory.ENTRANCE.value
       if (existEntrance()) {//存在入口
         return null
       }
-    } else if (type == SightType.EXIT.value) {//出口
+    } else if (type == SightCateGory.EXIT.value) {//出口
+      realType = SightCateGory.EXIT.value
       if (existExit()) {//存在出口
         return null
       }
     } else {//其他景点
-      if (!(existEntrance() && existExit())) {//不存在入口和出口
-        return null
-      }
+      realType = SightCateGory.OTHER.value
     }
     val parameters = ArrayList<Any>()
-    parameters.add(type)
+    parameters.add(realType)
     parameters.add(name)
     parameters.add(description)
     parameters.add(latitude)
@@ -183,11 +184,11 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         sight.id = resultSet.getInt(FIELD_ID)
         val type = resultSet.getInt(FIELD_TYPE)
         when (type) {
-          SightType.ENTRANCE.value -> sight.type = SightType.ENTRANCE
-          SightType.EXIT.value -> sight.type = SightType.EXIT
+          SightCateGory.ENTRANCE.value -> sight.type = SightCateGory.ENTRANCE
+          SightCateGory.EXIT.value -> sight.type = SightCateGory.EXIT
         }
         if (sight.type == null) {
-          sight.type = SightType.OTHER
+          sight.type = SightCateGory.OTHER
         }
         sight.name = resultSet.getString(FIELD_NAME)
         sight.description = resultSet.getString(FIELD_DESCRIPTION)

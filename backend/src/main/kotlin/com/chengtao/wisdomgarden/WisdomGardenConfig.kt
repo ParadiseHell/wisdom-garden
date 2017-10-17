@@ -27,6 +27,12 @@ interface Parameters {
     const val CONFIRM_PASSWORD = "confirmPassword"
     const val FILE = "file"
     const val FILE_CATEGORY = "file_category"
+    //景点
+    const val SIGHT_NAME = "name"
+    const val SIGHT_CATEGORY = "category"
+    const val SIGHT_LATITUDE = "latitude"
+    const val SIGHT_LONGITUDE = "longitude"
+    const val SIGHT_DESCRIPTION = "description"
   }
 }
 
@@ -50,6 +56,10 @@ interface Errors {
     const val USER_NAME_AND_PASSWORD_ERROR = "用户名或密码错误"
     const val USER_IS_EXIST_ERROR = "用户已存在"
     const val UNKNOWN_ERROR = "未知错误"
+    //景点
+    const val SIGHT_IS_EXIST = "景点已存在"
+    const val ENTRANCE_SIGHT_EXIST = "入口已存在"
+    const val EXIT_SIGHT_EXIST = "出口已存在"
   }
 }
 
@@ -91,7 +101,7 @@ interface Views {
     const val LOGIN = "login"
     const val REGISTER = "register"
     const val SIGHT = "sight"
-    const val SIGHT_CREATE = "sight-create"
+    const val SIGHT_CREATE = "sight_create"
     const val PLANTS = "plants"
     const val ROUTE = "route"
     const val SERVICE = "service"
