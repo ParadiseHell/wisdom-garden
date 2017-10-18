@@ -25,13 +25,27 @@
                         <div class="form-row">
                             <div class="col-6">
                                 <label>温度</label>
-                                <input type="number" class="form-control"
-                                       placeholder="请输入温度" name="<%=Parameters.TEMPERATURE%>"/>
+                                <c:if test="${ecology != null}">
+                                    <input type="number" class="form-control"
+                                           placeholder="请输入温度" name="<%=Parameters.TEMPERATURE%>"
+                                           value="${ecology.temperature}"/>
+                                </c:if>
+                                <c:if test="${ecology == null}">
+                                    <input type="number" class="form-control"
+                                           placeholder="请输入温度" name="<%=Parameters.TEMPERATURE%>"/>
+                                </c:if>
                             </div>
                             <div class="col-6">
                                 <label>湿度</label>
-                                <input type="number" class="form-control"
-                                       placeholder="请输入湿度" name="<%=Parameters.HUMIDITY%>"/>
+                                <c:if test="${ecology != null}">
+                                    <input type="number" class="form-control"
+                                           placeholder="请输入湿度" name="<%=Parameters.HUMIDITY%>"
+                                           value="${ecology.humidity}"/>
+                                </c:if>
+                                <c:if test="${ecology == null}">
+                                    <input type="number" class="form-control"
+                                           placeholder="请输入湿度" name="<%=Parameters.HUMIDITY%>"/>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -39,22 +53,48 @@
                         <div class="form-row">
                             <div class="col-6">
                                 <label>PM2.5</label>
-                                <input type="number" class="form-control"
-                                       placeholder="请输入PM2.5" name="<%=Parameters.PM25%>"/>
+                                <c:if test="${ecology != null}">
+                                    <input type="number" class="form-control"
+                                           placeholder="请输入PM2.5" name="<%=Parameters.PM25%>"
+                                           value="${ecology.pm25}"/>
+                                </c:if>
+                                <c:if test="${ecology == null}">
+                                    <input type="number" class="form-control"
+                                           placeholder="请输入PM2.5" name="<%=Parameters.PM25%>"/>
+                                </c:if>
                             </div>
                             <div class="col-6">
                                 <label>风力</label>
-                                <input type="text" class="form-control"
-                                       placeholder="请输入风力" name="<%=Parameters.WIND%>"/>
+                                <c:if test="${ecology != null}">
+                                    <input type="text" class="form-control"
+                                           placeholder="请输入风力" name="<%=Parameters.WIND%>"
+                                           value="${ecology.wind}"/>
+                                </c:if>
+                                <c:if test="${ecology == null}">
+                                    <input type="text" class="form-control"
+                                           placeholder="请输入风力" name="<%=Parameters.WIND%>"/>
+                                </c:if>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>穿衣指数</label>
-                        <input type="text" class="form-control"
-                               placeholder="请填写穿衣指数" name="<%=Parameters.DRESSING%>">
+                        <c:if test="${ecology != null}">
+                            <input type="text" class="form-control"
+                                   placeholder="请填写穿衣指数" name="<%=Parameters.DRESSING%>"
+                                   value="${ecology.dressing}">
+                        </c:if>
+                        <c:if test="${ecology == null}">
+                            <input type="text" class="form-control"
+                                   placeholder="请填写穿衣指数" name="<%=Parameters.DRESSING%>">
+                        </c:if>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block">创建生态</button>
+                    <c:if test="${ecology != null}">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">更新生态</button>
+                    </c:if>
+                    <c:if test="${ecology == null}">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">创建生态</button>
+                    </c:if>
                 </form>
             </div>
         </c:if>

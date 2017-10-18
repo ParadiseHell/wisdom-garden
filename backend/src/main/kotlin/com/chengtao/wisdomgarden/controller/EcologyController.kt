@@ -2,7 +2,10 @@ package com.chengtao.wisdomgarden.controller
 
 import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.dao.EcologyDao
+import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.EcologyDaoImpl
+import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
+import com.chengtao.wisdomgarden.entity.ViewAndRouter
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpSession
 class EcologyController : BaseController() {
   companion object {
     val ecologyDao: EcologyDao = EcologyDaoImpl()
+    val sightDao: SightDao = SightDaoImpl()
   }
 
   @GetMapping("${Routers.SIGHT}/{id}${Routers.ECOLOGY}")
@@ -27,11 +31,17 @@ class EcologyController : BaseController() {
     val modelAndView = ModelAndView(Views.ECOLOGY_CREATE)
     modelAndView.addObject(Attributes.SIGHT_ID, sightId)
     val ecology = ecologyDao.queryEcologyBySightId(sightId)
+    val viewAndRouter = ArrayList<ViewAndRouter>()
+    val sight = sightDao.querySightById(sightId)
+    if (sight != null) {
+      viewAndRouter.add(ViewAndRouter(sight.name!!, "${Routers.SIGHT}/$sightId"))
+    }
     if (ecology == null) {
-      initNavTitle(modelAndView, "创建生态", "${Routers.SIGHT}/$sightId${Routers.ECOLOGY}")
+      viewAndRouter.add(ViewAndRouter("创建生态", "${Routers.SIGHT}/$sightId${Routers.ECOLOGY}"))
     } else {
-      initNavTitle(modelAndView, "更新生态", "${Routers.SIGHT}/$sightId${Routers.ECOLOGY}")
+      viewAndRouter.add(ViewAndRouter("更新生态", "${Routers.SIGHT}/$sightId${Routers.ECOLOGY}"))
       modelAndView.addObject(Attributes.ECOLOGY, ecology)
+      modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouter)
     }
     return modelAndView
   }
