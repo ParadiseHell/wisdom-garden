@@ -26,4 +26,13 @@
         color: red;
         margin-top: 2px;
     }
+    .multiline-ellipsis {
+        display: block;
+        display: -webkit-box;
+        margin: 0 auto;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>

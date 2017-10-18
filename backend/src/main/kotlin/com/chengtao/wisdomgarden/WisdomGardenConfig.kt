@@ -46,6 +46,7 @@ interface Attributes {
     const val SIGHT_COUNT = "sightCount"
     const val SIGHT_LIST = "sightList"
     const val PLANTS_COUNT = "plantsCount"
+    const val PLANTS_LIST = "plantsList"
     const val ROUTE_COUNT = "routeCount"
     const val SERVICE_COUNT = "serviceCount"
   }

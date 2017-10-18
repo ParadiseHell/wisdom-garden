@@ -29,6 +29,7 @@ class PlantsController : BaseController() {
     val modelAndView = ModelAndView(Views.PLANTS)
     initMainModelAndView(modelAndView)
     initNavTitle(modelAndView, "植物", Routers.PLANTS)
+    modelAndView.addObject(Attributes.PLANTS_LIST, plantsDao.queryAllPlants())
     return modelAndView
   }
 
