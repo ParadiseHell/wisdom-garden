@@ -99,7 +99,7 @@ class RouteDaoImpl : BaseDaoImpl(), RouteDao {
     parameters.add(name)
     val result = executeQuery(QUERY_ROUTE_BY_NAME, parameters)
     if (result != null && result is ArrayList<*> && result.size > 0) {
-      return result as Route
+      return result[0] as Route
     }
     return null
   }

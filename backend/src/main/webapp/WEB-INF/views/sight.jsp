@@ -17,15 +17,15 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <jsp:include page="incon_card.jsp"/>
+        <h5 class="text-primary">
+            <i class="fa fa-pagelines"></i>&nbsp;景点列表
+            <c:if test="${not empty isManager}">
+                <a href="<%=Routers.SIGHT_CREATE%>"
+                   class="btn btn-outline-primary btn-sm float-right">创建景点</a>
+            </c:if>
+        </h5>
+        <hr/>
         <c:if test="${sightList != null && !sightList.isEmpty()}">
-            <h5 class="text-primary">
-                <i class="fa fa-pagelines"></i>&nbsp;景点列表
-                <c:if test="${not empty isManager}">
-                    <a href="<%=Routers.SIGHT_CREATE%>"
-                       class="btn btn-outline-primary btn-sm float-right">创建景点</a>
-                </c:if>
-            </h5>
-            <hr/>
             <div class="row">
                 <c:forEach items="${sightList}" var="sight">
                     <div class="col-sm-4 col-md-3 mt-2">
