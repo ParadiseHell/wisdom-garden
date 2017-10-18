@@ -5,6 +5,7 @@ import com.chengtao.wisdomgarden.db.dao.PlantsDao
 import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.PlantsDaoImpl
 import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
+import com.chengtao.wisdomgarden.entity.ViewAndRouter
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
@@ -37,8 +38,14 @@ class PlantsController : BaseController() {
   @GetMapping("${Routers.PLANTS}/{id}")
   fun getPlantsDetailView(@PathVariable(value = "id") id: Int): ModelAndView {
     val modelAndView = ModelAndView(Views.PLANTS_DETAIL)
-    initNavTitle(modelAndView, "植物详情", "${Routers.PLANTS}/$id")
-    modelAndView.addObject(Attributes.PLANTS, plantsDao.queryPlantsById(id))
+    val viewAndRouterList = ArrayList<ViewAndRouter>()
+    viewAndRouterList.add(ViewAndRouter("植物", Routers.PLANTS))
+    val plants = plantsDao.queryPlantsById(id)
+    if (plants != null) {
+      viewAndRouterList.add(ViewAndRouter(plants.name!!, "${Routers.PLANTS}/$id"))
+      modelAndView.addObject(Attributes.PLANTS, plants)
+    }
+    modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouterList)
     return modelAndView
   }
 

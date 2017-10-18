@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <c:if test="${not empty sight}">
-            <div class="card border-success mb-3 w-50">
+            <div class="card border-primary mb-3 w-50">
                 <div class="card-header text-primary"><i class="fa fa-fw fa-area-chart"></i>&nbsp;景点详情
                 </div>
                 <div class="card-body">

@@ -42,6 +42,7 @@ interface Attributes {
     const val ERROR_MESSAGE = "errorMessage"
     const val SUCCESS_MESSAGE = "successMessage"
     const val CURRENT_VIEW = "currentView"
+    const val VIEW_AND_ROUTER = "viewAndRouter"
     const val VIEW_ROUTER = "viewRouter"
     const val SIGHT = "sight"
     const val SIGHT_COUNT = "sightCount"

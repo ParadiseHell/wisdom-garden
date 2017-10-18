@@ -5,6 +5,7 @@ import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
 import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.SightCateGory
+import com.chengtao.wisdomgarden.entity.ViewAndRouter
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.isLatitude
 import com.chengtao.wisdomgarden.utils.isLongitude
@@ -21,6 +22,7 @@ import java.io.FileOutputStream
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
+import kotlin.collections.ArrayList
 
 
 /**
@@ -44,8 +46,14 @@ class SightController : BaseController() {
   @GetMapping("${Routers.SIGHT}/{id}")
   fun getSightDetailView(@PathVariable(value = "id") id: Int): ModelAndView {
     val modelAndView = ModelAndView(Views.SIGHT_DETAIL)
-    initNavTitle(modelAndView, "景点详情", Routers.SIGHT)
-    modelAndView.addObject(Attributes.SIGHT, sightDao.querySightById(id))
+    val viewAndRouterList = ArrayList<ViewAndRouter>()
+    viewAndRouterList.add(ViewAndRouter("景点", Routers.SIGHT))
+    val sight = sightDao.querySightById(id)
+    if (sight != null) {
+      modelAndView.addObject(Attributes.SIGHT, sight)
+      viewAndRouterList.add(ViewAndRouter(sight.name!!, "${Routers.SIGHT}/$id"))
+    }
+    modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouterList)
     return modelAndView
   }
 

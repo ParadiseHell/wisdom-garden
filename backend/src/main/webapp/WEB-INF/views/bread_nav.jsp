@@ -17,4 +17,11 @@
             <a href="${viewRouter}">${currentView}</a>
         </li>
     </c:if>
+    <c:if test="${viewAndRouter != null && !viewAndRouter.isEmpty()}">
+        <c:forEach items="${viewAndRouter}" var="item">
+            <li class="breadcrumb-item">
+                <a href="${item.viewRouter}">${item.viewName}</a>
+            </li>
+        </c:forEach>
+    </c:if>
 </ol>
