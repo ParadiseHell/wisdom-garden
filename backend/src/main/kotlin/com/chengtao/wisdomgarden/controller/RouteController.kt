@@ -5,10 +5,12 @@ import com.chengtao.wisdomgarden.db.dao.RouteDao
 import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.RouteDaoImpl
 import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
+import com.chengtao.wisdomgarden.entity.ViewAndRouter
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
@@ -30,6 +32,20 @@ class RouteController : BaseController() {
     initMainModelAndView(modelAndView)
     initNavTitle(modelAndView, "路线", Routers.ROUTE)
     modelAndView.addObject(Attributes.ROUTE_LIST, routeDao.queryAllRoutes())
+    return modelAndView
+  }
+
+  @GetMapping("${Routers.ROUTE}/{id}")
+  fun getRouteDetailView(@PathVariable(value = "id") id: Int): ModelAndView {
+    val route = routeDao.queryRouteById(id)
+    val modelAndView = ModelAndView(Views.ROUTE_DETAIL)
+    if (route != null){
+      val viewRouterList = ArrayList<ViewAndRouter>()
+      viewRouterList.add(ViewAndRouter("线路",Routers.ROUTE))
+      viewRouterList.add(ViewAndRouter(route.name!!,"${Routers.ROUTE}/$id"))
+      modelAndView.addObject(Attributes.VIEW_AND_ROUTER,viewRouterList)
+      modelAndView.addObject(Attributes.ROUTE,route)
+    }
     return modelAndView
   }
 

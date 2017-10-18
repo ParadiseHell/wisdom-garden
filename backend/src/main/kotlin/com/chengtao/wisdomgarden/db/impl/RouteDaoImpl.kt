@@ -89,7 +89,7 @@ class RouteDaoImpl : BaseDaoImpl(), RouteDao {
   override fun queryRouteById(routeId: Int): Route? {
     val result = queryById(TABLE_NAME, FIELD_ID, routeId)
     if (result != null && result is ArrayList<*> && result.size > 0) {
-      return result as Route
+      return result[0] as Route
     }
     return null
   }
