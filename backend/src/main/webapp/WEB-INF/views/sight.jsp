@@ -1,3 +1,4 @@
+<%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -16,10 +17,32 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <jsp:include page="incon_card.jsp"/>
-        <c:if test="${not empty sightList}">
-            <c:forEach items="${sightList}" var="sight">
-                ${sight.type}
-            </c:forEach>
+        <c:if test="${sightList != null && !sightList.isEmpty()}">
+            <h5 class="text-primary"><i class="fa fa-pagelines"></i>&nbsp;景点列表</h5>
+            <hr/>
+            <div class="row">
+                <c:forEach items="${sightList}" var="sight">
+                    <div class="col-sm-4 col-md-3">
+                        <div class="card">
+                            <c:if test="${sight.files != null && !sight.files.isEmpty()}">
+                                <img class="card-img-top" src="..." alt="Card image cap">
+                            </c:if>
+                            <c:if test="${sight.files == null || !sight.files.isEmpty()}">
+                                <img class="card-img-top" src="../statics/images/no_image.png"
+                                     alt="Card image cap">
+                            </c:if>
+                            <div class="card-body">
+                                <h4 class="card-title">${sight.name}</h4>
+                                <p class="card-text text-secondary multiline-ellipsis"
+                                   style="height: 8rem">${sight.description}</p>
+                                <a href="<%=Routers.SIGHT%>/${sight.id}"
+                                   class="btn btn-primary" role="button"
+                                   style="margin-top: 4px">详情</a>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         </c:if>
     </div>
     <jsp:include page="foot.jsp"/>

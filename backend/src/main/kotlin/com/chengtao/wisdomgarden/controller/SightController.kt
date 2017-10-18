@@ -12,10 +12,7 @@ import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
 import java.io.BufferedOutputStream
@@ -37,10 +34,19 @@ class SightController : BaseController() {
 
   @GetMapping(Routers.SIGHT)
   fun getSightView(): ModelAndView {
-    val sightAndModelView = ModelAndView(Views.SIGHT)
-    initMainModelAndView(sightAndModelView)
-    initNavTitle(sightAndModelView, "景点", Routers.SIGHT)
-    return sightAndModelView
+    val modelAndView = ModelAndView(Views.SIGHT)
+    initMainModelAndView(modelAndView)
+    initNavTitle(modelAndView, "景点", Routers.SIGHT)
+    modelAndView.addObject(Attributes.SIGHT_LIST, sightDao.queryAllSight())
+    return modelAndView
+  }
+
+  @GetMapping("${Routers.SIGHT}/{id}")
+  fun getSightDetailView(@PathVariable(value = "id") id: Int): ModelAndView {
+    val modelAndView = ModelAndView(Views.SIGHT_DETAIL)
+    initNavTitle(modelAndView, "景点详情", Routers.SIGHT)
+    modelAndView.addObject(Attributes.SIGHT, sightDao.querySightById(id))
+    return modelAndView
   }
 
   @GetMapping(Routers.SIGHT_CREATE)

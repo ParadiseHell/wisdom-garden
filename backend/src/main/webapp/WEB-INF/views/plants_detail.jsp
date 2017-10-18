@@ -32,7 +32,7 @@
                         <h5 class="card-title text-success">所在景点</h5>
                         <c:forEach items="${plants.sights}" var="sight">
                             <a href="<%=Routers.SIGHT%>/${sight.id}"
-                               class="badge badge-success" style="font-size: 1rem">${sight.name}</a>
+                               class="badge badge-success" style="font-size: 15px">${sight.name}</a>
                         </c:forEach>
                     </c:if>
                 </div>
