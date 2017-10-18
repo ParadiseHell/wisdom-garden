@@ -38,7 +38,7 @@
                                 <p class="card-text text-secondary multiline-ellipsis"
                                    style="height: 12rem">${plants.description}</p>
                                 <a href="<%=Routers.PLANTS%>/${plants.plantsId}"
-                                   class="btn btn-primary" role="button"
+                                   class="btn btn-success" role="button"
                                    style="margin-top: 4px">详情</a>
                             </div>
                         </div>
