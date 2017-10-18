@@ -9,6 +9,7 @@ import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
@@ -30,6 +31,14 @@ class PlantsController : BaseController() {
     initMainModelAndView(modelAndView)
     initNavTitle(modelAndView, "植物", Routers.PLANTS)
     modelAndView.addObject(Attributes.PLANTS_LIST, plantsDao.queryAllPlants())
+    return modelAndView
+  }
+
+  @GetMapping("${Routers.PLANTS}/{id}")
+  fun getPlantsDetailView(@PathVariable(value = "id") id: Int): ModelAndView {
+    val modelAndView = ModelAndView(Views.PLANTS_DETAIL)
+    initNavTitle(modelAndView, "植物详情", "${Routers.PLANTS}/$id")
+    modelAndView.addObject(Attributes.PLANTS, plantsDao.queryPlantsById(id))
     return modelAndView
   }
 
