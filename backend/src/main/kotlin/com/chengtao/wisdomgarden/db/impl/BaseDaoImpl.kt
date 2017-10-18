@@ -55,7 +55,7 @@ abstract class BaseDaoImpl {
       if (connection != null) {
         val ps: PreparedStatement = connection.prepareStatement(sql)
         initPreparedStatementWithParameters(ps, parameters)
-        val success = ps.executeLargeUpdate() > 0
+        val success = ps.executeUpdate() > 0
         connection.close()
         return success
       }

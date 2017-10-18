@@ -16,12 +16,15 @@ class ServiceDaoImpl : BaseDaoImpl(), ServiceDao {
     const val FIELD_LONGITUDE = "longitude"
     const val FIELD_CREATED_AT = "created_at"
     const val FIELD_UPDATED_AT = "updated_at"
+    const val FIELD_COUNT = "count"
     //SQL语句
     const val INSERT_SQL = "INSERT INTO $TABLE_NAME($FIELD_NAME,$FIELD_LATITUDE,$FIELD_LONGITUDE)" +
         " VALUES (?,?,?)"
     const val QUERY_SERVICE_SQL = "SELECT * FROM $TABLE_NAME WHERE $FIELD_NAME = ?" +
         " AND $FIELD_LATITUDE = ? AND $FIELD_LONGITUDE = ? LIMIT 1"
     const val QUERY_SERVICES_BY_NAME = "SELECT * FROM $TABLE_NAME WHERE $FIELD_NAME = ?"
+    const val QUERY_SERVICES_COUNT = "SELECT count(*) as $FIELD_COUNT FROM " +
+        "(SELECT $FIELD_NAME FROM $TABLE_NAME GROUP BY $FIELD_NAME) as new_$TABLE_NAME"
   }
 
   override fun createService(name: String, latitude: Float, longitude: Float): Service? {
@@ -112,7 +115,24 @@ class ServiceDaoImpl : BaseDaoImpl(), ServiceDao {
   }
 
   override fun queryAllServicesCount(): Int {
-    return queryCount(TABLE_NAME)
+    val result = executeQuery(QUERY_SERVICES_COUNT, object : ResultSetConvert {
+      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+        try {
+          if (resultSet.next()) {
+            return resultSet.getInt(FIELD_COUNT)
+          }
+        } catch (e: Exception) {
+
+        } finally {
+          resultSet.close()
+        }
+        return 0
+      }
+    })
+    if (result != null && result is Int) {
+      return result
+    }
+    return 0
   }
 
   override fun convertResultSetToAny(resultSet: ResultSet): Any? {
