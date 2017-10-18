@@ -140,6 +140,8 @@ interface API {
     const val GET_ALL_SIGHTS = "/api/sights"
     const val GET_ALL_PLANTS = "/api/plants"
     const val GET_ALL_ROUTES = "/api/routes"
+    const val SERVICE = "/api/service"
+    const val GET_ALL_SERVICE_NAME_AND_COUNT = "/api/services/name_count"
   }
 }
 
