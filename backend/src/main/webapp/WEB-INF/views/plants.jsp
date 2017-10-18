@@ -20,11 +20,17 @@
         <jsp:include page="bread_nav.jsp"/>
         <jsp:include page="incon_card.jsp"/>
         <c:if test="${plantsList != null && !plantsList.isEmpty()}">
-            <h5 class="text-success"><i class="fa fa-pagelines"></i>&nbsp;植物列表</h5>
+            <h5 class="text-success ">
+                <i class="fa fa-pagelines"></i>&nbsp;植物列表
+                <c:if test="${not empty isManager}">
+                    <a href="<%=Routers.PLANTS_CREATE%>"
+                       class="btn btn-outline-success btn-sm float-right">创建植物</a>
+                </c:if>
+            </h5>
             <hr/>
             <div class="row">
                 <c:forEach items="${plantsList}" var="plants">
-                    <div class="col-sm-4 col-md-3">
+                    <div class="col-sm-4 col-md-3 mb-2">
                         <div class="card">
                             <c:if test="${plants.files != null && !plants.files.isEmpty()}">
                                 <img class="card-img-top" src="..." alt="Card image cap">

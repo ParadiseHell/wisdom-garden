@@ -18,11 +18,17 @@
         <jsp:include page="bread_nav.jsp"/>
         <jsp:include page="incon_card.jsp"/>
         <c:if test="${sightList != null && !sightList.isEmpty()}">
-            <h5 class="text-primary"><i class="fa fa-pagelines"></i>&nbsp;景点列表</h5>
+            <h5 class="text-primary">
+                <i class="fa fa-pagelines"></i>&nbsp;景点列表
+                <c:if test="${not empty isManager}">
+                    <a href="<%=Routers.SIGHT_CREATE%>"
+                       class="btn btn-outline-primary btn-sm float-right">创建景点</a>
+                </c:if>
+            </h5>
             <hr/>
             <div class="row">
                 <c:forEach items="${sightList}" var="sight">
-                    <div class="col-sm-4 col-md-3">
+                    <div class="col-sm-4 col-md-3 mt-2">
                         <div class="card">
                             <c:if test="${sight.files != null && !sight.files.isEmpty()}">
                                 <img class="card-img-top" src="..." alt="Card image cap">

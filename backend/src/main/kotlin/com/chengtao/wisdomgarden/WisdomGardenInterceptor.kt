@@ -23,14 +23,13 @@ class WisdomGardenInterceptor : HandlerInterceptor {
   override fun preHandle(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?): Boolean {
     if (request != null && response != null) {
       val uri = request.requestURI
-      val router = uri.split("/")
-      if (router.size >= 2) {
-        val mRouter = "/${router[1]}"
-        println("uri:$uri->mRouter:$mRouter")
+      val routerArray = uri.split("/")
+      if (routerArray.size >= 2) {
+        val router = "/${routerArray[1]}"
+        if (UN_INTERCEPTOR_ROUTERS.contains(router)) {
+          return true
+        }
       }
-      UN_INTERCEPTOR_ROUTERS
-          .filter { request.requestURI.contains(it) }
-          .forEach { return true }
       var userName: String? = null
       var password: String? = null
       var cookieUserName: Cookie? = null
@@ -57,8 +56,12 @@ class WisdomGardenInterceptor : HandlerInterceptor {
         if (user != null) {
           //重新设置cookie过期时间
           CookieUtils.addUserNameAndPasswordCookie(cookieUserName!!, cookiePassword!!, response)
-          if (request.session != null && user.type == UserType.MANAGER) {
-            request.session.setAttribute(Attributes.IS_MANAGER, true)
+          if (request.session != null) {
+            if (user.type == UserType.MANAGER) {
+              request.session.setAttribute(Attributes.IS_MANAGER, true)
+            } else {
+              request.session.setAttribute(Attributes.IS_MANAGER, null)
+            }
           }
           return true
         }

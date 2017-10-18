@@ -20,7 +20,13 @@
         <jsp:include page="bread_nav.jsp"/>
         <jsp:include page="incon_card.jsp"/>
         <c:if test="${serviceNameCountList != null && !serviceNameCountList.isEmpty()}">
-            <h5 class="text-danger"><i class="fa fa-globe"></i>&nbsp;服务设施列表</h5>
+            <h5 class="text-danger">
+                <i class="fa fa-globe"></i>&nbsp;服务设施列表
+                <c:if test="${not empty isManager}">
+                    <a href="<%=Routers.SERVICE_CREATE%>"
+                       class="btn btn-outline-danger btn-sm float-right">创建服务设施</a>
+                </c:if>
+            </h5>
             <hr/>
             <div class="row">
                 <c:forEach items="${serviceNameCountList}" var="item">
