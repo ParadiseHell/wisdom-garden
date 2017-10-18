@@ -3,12 +3,14 @@ package com.chengtao.wisdomgarden.controller
 import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.dao.ServiceDao
 import com.chengtao.wisdomgarden.db.impl.ServiceDaoImpl
+import com.chengtao.wisdomgarden.entity.ViewAndRouter
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.isLatitude
 import com.chengtao.wisdomgarden.utils.isLongitude
 import com.chengtao.wisdomgarden.utils.redirect
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
@@ -29,6 +31,17 @@ class ServiceController : BaseController() {
     initMainModelAndView(modelAndView)
     initNavTitle(modelAndView, "服务设施", Routers.SERVICE)
     modelAndView.addObject(Attributes.SERVICE_NAME_COUNT_LIST, serviceDao.queryAllServiceNameAndCount())
+    return modelAndView
+  }
+
+  @GetMapping("${Routers.SERVICE}/{name}")
+  fun getServiceNameListView(@PathVariable(value = "name") name: String): ModelAndView {
+    val modelAndView = ModelAndView(Views.SERVICE_DETAIL)
+    val viewAndRouterList = ArrayList<ViewAndRouter>()
+    viewAndRouterList.add(ViewAndRouter("服务设施", Routers.SERVICE))
+    viewAndRouterList.add(ViewAndRouter(name, "${Routers.SERVICE}/$name"))
+    modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouterList)
+    modelAndView.addObject(Attributes.SERVICE_LIST, serviceDao.queryServicesByName(name))
     return modelAndView
   }
 

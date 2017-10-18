@@ -53,6 +53,7 @@ interface Attributes {
     const val ROUTE_COUNT = "routeCount"
     const val SERVICE_COUNT = "serviceCount"
     const val SERVICE_NAME_COUNT_LIST = "serviceNameCountList"
+    const val SERVICE_LIST = "serviceList"
   }
 }
 
@@ -112,5 +113,6 @@ interface Views {
     const val ROUTE = "route"
     const val SERVICE = "service"
     const val SERVICE_CREATE = "service_create"
+    const val SERVICE_DETAIL = "service_detail"
   }
 }
