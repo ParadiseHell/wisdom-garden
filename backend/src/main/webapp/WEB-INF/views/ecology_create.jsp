@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-6">
                                 <label>风力</label>
-                                <input type="number" class="form-control"
+                                <input type="text" class="form-control"
                                        placeholder="请输入风力" name="<%=Parameters.WIND%>"/>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
             }, pm25: {
               required: true, number: true, range: [0, 500]
             }, wind: {
-              required: true, number: true, minlength: 2
+              required: true, minlength: 2
             }, dressing: {
               required: true, minlength: 2
             }

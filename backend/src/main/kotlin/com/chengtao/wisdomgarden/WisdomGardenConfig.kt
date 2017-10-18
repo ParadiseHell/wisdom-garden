@@ -61,6 +61,7 @@ interface Attributes {
     const val SERVICE_COUNT = "serviceCount"
     const val SERVICE_NAME_COUNT_LIST = "serviceNameCountList"
     const val SERVICE_LIST = "serviceList"
+    const val ECOLOGY = "ecology"
   }
 }
 
