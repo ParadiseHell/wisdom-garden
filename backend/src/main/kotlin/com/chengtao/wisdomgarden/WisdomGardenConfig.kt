@@ -52,6 +52,7 @@ interface Attributes {
     const val PLANTS = "plants"
     const val ROUTE_COUNT = "routeCount"
     const val SERVICE_COUNT = "serviceCount"
+    const val SERVICE_NAME_COUNT_LIST = "serviceNameCountList"
   }
 }
 

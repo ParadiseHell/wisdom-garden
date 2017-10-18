@@ -2,6 +2,7 @@ package com.chengtao.wisdomgarden.db.impl
 
 import com.chengtao.wisdomgarden.db.dao.ServiceDao
 import com.chengtao.wisdomgarden.entity.Service
+import com.chengtao.wisdomgarden.entity.ServiceNameAndCount
 import java.sql.ResultSet
 
 /**
@@ -25,6 +26,8 @@ class ServiceDaoImpl : BaseDaoImpl(), ServiceDao {
     const val QUERY_SERVICES_BY_NAME = "SELECT * FROM $TABLE_NAME WHERE $FIELD_NAME = ?"
     const val QUERY_SERVICES_COUNT = "SELECT count(*) as $FIELD_COUNT FROM " +
         "(SELECT $FIELD_NAME FROM $TABLE_NAME GROUP BY $FIELD_NAME) as new_$TABLE_NAME"
+    const val QUERY_ALL_SERVICES_NAME_AND_COUNT_SQL = "SELECT $FIELD_NAME ,count(1) as $FIELD_COUNT " +
+        "FROM $TABLE_NAME GROUP BY $FIELD_NAME"
   }
 
   override fun createService(name: String, latitude: Float, longitude: Float): Service? {
@@ -110,6 +113,35 @@ class ServiceDaoImpl : BaseDaoImpl(), ServiceDao {
     val result = executeQuery(QUERY_SERVICES_BY_NAME, parameters)
     if (result != null && result is ArrayList<*> && result.size > 0) {
       return result as ArrayList<Service>
+    }
+    return null
+  }
+
+  override fun queryAllServiceNameAndCount(): ArrayList<ServiceNameAndCount>? {
+    val result = executeQuery(QUERY_ALL_SERVICES_NAME_AND_COUNT_SQL, object : ResultSetConvert {
+      override fun convertResultSetToAny(resultSet: ResultSet): Any? {
+        try {
+          val serviceNameAndCountList = ArrayList<ServiceNameAndCount>()
+          while (resultSet.next()) {
+            val name = resultSet.getString(FIELD_NAME)
+            val count = resultSet.getInt(FIELD_COUNT)
+            if (name != null && name != "" && count > 0) {
+              serviceNameAndCountList.add(ServiceNameAndCount(name, count))
+            }
+          }
+          if (serviceNameAndCountList.size > 0) {
+            return serviceNameAndCountList
+          }
+        } catch (e: Exception) {
+          printlnException("queryAllServiceName", e)
+        } finally {
+          resultSet.next()
+        }
+        return null
+      }
+    })
+    if (result != null && result is ArrayList<*> && result.size > 0) {
+      return result as ArrayList<ServiceNameAndCount>
     }
     return null
   }

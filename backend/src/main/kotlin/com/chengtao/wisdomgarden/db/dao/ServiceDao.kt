@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden.db.dao
 
 import com.chengtao.wisdomgarden.entity.Service
+import com.chengtao.wisdomgarden.entity.ServiceNameAndCount
 
 /**
  * Created by chengtao on 10/16/17.
@@ -13,5 +14,6 @@ interface ServiceDao {
   fun queryServiceByLocation(latitude: Float, longitude: Float, range: Float): ArrayList<Service>?
   fun queryService(name: String, latitude: Float, longitude: Float): Service?
   fun queryServicesByName(name: String): ArrayList<Service>?
+  fun queryAllServiceNameAndCount(): ArrayList<ServiceNameAndCount>?
   fun queryAllServicesCount(): Int
 }

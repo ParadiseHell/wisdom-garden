@@ -1,9 +1,6 @@
 package com.chengtao.wisdomgarden.controller
 
-import com.chengtao.wisdomgarden.Errors
-import com.chengtao.wisdomgarden.Parameters
-import com.chengtao.wisdomgarden.Routers
-import com.chengtao.wisdomgarden.Views
+import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.dao.ServiceDao
 import com.chengtao.wisdomgarden.db.impl.ServiceDaoImpl
 import com.chengtao.wisdomgarden.utils.StringUtils
@@ -31,6 +28,7 @@ class ServiceController : BaseController() {
     val modelAndView = ModelAndView(Views.SERVICE)
     initMainModelAndView(modelAndView)
     initNavTitle(modelAndView, "服务设施", Routers.SERVICE)
+    modelAndView.addObject(Attributes.SERVICE_NAME_COUNT_LIST, serviceDao.queryAllServiceNameAndCount())
     return modelAndView
   }
 
