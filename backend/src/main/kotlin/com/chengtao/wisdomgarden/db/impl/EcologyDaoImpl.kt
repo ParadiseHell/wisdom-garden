@@ -24,7 +24,7 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
         "$FIELD_PM25,$FIELD_WIND,$FIELD_DRESSING) VALUES (?,?,?,?,?,?)"
   }
 
-  override fun createEcology(sightId: Int, temperature: Float, humidity: Float, pm25: Int, wind: Float,
+  override fun createEcology(sightId: Int, temperature: Float, humidity: Float, pm25: Int, wind: String,
                              dressing: String): Ecology? {
     val parameters = ArrayList<Any>()
     parameters.add(sightId)
@@ -44,9 +44,9 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
   }
 
   override fun updateEcology(sightId: Int, temperature: Float?, humidity: Float?, pm25: Int?,
-                             wind: Float?, dressing: String?): Ecology? {
-    if (temperature == null && humidity == null && pm25 == null && wind == null
-        && StringUtils.isStringNull(dressing)) {
+                             wind: String?, dressing: String?): Ecology? {
+    if (temperature == null && humidity == null && pm25 == null
+        && StringUtils.isStringNull(wind, dressing)) {
       return null
     }
     var updateSQL = "UPDATE $TABLE_NAME SET "
@@ -63,7 +63,7 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
       updateSQL += "$FIELD_PM25 = ?,"
       parameters.add(pm25)
     }
-    if (wind != null) {
+    if (wind != null && wind != "") {
       updateSQL += "$FIELD_WIND = ?,"
       parameters.add(wind)
     }
@@ -98,7 +98,7 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
         ecology.temperature = resultSet.getFloat(FIELD_TEMPERATURE)
         ecology.humidity = resultSet.getFloat(FIELD_HUMIDITY)
         ecology.pm25 = resultSet.getInt(FIELD_PM25)
-        ecology.wind = resultSet.getFloat(FIELD_WIND)
+        ecology.wind = resultSet.getString(FIELD_WIND)
         ecology.dressing = resultSet.getString(FIELD_DRESSING)
         ecology.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         ecology.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)

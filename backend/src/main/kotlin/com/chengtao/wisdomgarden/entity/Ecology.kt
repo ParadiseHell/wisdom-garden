@@ -10,7 +10,7 @@ class Ecology {
   var temperature: Float? = null
   var humidity: Float? = null
   var pm25: Int? = null
-  var wind: Float? = null
+  var wind: String? = null
   var dressing: String? = null
   var createdAt: Date? = null
   var updatedAt: Date? = null

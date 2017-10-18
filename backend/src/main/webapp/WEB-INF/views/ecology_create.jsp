@@ -19,33 +19,42 @@
         <jsp:include page="bread_nav.jsp"/>
         <c:if test="${not empty sightId}">
             <div class="card-body">
-                <form action="<%=Routers.PLANTS%>" method="post" id="plantsForm">
+                <form action="<%=Routers.ECOLOGY%>" method="post" id="ecologyForm">
+                    <input hidden name="<%=Parameters.SIGHT_ID%>" value="${sightId}"/>
                     <div class="form-group">
                         <div class="form-row">
-                            <label>植物名称</label>
-                            <input type="text" class="form-control"
-                                   placeholder="请输入植物名称" name="<%=Parameters.NAME%>">
+                            <div class="col-6">
+                                <label>温度</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入温度" name="<%=Parameters.TEMPERATURE%>"/>
+                            </div>
+                            <div class="col-6">
+                                <label>湿度</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入湿度" name="<%=Parameters.HUMIDITY%>"/>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>植物描述</label>
-                        <textarea class="form-control" rows="5"
-                                  placeholder="请填写植物相关描述"
-                                  name="<%=Parameters.DESCRIPTION%>"></textarea>
-                    </div>
-                    <c:if test="${sightList != null && !sightList.isEmpty()}">
-                        <div class="form-group">
-                            <label>选择植物所在景点</label>
-                            <input type="text" hidden name="sightIds" id="sightIds">
-                            <select id="sightSelect" name="states[]" multiple="multiple"
-                                    class="form-control">
-                                <c:forEach items="${sightList}" var="sight">
-                                    <option value="${sight.id}">${sight.name}</option>
-                                </c:forEach>
-                            </select>
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label>PM2.5</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入PM2.5" name="<%=Parameters.PM25%>"/>
+                            </div>
+                            <div class="col-6">
+                                <label>风力</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入风力" name="<%=Parameters.WIND%>"/>
+                            </div>
                         </div>
-                    </c:if>
-                    <button type="submit" class="btn btn-success btn-lg btn-block">创建植物</button>
+                    </div>
+                    <div class="form-group">
+                        <label>穿衣指数</label>
+                        <input type="text" class="form-control"
+                               placeholder="请填写穿衣指数" name="<%=Parameters.DRESSING%>">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">创建生态</button>
                 </form>
             </div>
         </c:if>
@@ -53,51 +62,23 @@
     <jsp:include page="foot.jsp"/>
     <script type="text/javascript">
       $().ready(function () {
-        $("#plantsForm").validate({
+        $("#ecologyForm").validate({
           rules: {
-            name: {
-              required: true, minlength: 2, maxlength: 30
-            }, description: {
-              required: true
+            temperature: {
+              required: true, number: true, range: [-100, 100]
+            }, humidity: {
+              required: true, number: true, range: [0, 1]
+            }, pm25: {
+              required: true, number: true, range: [0, 500]
+            }, wind: {
+              required: true, number: true, minlength: 2
+            }, dressing: {
+              required: true, minlength: 2
             }
           }
         });
-        var sightIdsInput = $("#sightIds");
-        if (sightIdsInput.length > 0) {//存在景点
-          $('#sightSelect').select2({
-            placeholder: "请选择景点", closeOnSelect: false
-          }).on("select2:selecting", function (e) {
-            console.log('Selecting: ', e.params.args.data);
-            var value = sightIdsInput.val();
-            if (value === "") {
-              value += e.params.args.data.id;
-            } else {
-              value += "," + e.params.args.data.id;
-            }
-            console.log("Selecting:" + value);
-            sightIdsInput.val(value);
-          }).on("select2:unselecting", function (e) {
-            var value = sightIdsInput.val();
-            var splitStr = e.params.args.data.id + ",";
-            if (value.indexOf(splitStr) < 0) {//没有带逗号的字符串
-              splitStr = e.params.args.data.id;
-            }
-            var items = value.split(splitStr);
-            value = items.join("");
-            if (value.length % 2 === 0) {//id数组字符串只能为单数
-              value = value.substring(0, value.length - 1);
-            }
-            console.log("unselecting:" + value);
-            sightIdsInput.val(value);
-          }).on("select2:select", function (evt) {//静止排序
-            var element = evt.params.data.element;
-            var $element = $(element);
-            $element.detach();
-            $(this).append($element);
-            $(this).trigger("change");
-          });
-        }
       });
+      ;
     </script>
 </div>
 </body>

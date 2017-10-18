@@ -51,20 +51,20 @@
     </div>
 </div>
 <%}%>
-<script src="../statics/js/jquery.min.js" type="text/javascript"></script>
-<script src="../statics/js/popper.min.js" type="text/javascript"></script>
-<script src="../statics/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../statics/js/jquery.easing.min.js" type="text/javascript"></script>
-<script src="../statics/js/Chart.min.js" type="text/javascript"></script>
-<script src="../statics/js/jquery.dataTables.js" type="text/javascript"></script>
-<script src="../statics/js/dataTables.bootstrap4.js" type="text/javascript"></script>
-<script src="../statics/js/sb-admin.min.js" type="text/javascript"></script>
-<script src="../statics/js/sb-admin-datatables.min.js" type="text/javascript"></script>
-<script src="../statics/js/sb-admin-charts.min.js" type="text/javascript"></script>
-<script src="../statics/js/simply-toast.min.js" type="text/javascript"></script>
-<script src="../statics/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="../statics/js/messages_zh.min.js" type="text/javascript"></script>
-<script src="../statics/js/select2.min.js" type="text/javascript"></script>
+<script src="/statics/js/jquery.min.js" type="text/javascript"></script>
+<script src="/statics/js/popper.min.js" type="text/javascript"></script>
+<script src="/statics/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/statics/js/jquery.easing.min.js" type="text/javascript"></script>
+<script src="/statics/js/Chart.min.js" type="text/javascript"></script>
+<script src="/statics/js/jquery.dataTables.js" type="text/javascript"></script>
+<script src="/statics/js/dataTables.bootstrap4.js" type="text/javascript"></script>
+<script src="/statics/js/sb-admin.min.js" type="text/javascript"></script>
+<script src="/statics/js/sb-admin-datatables.min.js" type="text/javascript"></script>
+<script src="/statics/js/sb-admin-charts.min.js" type="text/javascript"></script>
+<script src="/statics/js/simply-toast.min.js" type="text/javascript"></script>
+<script src="/statics/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/statics/js/messages_zh.min.js" type="text/javascript"></script>
+<script src="/statics/js/select2.min.js" type="text/javascript"></script>
 <%
     Object errorMessage = session.getAttribute(Attributes.ERROR_MESSAGE);
     Object successMessage = session.getAttribute(Attributes.SUCCESS_MESSAGE);

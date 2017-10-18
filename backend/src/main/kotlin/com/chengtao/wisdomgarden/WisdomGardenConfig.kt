@@ -33,6 +33,12 @@ interface Parameters {
     const val LONGITUDE = "longitude"
     const val DESCRIPTION = "description"
     const val SIGHT_IDS = "sightIds"
+    const val SIGHT_ID = "sightId"
+    const val TEMPERATURE = "temperature"
+    const val HUMIDITY = "humidity"
+    const val PM25 = "pm25"
+    const val WIND = "wind"
+    const val DRESSING = "dressing"
   }
 }
 
