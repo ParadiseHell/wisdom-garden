@@ -2,6 +2,7 @@ package com.chengtao.wisdomgarden.utils
 
 import com.chengtao.wisdomgarden.Cookies
 import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -25,6 +26,14 @@ object CookieUtils {
     if (cookie != null) {
       cookie.maxAge = 0
       response.addCookie(cookie)
+    }
+  }
+
+  fun clearAll(request: HttpServletRequest, response: HttpServletResponse) {
+    val cookies = request.cookies
+    cookies?.forEach {
+      it.maxAge = 0
+      response.addCookie(it)
     }
   }
 }

@@ -47,6 +47,7 @@ interface Attributes {
   companion object {
     const val ERROR_MESSAGE = "errorMessage"
     const val SUCCESS_MESSAGE = "successMessage"
+    const val IS_MANAGER = "isManager"
     const val CURRENT_VIEW = "currentView"
     const val VIEW_AND_ROUTER = "viewAndRouter"
     const val VIEW_ROUTER = "viewRouter"

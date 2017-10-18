@@ -26,10 +26,7 @@ class UserController : BaseController() {
   //登录
   @GetMapping(Routers.LOGIN)
   fun getLoginView(request: HttpServletRequest, response: HttpServletResponse): String {
-    val cookies = request.cookies
-    cookies?.forEach {
-      CookieUtils.clear(it, response)
-    }
+    CookieUtils.clearAll(request, response)
     return Views.LOGIN
   }
 
@@ -57,7 +54,8 @@ class UserController : BaseController() {
 
   //注册
   @GetMapping(Routers.REGISTER)
-  fun getRegisterView(): String {
+  fun getRegisterView(request: HttpServletRequest, response: HttpServletResponse): String {
+    CookieUtils.clearAll(request, response)
     return Views.REGISTER
   }
 

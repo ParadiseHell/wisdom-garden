@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden
 
 import com.chengtao.wisdomgarden.db.impl.UserDaoImpl
+import com.chengtao.wisdomgarden.entity.UserType
 import com.chengtao.wisdomgarden.utils.CookieUtils
 import com.chengtao.wisdomgarden.utils.StringUtils
 import org.springframework.web.servlet.HandlerInterceptor
@@ -21,6 +22,12 @@ class WisdomGardenInterceptor : HandlerInterceptor {
 
   override fun preHandle(request: HttpServletRequest?, response: HttpServletResponse?, handler: Any?): Boolean {
     if (request != null && response != null) {
+      val uri = request.requestURI
+      val router = uri.split("/")
+      if (router.size >= 2) {
+        val mRouter = "/${router[1]}"
+        println("uri:$uri->mRouter:$mRouter")
+      }
       UN_INTERCEPTOR_ROUTERS
           .filter { request.requestURI.contains(it) }
           .forEach { return true }
@@ -46,9 +53,13 @@ class WisdomGardenInterceptor : HandlerInterceptor {
       if (!StringUtils.isStringNull(userName, password)) {
         val userDao = UserDaoImpl()
         //存在用户不拦截
-        if (userDao.isUserExist(userName!!, password!!)) {
+        val user = userDao.queryUserByNameAndPassword(userName!!, password!!)
+        if (user != null) {
           //重新设置cookie过期时间
-          CookieUtils.addUserNameAndPasswordCookie(cookieUserName!!, cookiePassword!!, response!!)
+          CookieUtils.addUserNameAndPasswordCookie(cookieUserName!!, cookiePassword!!, response)
+          if (request.session != null && user.type == UserType.MANAGER) {
+            request.session.setAttribute(Attributes.IS_MANAGER, true)
+          }
           return true
         }
       }
