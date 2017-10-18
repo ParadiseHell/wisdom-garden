@@ -137,6 +137,7 @@ interface API {
   companion object {
     const val USER_LOGIN = "/api/user/login"
     const val USER_REGISTER = "/api/user/register"
+    const val GET_ALL_SIGHTS = "/api/sights"
   }
 }
 
@@ -144,6 +145,7 @@ interface APIErrorType {
   companion object {
     const val MISSING_PARAMETER = "missing parameter"
     const val INTERNAL_SERVER_ERROR = "internal server error"
+    const val UNAUTHORIZED = "unauthorized"
     //用户
     const val USER_NOT_EXIST = "user not exist"
     const val USER_EXIST = "user exist"
