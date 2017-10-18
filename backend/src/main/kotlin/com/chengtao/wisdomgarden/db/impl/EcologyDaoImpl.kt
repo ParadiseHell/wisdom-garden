@@ -17,16 +17,15 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
     const val FIELD_PM25 = "pm25"
     const val FIELD_WIND = "wind"
     const val FIELD_DRESSING = "dressing"
-    const val FIELD_CAR_WASHING = "car_washing"
     const val FIELD_CREATED_AT = "created_at"
     const val FIELD_UPDATED_AT = "updated_at"
     //SQL语句
     const val INSERT_SQL = "INSERT INTO $TABLE_NAME($FIELD_SIGHT_ID,$FIELD_TEMPERATURE,$FIELD_HUMIDITY," +
-        "$FIELD_PM25,$FIELD_WIND,$FIELD_DRESSING,$FIELD_CAR_WASHING) VALUES (?,?,?,?,?,?,?)"
+        "$FIELD_PM25,$FIELD_WIND,$FIELD_DRESSING) VALUES (?,?,?,?,?,?)"
   }
 
   override fun createEcology(sightId: Int, temperature: Float, humidity: Float, pm25: Int, wind: Float,
-                             dressing: String, carWashing: String): Ecology? {
+                             dressing: String): Ecology? {
     val parameters = ArrayList<Any>()
     parameters.add(sightId)
     parameters.add(temperature)
@@ -34,7 +33,6 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
     parameters.add(pm25)
     parameters.add(wind)
     parameters.add(dressing)
-    parameters.add(carWashing)
     if (executeSQL(INSERT_SQL, parameters)) {
       return queryEcologyBySightId(sightId)
     }
@@ -46,9 +44,9 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
   }
 
   override fun updateEcology(sightId: Int, temperature: Float?, humidity: Float?, pm25: Int?,
-                             wind: Float?, dressing: String?, carWashing: String?): Ecology? {
+                             wind: Float?, dressing: String?): Ecology? {
     if (temperature == null && humidity == null && pm25 == null && wind == null
-        && StringUtils.isStringNull(dressing, carWashing)) {
+        && StringUtils.isStringNull(dressing)) {
       return null
     }
     var updateSQL = "UPDATE $TABLE_NAME SET "
@@ -72,10 +70,6 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
     if (dressing != null && dressing != "") {
       updateSQL += "$FIELD_DRESSING = ?,"
       parameters.add(dressing)
-    }
-    if (carWashing != null && carWashing != "") {
-      updateSQL += "$FIELD_CAR_WASHING = ?,"
-      parameters.add(carWashing)
     }
     if (updateSQL.contains(",")) {
       updateSQL = updateSQL.removeRange(updateSQL.length - 1, updateSQL.length)
@@ -106,7 +100,6 @@ class EcologyDaoImpl : BaseDaoImpl(), EcologyDao {
         ecology.pm25 = resultSet.getInt(FIELD_PM25)
         ecology.wind = resultSet.getFloat(FIELD_WIND)
         ecology.dressing = resultSet.getString(FIELD_DRESSING)
-        ecology.carWashing = resultSet.getString(FIELD_CAR_WASHING)
         ecology.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         ecology.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
         ecologyList.add(ecology)

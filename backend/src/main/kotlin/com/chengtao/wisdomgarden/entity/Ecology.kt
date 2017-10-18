@@ -12,12 +12,11 @@ class Ecology {
   var pm25: Int? = null
   var wind: Float? = null
   var dressing: String? = null
-  var carWashing: String? = null
   var createdAt: Date? = null
   var updatedAt: Date? = null
   override fun toString(): String {
     return "Ecology(sightId=$sightId, temperature=$temperature, humidity=$humidity, pm25=$pm25, " +
-        "wind=$wind, dressing=$dressing, carWashing=$carWashing, createdAt=$createdAt, updatedAt=$updatedAt)"
+        "wind=$wind, dressing=$dressing,  createdAt=$createdAt, updatedAt=$updatedAt)"
   }
 
 }

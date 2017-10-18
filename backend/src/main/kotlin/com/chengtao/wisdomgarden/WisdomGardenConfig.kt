@@ -45,6 +45,7 @@ interface Attributes {
     const val VIEW_AND_ROUTER = "viewAndRouter"
     const val VIEW_ROUTER = "viewRouter"
     const val SIGHT = "sight"
+    const val SIGHT_ID = "sightId"
     const val SIGHT_COUNT = "sightCount"
     const val SIGHT_LIST = "sightList"
     const val PLANTS_COUNT = "plantsCount"
@@ -89,6 +90,7 @@ interface Routers {
     const val ROUTE = "/route"
     const val SERVICE = "/service"
     const val SERVICE_CREATE = "/service/create"
+    const val ECOLOGY = "/ecology"
     //静态资源
     const val STATICS = "/statics"
     //API
@@ -114,5 +116,6 @@ interface Views {
     const val SERVICE = "service"
     const val SERVICE_CREATE = "service_create"
     const val SERVICE_DETAIL = "service_detail"
+    const val ECOLOGY_CREATE = "ecology_create"
   }
 }
