@@ -28,21 +28,22 @@ class EcologyController : BaseController() {
 
   @GetMapping("${Routers.SIGHT}/{id}${Routers.ECOLOGY}")
   fun getEcologyCrateView(@PathVariable(value = "id") sightId: Int): ModelAndView {
-    val modelAndView = ModelAndView(Views.ECOLOGY_CREATE)
+    val modelAndView = ModelAndView(Views.ECOLOGY_EDIT)
     modelAndView.addObject(Attributes.SIGHT_ID, sightId)
     val ecology = ecologyDao.queryEcologyBySightId(sightId)
     val viewAndRouter = ArrayList<ViewAndRouter>()
     val sight = sightDao.querySightById(sightId)
     if (sight != null) {
+      viewAndRouter.add(ViewAndRouter("景点", Routers.SIGHT))
       viewAndRouter.add(ViewAndRouter(sight.name!!, "${Routers.SIGHT}/$sightId"))
     }
     if (ecology == null) {
       viewAndRouter.add(ViewAndRouter("创建生态", "${Routers.SIGHT}/$sightId${Routers.ECOLOGY}"))
     } else {
       viewAndRouter.add(ViewAndRouter("更新生态", "${Routers.SIGHT}/$sightId${Routers.ECOLOGY}"))
-      modelAndView.addObject(Attributes.ECOLOGY, ecology)
-      modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouter)
     }
+    modelAndView.addObject(Attributes.ECOLOGY, ecology)
+    modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouter)
     return modelAndView
   }
 

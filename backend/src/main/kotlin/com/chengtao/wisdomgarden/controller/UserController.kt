@@ -38,7 +38,7 @@ class UserController : BaseController() {
       val md5Password = MD5Util.md5(password)
       if (md5Password != null) {
         val userDao = UserDaoImpl()
-        if (userDao.isUserExist(userName, md5Password)) {
+        if (userDao.isUserExist(userName)) {
           //创建cookies
           CookieUtils.addUserNameAndPasswordCookie(userName, md5Password, response)
           return Routers.INDEX.redirect()

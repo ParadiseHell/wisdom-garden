@@ -129,6 +129,30 @@ interface Views {
     const val SERVICE = "service"
     const val SERVICE_CREATE = "service_create"
     const val SERVICE_DETAIL = "service_detail"
-    const val ECOLOGY_CREATE = "ecology_create"
+    const val ECOLOGY_EDIT = "ecology_edit"
+  }
+}
+
+interface API {
+  companion object {
+    const val USER_LOGIN = "/api/user/login"
+    const val USER_REGISTER = "/api/user/register"
+  }
+}
+
+interface APIErrorType {
+  companion object {
+    const val MISSING_PARAMETER = "missing parameter"
+    const val INTERNAL_SERVER_ERROR = "internal server error"
+    //用户
+    const val USER_NOT_EXIST = "user not exist"
+    const val USER_EXIST = "user exist"
+  }
+}
+
+interface APIParameters {
+  companion object {
+    const val USER_NAME = "user_name"
+    const val PASSWORD = "password"
   }
 }

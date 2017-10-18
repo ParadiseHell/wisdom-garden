@@ -1,3 +1,4 @@
+<%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -16,7 +17,7 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <c:if test="${not empty sight}">
-            <div class="card border-primary mb-3 w-50">
+            <div class="card border-primary mb-3">
                 <div class="card-header text-primary"><i class="fa fa-fw fa-area-chart"></i>&nbsp;景点详情
                 </div>
                 <div class="card-body">
@@ -28,6 +29,37 @@
                     <h5 class="card-title text-primary">位置</h5>
                     <p class="card-text text-dark">纬度&nbsp;:&nbsp;${sight.latitude} &nbsp;&nbsp;
                         经度&nbsp;:&nbsp;${sight.longitude}</p>
+                    <c:if test="${sight.ecology != null}">
+                        <h5 class="card-title text-primary">
+                            周边生态
+                            <a href="<%=Routers.SIGHT%>/${sight.id}<%=Routers.ECOLOGY%>"
+                               class="btn btn-outline-primary btn-sm ml-5">更新生态</a>
+                        </h5>
+                        <table class="table table-bordered table-hover table-secondary">
+                            <thead>
+                            <tr>
+                                <th>温度</th>
+                                <th>湿度</th>
+                                <th>PM2.5</th>
+                                <th>风力</th>
+                                <th>穿衣指数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>${sight.ecology.temperature}</td>
+                                <td>${sight.ecology.humidity}</td>
+                                <td>${sight.ecology.pm25}</td>
+                                <td>${sight.ecology.wind}</td>
+                                <td>${sight.ecology.dressing}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </c:if>
+                    <c:if test="${sight.ecology == null}">
+                        <a href="<%=Routers.SIGHT%>/${sight.id}<%=Routers.ECOLOGY%>"
+                           class="btn btn-outline-primary btn-sm">创建生态</a>
+                    </c:if>
                 </div>
             </div>
         </c:if>

@@ -21,6 +21,8 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
         " VALUES (?,?,?)"
     const val QUERY_By_NAME_AND_PASSWORD_SQL = "SELECT * FROM $TABLE_NAME" +
         " WHERE $FIELD_USER_NAME = ? AND $FIELD_PASSWORD = ?"
+    const val QUERY_USER_BY_NAME = "SELECT * FROM $TABLE_NAME" +
+        " WHERE $FIELD_USER_NAME = ?"
     const val UPDATE_PASSWORD_SQL = "UPDATE $TABLE_NAME SET $FIELD_PASSWORD = ?" +
         " WHERE $FIELD_ID = ?"
   }
@@ -40,11 +42,10 @@ class UserDaoImpl : BaseDaoImpl(), UserDao {
     return deleteById(TABLE_NAME, FIELD_ID, userId)
   }
 
-  override fun isUserExist(userName: String, password: String): Boolean {
+  override fun isUserExist(userName: String): Boolean {
     val parameters = ArrayList<Any>()
     parameters.add(userName)
-    parameters.add(password)
-    val isExist: Any? = executeQuery(QUERY_By_NAME_AND_PASSWORD_SQL, parameters, object : ResultSetConvert {
+    val isExist: Any? = executeQuery(QUERY_USER_BY_NAME, parameters, object : ResultSetConvert {
       override fun convertResultSetToAny(resultSet: ResultSet): Any? {
         return resultSet.next()
       }
