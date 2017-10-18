@@ -138,6 +138,7 @@ interface API {
     const val USER_LOGIN = "/api/user/login"
     const val USER_REGISTER = "/api/user/register"
     const val GET_ALL_SIGHTS = "/api/sights"
+    const val GET_ALL_PLANTS = "/api/plants"
   }
 }
 
