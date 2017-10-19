@@ -1,5 +1,6 @@
 package com.chengtao.wisdomgarden
 
+import android.app.Activity
 import android.content.Context
 import com.chengtao.wisdomgarden.entity.EventBusMessage
 import com.chengtao.wisdomgarden.http.HttpResponseListener
@@ -13,7 +14,7 @@ import org.greenrobot.eventbus.ThreadMode.MAIN
  * Time : 7:24 AM
  * Description :
  */
-@Suppress("AddVarianceModifier")
+@Suppress("AddVarianceModifier", "MemberVisibilityCanPrivate")
 abstract class WisdomGardenPresenter<V : BaseView>(view: V,
     context: Context) : BasePresenter, HttpResponseListener {
   val mView: V? = view
@@ -41,6 +42,12 @@ abstract class WisdomGardenPresenter<V : BaseView>(view: V,
 
   override fun onSpecialError(requestId: Short, errorType: Short) {
     println("onSpecialError:$requestId")
+  }
+
+  protected fun finish() {
+    if (mContext != null && mContext is Activity) {
+      mContext.finish()
+    }
   }
 
   //event bus 消息通知

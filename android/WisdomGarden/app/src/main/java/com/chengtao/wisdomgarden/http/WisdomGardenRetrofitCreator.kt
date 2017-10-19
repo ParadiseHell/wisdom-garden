@@ -20,7 +20,7 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
     var baseUrl: String? = null
   }
 
-  override fun getBaseUrl(): String = baseUrl ?: "http://localhost/"
+  override fun getBaseUrl(): String = baseUrl ?: "http://127.0.0.1/"
 
   override fun getOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder().writeTimeout(60, TimeUnit.SECONDS)

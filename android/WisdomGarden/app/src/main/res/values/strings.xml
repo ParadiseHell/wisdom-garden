@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">WisdomGarden</string>
+  <string name="app_name">智慧园林</string>
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
   <string name="action_settings">Settings</string>
@@ -13,4 +13,6 @@
   <string name="password">密码</string>
   <string name="login">登录</string>
   <string name="hit_register">没有账号?马上注册</string>
+  <string name="register">注册</string>
+  <string name="password_confirm">确认密码</string>
 </resources>

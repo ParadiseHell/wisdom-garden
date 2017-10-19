@@ -8,6 +8,7 @@ import android.widget.TextView
 import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.R
+import com.chengtao.wisdomgarden.ui.register.RegisterActivity
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)
@@ -48,7 +49,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
         mPresenter?.login(etUserName.text.toString(), etPassword.text.toString())
       }
       R.id.tv_hint_register -> {
-        TODO("跳转注册界面")
+        RegisterActivity.Companion.invoke(mContext!!)
       }
     }
   }

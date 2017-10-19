@@ -27,7 +27,7 @@ class LoginPresenter(
         mView?.toast("用户名不能为空")
       }
       password == "" -> {
-        mView?.to("密码不能为空")
+        mView?.toast("密码不能为空")
       }
       else -> {
         loginRequest.userName = userName

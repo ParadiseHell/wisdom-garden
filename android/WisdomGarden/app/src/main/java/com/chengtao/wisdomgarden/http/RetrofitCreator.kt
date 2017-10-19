@@ -39,7 +39,7 @@ abstract class RetrofitCreator protected constructor() {
       if (getBaseUrl() == "") {
         throw IllegalArgumentException("baseUrl不能为空");
       }
-      if ((!URLUtil.isHttpUrl(getBaseUrl()) || !URLUtil.isHttpsUrl(
+      if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(
           getBaseUrl()))) {
         throw IllegalArgumentException("baseUrl不是http或者https地址");
       }
