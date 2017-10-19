@@ -1,8 +1,8 @@
 package com.chengtao.wisdomgarden
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
 import butterknife.ButterKnife
@@ -14,18 +14,17 @@ import butterknife.ButterKnife
  * Description :
  */
 @Suppress("MemberVisibilityCanPrivate", "UNCHECKED_CAST")
-abstract class BaseActivity<P : BasePresenter> : Activity(), BaseView {
+abstract class BaseActivity<P : BasePresenter> : AppCompatActivity(), BaseView {
   var toast: Toast? = null
   var mContext: Context? = null
   var mPresenter: P? = null
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     if (getLayoutId() == 0) {
-      throw NullPointerException("布局ID不能为0")
+      throw NullPointerException("layout id can not be 0")
     }
     setContentView(getLayoutId())
     ButterKnife.bind(this)
-    println("==================")
     mContext = this
     mPresenter = initPresenter()
     mPresenter?.subscribe()
