@@ -7,5 +7,5 @@ package com.chengtao.wisdomgarden.entity
  * Description :
  */
 class User {
-
+  
 }
