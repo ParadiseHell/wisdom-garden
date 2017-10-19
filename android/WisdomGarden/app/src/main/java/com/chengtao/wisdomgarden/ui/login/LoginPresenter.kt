@@ -1,5 +1,6 @@
 package com.chengtao.wisdomgarden.ui.login
 
+import android.content.Context
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.request.LoginRequest
 import com.chengtao.wisdomgarden.utils.MD5Util
@@ -11,8 +12,9 @@ import com.chengtao.wisdomgarden.utils.MD5Util
  * Description :
  */
 class LoginPresenter(
-    loginView: LoginContract.LoginView) : WisdomGardenPresenter<LoginContract.LoginView>(
-    loginView), LoginContract.LoginPresenter {
+    loginView: LoginContract.LoginView,
+    context: Context) : WisdomGardenPresenter<LoginContract.LoginView>(
+    loginView, context), LoginContract.LoginPresenter {
   companion object {
     val LOGIN_REQUEST: Short = 1
   }

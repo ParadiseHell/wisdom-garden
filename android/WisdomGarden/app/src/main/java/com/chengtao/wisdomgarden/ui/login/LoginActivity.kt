@@ -25,7 +25,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
 
   override fun getLayoutId(): Int = R.layout.activity_login
 
-  override fun initPresenter(): LoginContract.LoginPresenter = LoginPresenter(this)
+  override fun initPresenter(): LoginContract.LoginPresenter = LoginPresenter(this, this)
 
   override fun initView() {
 
