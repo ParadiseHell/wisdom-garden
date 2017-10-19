@@ -12,8 +12,8 @@ interface ErrorString {
     const val INTERNAL_SERVER_ERROR = "internal server error"
     const val UNAUTHORIZED = "unauthorized"
     //用户
-    const val USER_NOT_EXIST = "user not exist"
     const val USER_EXIST = "user exist"
+    const val USER_NAME_OR_PASSWORD_WRONG = "user name or password wrong"
   }
 }
 

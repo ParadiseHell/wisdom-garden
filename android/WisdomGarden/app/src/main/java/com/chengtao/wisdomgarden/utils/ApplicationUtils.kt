@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden.utils
 
-import android.app.Application
+import android.content.Context
+import android.util.Log
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)
@@ -8,9 +9,12 @@ import android.app.Application
  * Time : 6:03 PM
  * Description :
  */
-object ApplicationUtils {
-  var appliction: Application? = null
-  fun initApplication(application: Application) {
-    this.appliction = appliction
+class ApplicationUtils {
+  companion object {
+    var appliction: Context? = null
+    fun initApplication(applicationContext: Context) {
+      appliction = applicationContext
+      Log.e("TAG", appliction.toString())
+    }
   }
 }

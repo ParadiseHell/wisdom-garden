@@ -3,12 +3,12 @@ package com.chengtao.wisdomgarden.request
 import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.api.ErrorString
 import com.chengtao.wisdomgarden.api.ErrorType
+import com.chengtao.wisdomgarden.entity.Error
 import com.chengtao.wisdomgarden.http.HttpClient
 import com.chengtao.wisdomgarden.http.HttpRequest
 import com.chengtao.wisdomgarden.http.HttpResponseListener
 import com.chengtao.wisdomgarden.http.RetrofitCreator
-import com.chengtao.wisdomgarden.http.WisdomGardenRetrofitCreator
-import com.chengtao.wisdomgarden.entity.Error
+import com.chengtao.wisdomgarden.api.WisdomGardenRetrofitCreator
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -47,7 +47,7 @@ abstract class BaseRequest<T>() : HttpRequest<T>() {
     } else {
       val errorBody = response.errorBody()
       if (errorBody != null) {
-
+        onError(requestId, handleError(errorBody))
       } else {
         httpResponseListener?.onData(requestId, response.body())
       }
@@ -83,8 +83,8 @@ abstract class BaseRequest<T>() : HttpRequest<T>() {
         httpResponseListener?.onError(requestId, R.string.user_exist)
         httpResponseListener?.onSpecialError(requestId, ErrorType.USER_EXIST)
       }
-      ErrorString.USER_NOT_EXIST -> {
-        httpResponseListener?.onError(requestId, R.string.user_exist)
+      ErrorString.USER_NAME_OR_PASSWORD_WRONG -> {
+        httpResponseListener?.onError(requestId, R.string.user_name_or_password_wrong)
         httpResponseListener?.onSpecialError(requestId, ErrorType.USER_NOT_EXIST)
       }
       else -> {

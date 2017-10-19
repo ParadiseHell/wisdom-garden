@@ -23,12 +23,12 @@ import retrofit2.http.Path
 interface UserAPI {
   @POST("/api/user/login")
   @FormUrlEncoded
-  fun login(@Field("user_name") userName: String, @Field(
+  fun login(@Field("userName") userName: String, @Field(
       "password") password: String): Observable<Response<User>>
 
   @POST("/api/user/register")
   @FormUrlEncoded
-  fun register(@Field("user_name") userName: String, @Field(
+  fun register(@Field("userName") userName: String, @Field(
       "password") password: String): Observable<Response<User>>
 }
 

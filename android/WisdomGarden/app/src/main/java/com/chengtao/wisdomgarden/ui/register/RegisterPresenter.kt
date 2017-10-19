@@ -5,6 +5,8 @@ import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.api.ErrorType
 import com.chengtao.wisdomgarden.request.RegisterRequest
 import com.chengtao.wisdomgarden.utils.MD5Util
+import com.chengtao.wisdomgarden.utils.StringUtils
+import com.chengtao.wisdomgarden.utils.UserUtils
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)
@@ -21,7 +23,9 @@ class RegisterPresenter(view: RegisterContract.View,
 
   //请求
   private val registerRequest = RegisterRequest(this)
-
+  //其他
+  private var userName: String? = null
+  private var password: String? = null
   override fun register(userName: String, password: String, passwordConfirm: String) {
     when {
       userName == "" -> {
@@ -37,9 +41,11 @@ class RegisterPresenter(view: RegisterContract.View,
         mView?.toast("密码和确认密码不一致")
       }
       else -> {
+        this.userName = userName
+        this.password = MD5Util.md5(password)
         registerRequest.requestId = REGISTER_REQUEST
-        registerRequest.userName = userName
-        registerRequest.password = MD5Util.md5(password)
+        registerRequest.userName = this.userName
+        registerRequest.password = this.password
         registerRequest.execute()
       }
     }
@@ -49,7 +55,10 @@ class RegisterPresenter(view: RegisterContract.View,
     when (requestId) {
       REGISTER_REQUEST -> {
         if (response != null) {
-          TODO("保存用户信息,注册成功,跳转主界面")
+          if (!StringUtils.isStringNull(userName, password)) {
+            UserUtils.saveUser(userName!!, password!!)
+          }
+          mView?.toast("注册成功")
         }
       }
     }

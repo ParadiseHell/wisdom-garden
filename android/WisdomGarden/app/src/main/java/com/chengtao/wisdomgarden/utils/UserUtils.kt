@@ -11,7 +11,9 @@ object UserUtils {
   private const val USER_NAME = "USER_NAME"
   private const val USER_PASSWORD = "USER_PASSWORD"
   fun saveUser(name: String, password: String) {
+    println("saveUser")
     if (ApplicationUtils.appliction != null) {
+      println("doSaveUser")
       SharedPreferencesUtils.putAsynchronous(ApplicationUtils.appliction!!, USER_FILE, USER_NAME,
           name)
       SharedPreferencesUtils.putAsynchronous(ApplicationUtils.appliction!!, USER_FILE,
@@ -33,6 +35,12 @@ object UserUtils {
       SharedPreferencesUtils.getString(ApplicationUtils.appliction!!, USER_FILE, USER_PASSWORD)
     } else {
       null
+    }
+  }
+
+  fun clean() {
+    if (ApplicationUtils.appliction != null) {
+      SharedPreferencesUtils.clean(ApplicationUtils.appliction!!, USER_FILE)
     }
   }
 }
