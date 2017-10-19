@@ -7,5 +7,8 @@ package com.chengtao.wisdomgarden.entity
  * Description :
  */
 class ServiceNameAndCount {
+  var name: String? = null
+  var count: Int? = null
+  override fun toString(): String = "ServiceNameAndCount(name=$name, count=$count)"
 
 }

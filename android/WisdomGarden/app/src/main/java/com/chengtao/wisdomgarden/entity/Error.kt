@@ -8,4 +8,6 @@ package com.chengtao.wisdomgarden.entity
  */
 class Error {
   var error: String? = null
+  override fun toString(): String = "Error(error=$error)"
+
 }
