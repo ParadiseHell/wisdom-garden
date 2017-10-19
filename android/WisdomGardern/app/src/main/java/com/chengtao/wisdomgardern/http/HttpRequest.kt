@@ -13,7 +13,7 @@ import retrofit2.Retrofit
  * Description :
  */
 @Suppress("MemberVisibilityCanPrivate")
-abstract class HttpRequest<T> protected constructor() : HttpRequestListener {
+abstract class HttpRequest<T>() : HttpRequestListener {
   companion object {
     var httpClient = HttpClient()
   }
