@@ -2,6 +2,7 @@ package com.chengtao.wisdomgarden.api
 
 import com.chengtao.wisdomgarden.response.Plants
 import com.chengtao.wisdomgarden.response.Route
+import com.chengtao.wisdomgarden.response.Service
 import com.chengtao.wisdomgarden.response.ServiceNameAndCount
 import com.chengtao.wisdomgarden.response.Sight
 import com.chengtao.wisdomgarden.response.User
@@ -51,5 +52,5 @@ interface ServiceAPI {
   fun getServiceNameAncCount(): Observable<Response<ArrayList<ServiceNameAndCount>>>
 
   @GET("/api/service/{name}")
-  fun getServicesByName(@Path("name") name: String)
+  fun getServicesByName(@Path("name") name: String): Observable<Response<ArrayList<Service>>>
 }
