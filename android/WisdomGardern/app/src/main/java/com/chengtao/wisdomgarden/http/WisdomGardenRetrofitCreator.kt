@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgardern.http
+package com.chengtao.wisdomgarden.http
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder

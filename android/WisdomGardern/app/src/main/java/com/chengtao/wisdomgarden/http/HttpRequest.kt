@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgardern.http
+package com.chengtao.wisdomgarden.http
 
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable

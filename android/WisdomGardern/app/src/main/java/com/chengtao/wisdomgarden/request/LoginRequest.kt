@@ -1,9 +1,9 @@
-package com.chengtao.wisdomgardern.request
+package com.chengtao.wisdomgarden.request
 
 import com.chengtao.wisdomgarden.utils.StringUtils
-import com.chengtao.wisdomgardern.api.UserAPI
-import com.chengtao.wisdomgardern.http.HttpResponseListener
-import com.chengtao.wisdomgardern.response.User
+import com.chengtao.wisdomgarden.api.UserAPI
+import com.chengtao.wisdomgarden.http.HttpResponseListener
+import com.chengtao.wisdomgarden.response.User
 import io.reactivex.Observable
 import retrofit2.Response
 

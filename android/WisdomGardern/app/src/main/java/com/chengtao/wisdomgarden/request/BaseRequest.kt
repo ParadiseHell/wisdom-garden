@@ -1,14 +1,14 @@
-package com.chengtao.wisdomgardern.request
+package com.chengtao.wisdomgarden.request
 
-import com.chengtao.wisdomgardern.R
-import com.chengtao.wisdomgardern.api.ErrorString
-import com.chengtao.wisdomgardern.api.ErrorType
-import com.chengtao.wisdomgardern.http.HttpClient
-import com.chengtao.wisdomgardern.http.HttpRequest
-import com.chengtao.wisdomgardern.http.HttpResponseListener
-import com.chengtao.wisdomgardern.http.RetrofitCreator
-import com.chengtao.wisdomgardern.http.WisdomGardenRetrofitCreator
-import com.chengtao.wisdomgardern.response.Error
+import com.chengtao.wisdomgarden.R
+import com.chengtao.wisdomgarden.api.ErrorString
+import com.chengtao.wisdomgarden.api.ErrorType
+import com.chengtao.wisdomgarden.http.HttpClient
+import com.chengtao.wisdomgarden.http.HttpRequest
+import com.chengtao.wisdomgarden.http.HttpResponseListener
+import com.chengtao.wisdomgarden.http.RetrofitCreator
+import com.chengtao.wisdomgarden.http.WisdomGardenRetrofitCreator
+import com.chengtao.wisdomgarden.response.Error
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody

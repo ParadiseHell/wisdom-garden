@@ -1,4 +1,6 @@
-package com.chengtao.wisdomgardern.http
+package com.chengtao.wisdomgarden.http
+
+import retrofit2.Response
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)
@@ -6,7 +8,7 @@ package com.chengtao.wisdomgardern.http
  * Time : 7:00 AM
  * Description :
  */
-interface HttpResponseListener {
+interface HttpRequestListener {
   /**
    * 当请求开始
    *
@@ -20,7 +22,7 @@ interface HttpResponseListener {
    * @param requestId 请求ID
    * @param response 响应实体
    */
-  fun onData(requestId: Short, response: Any?)
+  fun <T> onData(requestId: Short, response: Response<T>?)
 
   /**
    * 当处理完请求响应数据后
@@ -33,15 +35,7 @@ interface HttpResponseListener {
    * 当请求出现错误
    *
    * @param requestId 请求ID
-   * @param stringId 错误提示字符串资源id
+   * @param e 异常
    */
-  fun onError(requestId: Short, stringId: Int)
-
-  /**
-   * 当请求为特殊错误时发生
-   *
-   * @param requestId 请求ID
-   * @param errorType 错误类型
-   */
-  fun onSpecialError(requestId: Short, errorType: Short)
+  fun onError(requestId: Short, e: Throwable?)
 }

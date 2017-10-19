@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgardern;
+package com.chengtao.wisdomgarden;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

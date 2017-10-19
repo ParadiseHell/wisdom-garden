@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgardern.http
+package com.chengtao.wisdomgarden.http
 
 import android.util.Log
 import io.reactivex.Flowable

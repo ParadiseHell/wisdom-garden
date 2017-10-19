@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgardern.api
+package com.chengtao.wisdomgarden.api
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)

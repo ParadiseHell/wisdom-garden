@@ -1,10 +1,10 @@
-package com.chengtao.wisdomgardern.api
+package com.chengtao.wisdomgarden.api
 
-import com.chengtao.wisdomgardern.response.Plants
-import com.chengtao.wisdomgardern.response.Route
-import com.chengtao.wisdomgardern.response.ServiceNameAndCount
-import com.chengtao.wisdomgardern.response.Sight
-import com.chengtao.wisdomgardern.response.User
+import com.chengtao.wisdomgarden.response.Plants
+import com.chengtao.wisdomgarden.response.Route
+import com.chengtao.wisdomgarden.response.ServiceNameAndCount
+import com.chengtao.wisdomgarden.response.Sight
+import com.chengtao.wisdomgarden.response.User
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Field
