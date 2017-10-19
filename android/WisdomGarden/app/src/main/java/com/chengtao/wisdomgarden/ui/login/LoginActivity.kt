@@ -4,6 +4,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.R
@@ -22,6 +23,8 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
   lateinit var etPassword: EditText
   @BindView(R.id.btn_login)
   lateinit var btnLogin: Button
+  @BindView(R.id.tv_hint_register)
+  lateinit var tvHitRegister: TextView
 
   override fun getLayoutId(): Int = R.layout.activity_login
 
@@ -33,6 +36,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
 
   override fun setListener() {
     btnLogin.setOnClickListener(this)
+    tvHitRegister.setOnClickListener(this)
   }
 
   override fun start() {
@@ -40,7 +44,12 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
 
   override fun onClick(v: View?) {
     when (v?.id) {
-      R.id.btn_login -> mPresenter?.login(etUserName.text.toString(), etPassword.text.toString())
+      R.id.btn_login -> {
+        mPresenter?.login(etUserName.text.toString(), etPassword.text.toString())
+      }
+      R.id.tv_hint_register -> {
+        TODO("跳转注册界面")
+      }
     }
   }
 

@@ -12,4 +12,5 @@
   <string name="user_name">用户名</string>
   <string name="password">密码</string>
   <string name="login">登录</string>
+  <string name="hit_register">没有账号?马上注册</string>
 </resources>
