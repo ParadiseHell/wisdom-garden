@@ -12,6 +12,7 @@ import com.chengtao.wisdomgarden.BaseView
 interface LoginContract {
   interface LoginPresenter : BasePresenter {
     fun login(userName: String, password: String)
+    fun init()
   }
 
   interface LoginView : BaseView {

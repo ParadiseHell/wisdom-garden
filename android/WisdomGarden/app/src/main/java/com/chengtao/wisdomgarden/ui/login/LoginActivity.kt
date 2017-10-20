@@ -45,6 +45,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
   }
 
   override fun start() {
+    mPresenter?.init()
   }
 
   override fun onClick(v: View?) {

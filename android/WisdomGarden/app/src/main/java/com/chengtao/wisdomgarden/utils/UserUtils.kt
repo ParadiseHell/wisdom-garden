@@ -45,4 +45,7 @@ object UserUtils {
       SharedPreferencesUtils.clean(ApplicationUtils.applicationContext!!, USER_FILE)
     }
   }
+
+  fun isUserExist(): Boolean = !StringUtils.isStringNull(getCurrentUserName(),
+      getCurrentUserPassword())
 }

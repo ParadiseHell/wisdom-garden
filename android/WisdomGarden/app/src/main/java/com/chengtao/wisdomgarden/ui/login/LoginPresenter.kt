@@ -3,6 +3,7 @@ package com.chengtao.wisdomgarden.ui.login
 import android.content.Context
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.request.LoginRequest
+import com.chengtao.wisdomgarden.ui.MainActivity
 import com.chengtao.wisdomgarden.utils.MD5Util
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.UserUtils
@@ -41,6 +42,13 @@ class LoginPresenter(
         loginRequest.requestId = LOGIN_REQUEST
         loginRequest.execute()
       }
+    }
+  }
+
+  override fun init() {
+    if (UserUtils.isUserExist()) {
+      MainActivity.invoke(mContext!!)
+      finish()
     }
   }
 

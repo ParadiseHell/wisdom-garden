@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/port"
-        android:inputType="textPassword"
+        android:inputType="number"
         />
   </android.support.design.widget.TextInputLayout>
   <com.dd.processbutton.iml.ActionProcessButton

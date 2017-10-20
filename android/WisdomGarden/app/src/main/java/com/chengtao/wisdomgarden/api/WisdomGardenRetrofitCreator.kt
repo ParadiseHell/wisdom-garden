@@ -31,7 +31,7 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
     baseUrl = BaseURLUtils.getBaseUrl()
   }
 
-  override fun getBaseUrl(): String = baseUrl ?: "http://192.168.43.176:8888/"
+  override fun getBaseUrl(): String = baseUrl ?: ""
 
   override fun getOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder().writeTimeout(60, TimeUnit.SECONDS)

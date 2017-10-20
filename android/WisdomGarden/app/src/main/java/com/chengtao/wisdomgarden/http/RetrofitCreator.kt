@@ -37,15 +37,15 @@ abstract class RetrofitCreator protected constructor() {
     val builder = Retrofit.Builder()
     if (useBaseUrl()) {
       if (getBaseUrl() == "") {
-        throw IllegalArgumentException("baseUrl不能为空");
-      }
-      if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(
+        builder.baseUrl("http://localhost/")
+      } else if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(
           getBaseUrl()))) {
-        throw IllegalArgumentException("baseUrl不是http或者https地址");
+        builder.baseUrl("http://localhost/")
+      } else {
+        builder.baseUrl(getBaseUrl())
       }
-      builder.baseUrl(getBaseUrl())
     } else {
-      builder.baseUrl("http://localhost/");
+      builder.baseUrl("http://localhost/")
     }
     return builder.client(getOkHttpClient().newBuilder().addInterceptor(
         HttpLoggingInterceptor(HttpLogger()).setLevel(BODY)).build())
