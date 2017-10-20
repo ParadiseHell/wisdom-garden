@@ -19,7 +19,7 @@ import com.chengtao.wisdomgarden.entity.ServiceNameAndCount
  */
 class ServiceAndNameAdapter(
     serviceNameAndCountList: ArrayList<ServiceNameAndCount>) : BaseQuickAdapter<ServiceNameAndCount, BaseViewHolder>(
-    R.layout.adpter_plants, serviceNameAndCountList) {
+    R.layout.adpter_service_name_and_count, serviceNameAndCountList) {
   init {
     openLoadAnimation()
   }

@@ -29,7 +29,8 @@
   <string name="sight">景点</string>
   <string name="plants">植物</string>
   <string name="route">路线</string>
-  <string name="service">服务</string>
+  <string name="service">服务设施</string>
   <string name="sight_list">所经过景点</string>
   <string name="sight_inside">所在景点</string>
+  <string name="count">个数</string>
 </resources>
