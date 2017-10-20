@@ -2,6 +2,8 @@ package com.chengtao.wisdomgarden.ui.register
 
 import android.content.Context
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
@@ -9,6 +11,7 @@ import android.widget.EditText
 import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.R
+import com.chengtao.wisdomgarden.ui.main.setting.SettingActivity
 import com.chengtao.wisdomgarden.ui.register.RegisterContract.Presenter
 
 /**
@@ -55,5 +58,18 @@ class RegisterActivity : BaseActivity<RegisterContract.Presenter>(), RegisterCon
       }
     }
   }
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.main, menu)
+    return true
+  }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+    R.id.action_settings -> {
+      SettingActivity.invoke(mContext!!)
+      true
+    }
+    else -> {
+      super.onOptionsItemSelected(item)
+    }
+  }
 }

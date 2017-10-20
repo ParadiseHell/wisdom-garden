@@ -2,6 +2,7 @@ package com.chengtao.wisdomgarden.api
 
 import android.text.TextUtils
 import com.chengtao.wisdomgarden.http.RetrofitCreator
+import com.chengtao.wisdomgarden.utils.BaseURLUtils
 import com.chengtao.wisdomgarden.utils.UserUtils
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -26,6 +27,10 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
     var baseUrl: String? = null
   }
 
+  init {
+    baseUrl = BaseURLUtils.getBaseUrl()
+  }
+
   override fun getBaseUrl(): String = baseUrl ?: "http://192.168.43.176:8888/"
 
   override fun getOkHttpClient(): OkHttpClient {
@@ -47,13 +52,13 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
       } else {
         UserUtils.getCurrentUserName()
       }
-      builder.addHeader("userName", userName)
+      builder.addHeader("userName", userName!!)
       val password = if (TextUtils.isEmpty(UserUtils.getCurrentUserPassword())) {
         ""
       } else {
         UserUtils.getCurrentUserPassword()
       }
-      builder.addHeader("password", password)
+      builder.addHeader("password", password!!)
       return chain.proceed(builder.build())
     }
   }

@@ -151,14 +151,14 @@ interface APIErrorType {
     const val INTERNAL_SERVER_ERROR = "internal server error"
     const val UNAUTHORIZED = "unauthorized"
     //用户
-    const val USER_NOT_EXIST = "user not exist"
+    const val USER_NAME_OR_PASSWORD_WRONG = "user name or password wrong"
     const val USER_EXIST = "user exist"
   }
 }
 
 interface APIParameters {
   companion object {
-    const val USER_NAME = "user_name"
+    const val USER_NAME = "userName"
     const val PASSWORD = "password"
   }
 }

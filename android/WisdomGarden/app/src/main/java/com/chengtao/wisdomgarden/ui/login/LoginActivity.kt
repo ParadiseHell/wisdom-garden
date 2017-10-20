@@ -1,5 +1,7 @@
 package com.chengtao.wisdomgarden.ui.login
 
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
@@ -8,6 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.R
+import com.chengtao.wisdomgarden.ui.main.setting.SettingActivity
 import com.chengtao.wisdomgarden.ui.register.RegisterActivity
 
 /**
@@ -38,6 +41,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
   override fun setListener() {
     btnLogin.setOnClickListener(this)
     tvHitRegister.setOnClickListener(this)
+    supportActionBar
   }
 
   override fun start() {
@@ -54,4 +58,18 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
     }
   }
 
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.main, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+    R.id.action_settings -> {
+      SettingActivity.invoke(mContext!!)
+      true
+    }
+    else -> {
+      super.onOptionsItemSelected(item)
+    }
+  }
 }

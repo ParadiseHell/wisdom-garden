@@ -26,6 +26,9 @@
     <activity
         android:name=".ui.register.RegisterActivity"
         android:label="@string/register"/>
+    <activity
+        android:name=".ui.main.setting.SettingActivity"
+        android:label="@string/setting"/>
   </application>
 
 </manifest>

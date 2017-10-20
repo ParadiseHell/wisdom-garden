@@ -1,7 +1,6 @@
 package com.chengtao.wisdomgarden.utils
 
 import android.content.Context
-import android.util.Log
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)
@@ -11,10 +10,9 @@ import android.util.Log
  */
 class ApplicationUtils {
   companion object {
-    var appliction: Context? = null
+    var applicationContext: Context? = null
     fun initApplication(applicationContext: Context) {
-      appliction = applicationContext
-      Log.e("TAG", appliction.toString())
+      this.applicationContext = applicationContext
     }
   }
 }

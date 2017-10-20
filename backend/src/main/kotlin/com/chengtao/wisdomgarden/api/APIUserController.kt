@@ -28,12 +28,14 @@ class APIUserController {
   @ResponseBody
   fun login(@RequestParam(value = APIParameters.USER_NAME, required = false) userName: String?,
             @RequestParam(value = APIParameters.PASSWORD, required = false) password: String?): Any? {
+    println("userName{${APIParameters.USER_NAME}}:$userName")
+    println("password{${APIParameters.PASSWORD}}:$password")
     return if (!StringUtils.isStringNull(userName, password)) {
       val user = userDao.queryUserByNameAndPassword(userName!!, password!!)
       if (user == null) {
         ResponseEntity
             .status(HttpStatus.NOT_FOUND)
-            .body(APIError(APIErrorType.USER_NOT_EXIST))
+            .body(APIError(APIErrorType.USER_NAME_OR_PASSWORD_WRONG))
       } else {
         user.password = null
         user.type = null

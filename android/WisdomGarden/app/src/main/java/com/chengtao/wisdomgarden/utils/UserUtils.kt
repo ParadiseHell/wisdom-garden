@@ -12,35 +12,37 @@ object UserUtils {
   private const val USER_PASSWORD = "USER_PASSWORD"
   fun saveUser(name: String, password: String) {
     println("saveUser")
-    if (ApplicationUtils.appliction != null) {
+    if (ApplicationUtils.applicationContext != null) {
       println("doSaveUser")
-      SharedPreferencesUtils.putAsynchronous(ApplicationUtils.appliction!!, USER_FILE, USER_NAME,
+      SharedPreferencesUtils.putAsynchronous(ApplicationUtils.applicationContext!!, USER_FILE,
+          USER_NAME,
           name)
-      SharedPreferencesUtils.putAsynchronous(ApplicationUtils.appliction!!, USER_FILE,
+      SharedPreferencesUtils.putAsynchronous(ApplicationUtils.applicationContext!!, USER_FILE,
           USER_PASSWORD,
           password)
     }
   }
 
   fun getCurrentUserName(): String? {
-    return if (ApplicationUtils.appliction != null) {
-      SharedPreferencesUtils.getString(ApplicationUtils.appliction!!, USER_FILE, USER_NAME)
+    return if (ApplicationUtils.applicationContext != null) {
+      SharedPreferencesUtils.getString(ApplicationUtils.applicationContext!!, USER_FILE, USER_NAME)
     } else {
       null
     }
   }
 
   fun getCurrentUserPassword(): String? {
-    return if (ApplicationUtils.appliction != null) {
-      SharedPreferencesUtils.getString(ApplicationUtils.appliction!!, USER_FILE, USER_PASSWORD)
+    return if (ApplicationUtils.applicationContext != null) {
+      SharedPreferencesUtils.getString(ApplicationUtils.applicationContext!!, USER_FILE,
+          USER_PASSWORD)
     } else {
       null
     }
   }
 
   fun clean() {
-    if (ApplicationUtils.appliction != null) {
-      SharedPreferencesUtils.clean(ApplicationUtils.appliction!!, USER_FILE)
+    if (ApplicationUtils.applicationContext != null) {
+      SharedPreferencesUtils.clean(ApplicationUtils.applicationContext!!, USER_FILE)
     }
   }
 }
