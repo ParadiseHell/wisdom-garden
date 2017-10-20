@@ -35,7 +35,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
   override fun initPresenter(): LoginContract.LoginPresenter = LoginPresenter(this, this)
 
   override fun initView() {
-
+    setActionBarTitle(R.string.login)
   }
 
   override fun setListener() {

@@ -79,6 +79,18 @@ abstract class BaseActivity<P : BasePresenter> : AppCompatActivity(), BaseView {
     }
   }
 
+  protected fun setActionBarTitle(titleResourceId: Int) {
+    try {
+      setActionBarTitle(getString(titleResourceId))
+    } catch (e: Exception) {
+      //do nothing
+    }
+  }
+
+  protected fun setActionBarTitle(title: String) {
+    supportActionBar?.title = title
+  }
+
   override fun toast(string: String) {
     showToast(string)
   }

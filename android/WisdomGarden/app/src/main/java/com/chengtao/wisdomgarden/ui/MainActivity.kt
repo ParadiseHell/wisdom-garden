@@ -70,7 +70,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
     when (tab) {
       TAB_SIGHT -> {
         mainNav.menu.findItem(R.id.sight).isChecked = true
-        supportActionBar?.title = getString(R.string.sight)
+        setActionBarTitle(R.string.sight)
         currentTab = TAB_SIGHT
         if (sightFragment == null) {
           sightFragment = SightFragment()
@@ -81,7 +81,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
       }
       TAB_PLANTS -> {
         mainNav.menu.findItem(R.id.plants).isChecked = true
-        supportActionBar?.title= getString(R.string.plants)
+        setActionBarTitle(R.string.plants)
         currentTab = TAB_PLANTS
         if (plantsFragment == null) {
           plantsFragment = PlantsFragment()
@@ -92,12 +92,12 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
       }
       TAB_ROUTE -> {
         mainNav.menu.findItem(R.id.route).isChecked = true
-        supportActionBar?.title= getString(R.string.route)
+        setActionBarTitle(R.string.route)
         currentTab = TAB_ROUTE
       }
       TAB_SERVICE -> {
         mainNav.menu.findItem(R.id.service).isChecked = true
-        supportActionBar?.title = getString(R.string.service)
+        setActionBarTitle(R.string.service)
         currentTab = TAB_SERVICE
       }
     }

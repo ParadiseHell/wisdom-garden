@@ -37,7 +37,9 @@ class SettingActivity : BaseActivity<SettingContract.Presenter>(), SettingContra
 
   override fun initPresenter(): Presenter = SettingPresenter(this, this)
 
-  override fun initView() {}
+  override fun initView() {
+    setActionBarTitle(R.string.setting)
+  }
 
   override fun setListener() {
     btnSetting.setOnClickListener(this)

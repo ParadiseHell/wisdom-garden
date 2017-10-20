@@ -42,7 +42,9 @@ class RegisterActivity : BaseActivity<RegisterContract.Presenter>(), RegisterCon
 
   override fun initPresenter(): Presenter = RegisterPresenter(this, this)
 
-  override fun initView() {}
+  override fun initView() {
+    setActionBarTitle(R.string.register)
+  }
 
   override fun setListener() {
     btnRegister.setOnClickListener(this)
