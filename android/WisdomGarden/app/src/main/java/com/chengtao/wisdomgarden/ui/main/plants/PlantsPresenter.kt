@@ -26,12 +26,12 @@ class PlantsPresenter(view: PlantsContract.View,
   private var plantsAdapter: PlantsAdapter? = null
   private val getAllPlantsRequest = GetAllPlantsRequest(this)
   override fun init() {
+    plantsAdapter = PlantsAdapter(plantsList)
+    mView?.initAdapter(plantsAdapter!!)
     getAllPlants()
   }
 
   private fun getAllPlants() {
-    plantsAdapter = PlantsAdapter(plantsList)
-    mView?.initAdapter(plantsAdapter!!)
     getAllPlantsRequest.requestId = GET_ALL_PLANTS_REQUEST
     getAllPlantsRequest.execute()
   }

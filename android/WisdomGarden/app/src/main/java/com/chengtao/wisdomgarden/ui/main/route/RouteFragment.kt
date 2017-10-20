@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView
 import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseFragment
 import com.chengtao.wisdomgarden.R
-import com.chengtao.wisdomgarden.adapter.SightAdapter
-import com.chengtao.wisdomgarden.ui.main.sight.SightContract
+import com.chengtao.wisdomgarden.adapter.RouteAdapter
+import com.chengtao.wisdomgarden.ui.main.route.RouteContract
 import com.chengtao.wisdomgarden.ui.main.route.RouteContract.Presenter
 
 /**
@@ -15,16 +15,16 @@ import com.chengtao.wisdomgarden.ui.main.route.RouteContract.Presenter
  * Time : 10:29 AM
  * Description :
  */
-class SightFragment : BaseFragment<SightContract.Presenter>(), SightContract.View {
-  @BindView(R.id.rv_sight)
-  lateinit var rvSight: RecyclerView
+class RouteFragment : BaseFragment<RouteContract.Presenter>(), RouteContract.View {
+  @BindView(R.id.rv_route)
+  lateinit var rvRoute: RecyclerView
 
-  override fun getLayoutId(): Int = R.layout.fagment_sight
+  override fun getLayoutId(): Int = R.layout.fagment_route
 
-  override fun initPresenter(): SightContract.Presenter = SightPresenter(this, mContext!!)
+  override fun initPresenter(): Presenter = RoutePresenter(this, mContext!!)
 
   override fun initView() {
-    rvSight.layoutManager = LinearLayoutManager(mContext!!)
+    rvRoute.layoutManager = LinearLayoutManager(mContext!!)
   }
 
   override fun setListener() {
@@ -34,7 +34,7 @@ class SightFragment : BaseFragment<SightContract.Presenter>(), SightContract.Vie
     mPresenter?.init()
   }
 
-  override fun initAdapter(adapter: SightAdapter) {
-    rvSight.adapter = adapter
+  override fun initAdapter(adapter: RouteAdapter) {
+    rvRoute.adapter = adapter
   }
 }

@@ -3,10 +3,11 @@ package com.chengtao.wisdomgarden.ui.main.sight
 import android.content.Context
 import com.chengtao.wisdomgarden.EventBusMessageID
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
-import com.chengtao.wisdomgarden.adapter.SightAdapter
+import com.chengtao.wisdomgarden.adapter.RouteAdapter
 import com.chengtao.wisdomgarden.entity.EventBusMessage
-import com.chengtao.wisdomgarden.entity.Sight
+import com.chengtao.wisdomgarden.entity.Route
 import com.chengtao.wisdomgarden.request.GetAllSightsRequest
+import com.chengtao.wisdomgarden.ui.main.route.RouteContract
 
 @Suppress("UNCHECKED_CAST")
 /**
@@ -15,38 +16,38 @@ import com.chengtao.wisdomgarden.request.GetAllSightsRequest
  * Time : 10:30 AM
  * Description :
  */
-class SightPresenter(view: SightContract.View,
-    context: Context) : WisdomGardenPresenter<SightContract.View>(view,
-    context), SightContract.Presenter {
+class RoutePresenter(view: RouteContract.View,
+    context: Context) : WisdomGardenPresenter<RouteContract.View>(view,
+    context), RouteContract.Presenter {
   companion object {
-    const val GET_ALL_SIGHT_REQUEST: Short = 1
+    const val GET_ALL_ROUTE_REQUEST: Short = 1
   }
 
-  private val sightList = ArrayList<Sight>()
-  private var sightAdapter: SightAdapter? = null
+  private val routeList = ArrayList<Route>()
+  private var routeAdapter: RouteAdapter? = null
   private val getAllSightRequest = GetAllSightsRequest(this)
   override fun init() {
-    sightAdapter = SightAdapter(sightList)
-    mView?.initAdapter(sightAdapter!!)
-    getAllSight()
+    routeAdapter = RouteAdapter(routeList)
+    mView?.initAdapter(routeAdapter!!)
+    getAllRoute()
   }
 
-  private fun getAllSight() {
-    getAllSightRequest.requestId = GET_ALL_SIGHT_REQUEST
+  private fun getAllRoute() {
+    getAllSightRequest.requestId = GET_ALL_ROUTE_REQUEST
     getAllSightRequest.execute()
   }
 
   override fun onData(requestId: Short, response: Any?) {
     when (requestId) {
-      GET_ALL_SIGHT_REQUEST -> {
+      GET_ALL_ROUTE_REQUEST -> {
         if (response != null) {
-          val list: ArrayList<Sight> = response as ArrayList<Sight>
+          val list: ArrayList<Route> = response as ArrayList<Route>
           if (list.size > 0) {
-            sightList.clear()
-            sightList.addAll(list)
-            sightAdapter?.notifyDataSetChanged()
+            routeList.clear()
+            routeList.addAll(list)
+            routeAdapter?.notifyDataSetChanged()
           } else {
-            mView?.toast("没有景点")
+            mView?.toast("没有路线")
           }
         }
       }
@@ -57,7 +58,7 @@ class SightPresenter(view: SightContract.View,
     super.onEventBusMessage(message)
     when (message.messageId) {
       EventBusMessageID.CHANGE_BASE_URL -> {
-        getAllSight()
+        getAllRoute()
       }
     }
   }

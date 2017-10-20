@@ -12,6 +12,7 @@ import com.chengtao.wisdomgarden.BasePresenter
 import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.ui.main.plants.PlantsFragment
 import com.chengtao.wisdomgarden.ui.main.setting.SettingActivity
+import com.chengtao.wisdomgarden.ui.main.sight.RouteFragment
 import com.chengtao.wisdomgarden.ui.main.sight.SightFragment
 
 
@@ -33,6 +34,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
   private var currentTab: Short = TAB_SIGHT
   private var sightFragment: SightFragment? = null
   private var plantsFragment: PlantsFragment? = null
+  private var routeFragment: RouteFragment? = null
 
   override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -94,6 +96,12 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
         mainNav.menu.findItem(R.id.route).isChecked = true
         setActionBarTitle(R.string.route)
         currentTab = TAB_ROUTE
+        if (routeFragment == null) {
+          routeFragment = RouteFragment()
+          transaction.add(R.id.fl_main, routeFragment)
+        } else {
+          transaction.show(routeFragment)
+        }
       }
       TAB_SERVICE -> {
         mainNav.menu.findItem(R.id.service).isChecked = true
