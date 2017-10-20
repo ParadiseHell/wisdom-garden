@@ -18,4 +18,17 @@
   <string name="domain_or_ip">域名或ip</string>
   <string name="port">端口</string>
   <string name="setting">设置</string>
+  <string name="name">名称</string>
+  <string name="description">简介</string>
+  <string name="ecology">生态</string>
+  <string name="temperature">温度</string>
+  <string name="humidity">湿度</string>
+  <string name="pm25">PM2.5</string>
+  <string name="wind">风力</string>
+  <string name="dressing">穿衣指数</string>
+  <string name="sight">景点</string>
+  <string name="plants">植物</string>
+  <string name="route">路线</string>
+  <string name="service">服务</string>
+  <string name="sight_list">所经过景点</string>
 </resources>

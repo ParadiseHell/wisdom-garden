@@ -6,6 +6,7 @@ android {
   compileSdkVersion 26
   buildToolsVersion "26.0.1"
   defaultConfig {
+    multiDexEnabled true
     applicationId "com.chengtao.wisdomgarden"
     minSdkVersion 21
     targetSdkVersion 26
@@ -19,6 +20,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  kapt { generateStubs = true }
 }
 
 dependencies {
@@ -52,7 +54,4 @@ dependencies {
   //
   compile 'com.jakewharton:butterknife:8.8.1'
   kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-}
-repositories {
-  mavenCentral()
 }

@@ -53,7 +53,7 @@ abstract class WisdomGardenPresenter<V : BaseView>(view: V,
 
   //event bus 消息通知
   @Subscribe(threadMode = MAIN)
-  fun onEventBusMessage(message: EventBusMessage) {
-    Log.e("TAG","onEventBusMessage")
+  open fun onEventBusMessage(message: EventBusMessage) {
+    Log.e("TAG", "onEventBusMessage")
   }
 }

@@ -7,6 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
+import java.net.ConnectException
+import java.net.SocketException
 import java.net.UnknownHostException
 
 /**
@@ -69,5 +71,10 @@ class HttpClient {
    * @param e 　异常
    * @return 是　: true
    */
-  private fun isNetWorkError(e: Throwable?): Boolean = e is UnknownHostException
+  private fun isNetWorkError(e: Throwable?): Boolean = when (e) {
+    is UnknownHostException -> true
+    is ConnectException -> true
+    is SocketException -> true
+    else -> false
+  }
 }

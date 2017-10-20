@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import butterknife.ButterKnife
+import butterknife.Unbinder
 
 @Suppress("ProtectedInFinal")
 /**
@@ -18,7 +19,7 @@ import butterknife.ButterKnife
  * Description :
  */
 abstract class BaseFragment<P : BasePresenter> : Fragment(), BaseView {
-
+  private var unBinder: Unbinder? = null
   var toast: Toast? = null
   var mContext: Context? = null
   var mPresenter: P? = null
@@ -28,12 +29,13 @@ abstract class BaseFragment<P : BasePresenter> : Fragment(), BaseView {
     if (getLayoutId() == 0) {
       throw RuntimeException("layout id can not be 0");
     }
-    return inflater?.inflate(getLayoutId(), container, false)
+    val view = inflater?.inflate(getLayoutId(), container, false)
+    unBinder = ButterKnife.bind(this, view!!)
+    return view
   }
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    ButterKnife.bind(this.activity)
     mContext = this.activity
     mPresenter = initPresenter()
     mPresenter?.subscribe()
@@ -48,6 +50,7 @@ abstract class BaseFragment<P : BasePresenter> : Fragment(), BaseView {
 
   override fun onDetach() {
     super.onDetach()
+    unBinder?.unbind()
     mPresenter?.unSubscribe()
   }
 
