@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgarden.ui.main.sight
+package com.chengtao.wisdomgarden.ui.main.route
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -8,6 +8,7 @@ import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.adapter.RouteAdapter
 import com.chengtao.wisdomgarden.ui.main.route.RouteContract
 import com.chengtao.wisdomgarden.ui.main.route.RouteContract.Presenter
+import com.chengtao.wisdomgarden.ui.main.route.RoutePresenter
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)

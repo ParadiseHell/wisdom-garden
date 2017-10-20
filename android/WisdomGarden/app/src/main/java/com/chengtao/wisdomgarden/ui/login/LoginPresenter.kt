@@ -17,7 +17,7 @@ import com.chengtao.wisdomgarden.utils.UserUtils
 class LoginPresenter(
     loginView: LoginContract.LoginView,
     context: Context) : WisdomGardenPresenter<LoginContract.LoginView>(
-    loginView, context), LoginContract.LoginPresenter {
+    loginView, context), LoginContract.Presenter {
   companion object {
     val LOGIN_REQUEST: Short = 1
   }

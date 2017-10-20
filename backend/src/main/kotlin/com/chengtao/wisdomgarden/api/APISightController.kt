@@ -24,6 +24,8 @@ class APISightController : APIBaseController() {
   @GetMapping(API.GET_ALL_SIGHTS)
   fun getAllSights(@RequestHeader(value = APIParameters.USER_NAME, required = false) userName: String?,
                    @RequestHeader(value = APIParameters.PASSWORD, required = false) password: String?): Any? {
+    println("userName{${APIParameters.USER_NAME}}:$userName")
+    println("password{${APIParameters.PASSWORD}}:$password")
     return if (isAuthorized(userName, password)) {
       var sightList = sightDao.queryAllSight()
       if (sightList == null) {

@@ -11,8 +11,9 @@ import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.BasePresenter
 import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.ui.main.plants.PlantsFragment
+import com.chengtao.wisdomgarden.ui.main.route.RouteFragment
+import com.chengtao.wisdomgarden.ui.main.service.ServiceFragment
 import com.chengtao.wisdomgarden.ui.main.setting.SettingActivity
-import com.chengtao.wisdomgarden.ui.main.sight.RouteFragment
 import com.chengtao.wisdomgarden.ui.main.sight.SightFragment
 
 
@@ -35,6 +36,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
   private var sightFragment: SightFragment? = null
   private var plantsFragment: PlantsFragment? = null
   private var routeFragment: RouteFragment? = null
+  private var serviceFragment: ServiceFragment? = null
 
   override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -107,6 +109,12 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
         mainNav.menu.findItem(R.id.service).isChecked = true
         setActionBarTitle(R.string.service)
         currentTab = TAB_SERVICE
+        if (serviceFragment == null) {
+          serviceFragment = ServiceFragment()
+          transaction.add(R.id.fl_main, serviceFragment)
+        } else {
+          transaction.show(serviceFragment)
+        }
       }
     }
     transaction.commitAllowingStateLoss()
@@ -123,6 +131,12 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
     }
     if (plantsFragment != null) {
       transaction.hide(plantsFragment)
+    }
+    if (routeFragment != null) {
+      transaction.hide(routeFragment)
+    }
+    if (serviceFragment != null) {
+      transaction.hide(serviceFragment)
     }
   }
 

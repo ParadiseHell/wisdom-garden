@@ -1,4 +1,4 @@
-package com.chengtao.wisdomgarden.ui.main.sight
+package com.chengtao.wisdomgarden.ui.main.route
 
 import android.content.Context
 import com.chengtao.wisdomgarden.EventBusMessageID
@@ -6,8 +6,7 @@ import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.adapter.RouteAdapter
 import com.chengtao.wisdomgarden.entity.EventBusMessage
 import com.chengtao.wisdomgarden.entity.Route
-import com.chengtao.wisdomgarden.request.GetAllSightsRequest
-import com.chengtao.wisdomgarden.ui.main.route.RouteContract
+import com.chengtao.wisdomgarden.request.GetAllRoutesRequest
 
 @Suppress("UNCHECKED_CAST")
 /**
@@ -25,7 +24,7 @@ class RoutePresenter(view: RouteContract.View,
 
   private val routeList = ArrayList<Route>()
   private var routeAdapter: RouteAdapter? = null
-  private val getAllSightRequest = GetAllSightsRequest(this)
+  private val getAllRouteRequest = GetAllRoutesRequest(this)
   override fun init() {
     routeAdapter = RouteAdapter(routeList)
     mView?.initAdapter(routeAdapter!!)
@@ -33,8 +32,8 @@ class RoutePresenter(view: RouteContract.View,
   }
 
   private fun getAllRoute() {
-    getAllSightRequest.requestId = GET_ALL_ROUTE_REQUEST
-    getAllSightRequest.execute()
+    getAllRouteRequest.requestId = GET_ALL_ROUTE_REQUEST
+    getAllRouteRequest.execute()
   }
 
   override fun onData(requestId: Short, response: Any?) {

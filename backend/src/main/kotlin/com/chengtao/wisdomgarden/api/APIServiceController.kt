@@ -25,6 +25,8 @@ class APIServiceController : APIBaseController() {
   @GetMapping(API.GET_ALL_SERVICE_NAME_AND_COUNT)
   fun getAllServicesNameAndCount(@RequestHeader(value = APIParameters.USER_NAME, required = false) userName: String?,
                                  @RequestHeader(value = APIParameters.PASSWORD, required = false) password: String?): Any? {
+    println("userName{${APIParameters.USER_NAME}}:$userName")
+    println("password{${APIParameters.PASSWORD}}:$password")
     return if (isAuthorized(userName, password)) {
       var serviceNameCountList = serviceDao.queryAllServiceNameAndCount()
       if (serviceNameCountList == null) {
@@ -40,6 +42,8 @@ class APIServiceController : APIBaseController() {
   fun getAllServicesByName(@RequestHeader(value = APIParameters.USER_NAME, required = false) userName: String?,
                            @RequestHeader(value = APIParameters.PASSWORD, required = false) password: String?,
                            @PathVariable(value = "name") name: String): Any? {
+    println("userName{${APIParameters.USER_NAME}}:$userName")
+    println("password{${APIParameters.PASSWORD}}:$password")
     return if (isAuthorized(userName, password)) {
       var serviceList = serviceDao.queryServicesByName(name)
       if (serviceList == null) {

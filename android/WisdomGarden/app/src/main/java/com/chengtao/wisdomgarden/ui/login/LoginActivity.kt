@@ -19,7 +19,7 @@ import com.chengtao.wisdomgarden.ui.register.RegisterActivity
  * Time : 1:05 PM
  * Description :
  */
-class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContract.LoginView, OnClickListener {
+class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.LoginView, OnClickListener {
   //控件
   @BindView(R.id.et_user_name)
   lateinit var etUserName: EditText
@@ -32,7 +32,7 @@ class LoginActivity : BaseActivity<LoginContract.LoginPresenter>(), LoginContrac
 
   override fun getLayoutId(): Int = R.layout.activity_login
 
-  override fun initPresenter(): LoginContract.LoginPresenter = LoginPresenter(this, this)
+  override fun initPresenter(): LoginContract.Presenter = LoginPresenter(this, this)
 
   override fun initView() {
     setActionBarTitle(R.string.login)

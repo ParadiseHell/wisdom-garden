@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden.ui.main.sight
 
 import android.content.Context
+import android.util.Log
 import com.chengtao.wisdomgarden.EventBusMessageID
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.adapter.SightAdapter
@@ -40,6 +41,7 @@ class SightPresenter(view: SightContract.View,
     when (requestId) {
       GET_ALL_SIGHT_REQUEST -> {
         if (response != null) {
+          Log.e("TAG", response.toString())
           val list: ArrayList<Sight> = response as ArrayList<Sight>
           if (list.size > 0) {
             sightList.clear()

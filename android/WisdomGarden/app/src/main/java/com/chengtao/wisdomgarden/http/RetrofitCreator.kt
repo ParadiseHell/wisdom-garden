@@ -36,6 +36,7 @@ abstract class RetrofitCreator protected constructor() {
   private fun getRetrofit(): Retrofit {
     val builder = Retrofit.Builder()
     if (useBaseUrl()) {
+      Log.e("TAG", "getBaseUrl():${getBaseUrl()}")
       if (getBaseUrl() == "") {
         builder.baseUrl("http://localhost/")
       } else if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(

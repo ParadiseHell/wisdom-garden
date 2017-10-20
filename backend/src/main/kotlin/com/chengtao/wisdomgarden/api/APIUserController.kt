@@ -52,6 +52,8 @@ class APIUserController {
   @ResponseBody
   fun register(@RequestParam(value = APIParameters.USER_NAME, required = false) userName: String?,
                @RequestParam(value = APIParameters.PASSWORD, required = false) password: String?): Any? {
+    println("userName{${APIParameters.USER_NAME}}:$userName")
+    println("password{${APIParameters.PASSWORD}}:$password")
     return if (!StringUtils.isStringNull(userName, password)) {
       if (userDao.isUserExist(userName!!)) {
         ResponseEntity

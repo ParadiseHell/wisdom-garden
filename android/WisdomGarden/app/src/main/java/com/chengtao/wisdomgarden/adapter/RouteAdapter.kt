@@ -12,22 +12,22 @@ import com.chengtao.wisdomgarden.entity.Route
  * Description :
  */
 class RouteAdapter(routeList: ArrayList<Route>) : BaseQuickAdapter<Route, BaseViewHolder>(
-    R.layout.adpter_plants, routeList) {
+    R.layout.adpter_route, routeList) {
   init {
     openLoadAnimation()
   }
 
   override fun convert(holder: BaseViewHolder?, item: Route?) {
     if (holder != null && item != null) {
-      holder.setText(R.id.name, item.name ?: "")
-      holder.setText(R.id.description, item.description ?: "")
+      holder.setText(R.id.name, if (item.name == null) "" else item.name)
+      holder.setText(R.id.description, if (item.description == null) "" else item.description)
       val sightList = item.sightChain
       if (sightList != null) {
         var sightListString: String? = ""
         for (index in sightList.indices) {
-          sightListString += sightList[index]
+          sightListString += sightList[index].name
           if (index != sightList.size - 1) {
-            sightListString + ","
+            sightListString += ","
           }
         }
         holder.setText(R.id.sight_chain, sightListString)

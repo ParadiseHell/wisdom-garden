@@ -27,11 +27,7 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
     var baseUrl: String? = null
   }
 
-  init {
-    baseUrl = BaseURLUtils.getBaseUrl()
-  }
-
-  override fun getBaseUrl(): String = baseUrl ?: ""
+  override fun getBaseUrl(): String = BaseURLUtils.getBaseUrl()
 
   override fun getOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder().writeTimeout(60, TimeUnit.SECONDS)
@@ -66,7 +62,6 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
   override fun getConverterFactory(): Factory {
     val builder = GsonBuilder().serializeNulls()
         .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ")
-        .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE_WITH_SPACES)
     return GsonConverterFactory.create(builder.create())
   }
 }

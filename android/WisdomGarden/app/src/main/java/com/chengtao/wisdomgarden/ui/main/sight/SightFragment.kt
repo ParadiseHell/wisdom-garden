@@ -6,8 +6,6 @@ import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseFragment
 import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.adapter.SightAdapter
-import com.chengtao.wisdomgarden.ui.main.sight.SightContract
-import com.chengtao.wisdomgarden.ui.main.route.RouteContract.Presenter
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)

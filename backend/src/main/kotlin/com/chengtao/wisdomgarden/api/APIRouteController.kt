@@ -26,6 +26,8 @@ class APIRouteController : APIBaseController() {
   @GetMapping(API.GET_ALL_ROUTES)
   fun getAllRoutes(@RequestHeader(value = APIParameters.USER_NAME, required = false) userName: String?,
                    @RequestHeader(value = APIParameters.PASSWORD, required = false) password: String?): Any? {
+    println("userName{${APIParameters.USER_NAME}}:$userName")
+    println("password{${APIParameters.PASSWORD}}:$password")
     return if (isAuthorized(userName, password)) {
       var routeList = routeDao.queryAllRoutes()
       if (routeList == null) {
