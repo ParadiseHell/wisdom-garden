@@ -1,7 +1,9 @@
 package com.chengtao.wisdomgarden.ui.login
 
 import android.content.Context
+import com.chengtao.wisdomgarden.EventBusMessageID
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
+import com.chengtao.wisdomgarden.entity.EventBusMessage
 import com.chengtao.wisdomgarden.request.LoginRequest
 import com.chengtao.wisdomgarden.ui.MainActivity
 import com.chengtao.wisdomgarden.utils.MD5Util
@@ -60,7 +62,17 @@ class LoginPresenter(
             UserUtils.saveUser(userName!!, password!!)
           }
           mView?.toast("登录成功")
+          MainActivity.invoke(mContext!!)
         }
+      }
+    }
+  }
+
+  override fun onEventBusMessage(message: EventBusMessage) {
+    super.onEventBusMessage(message)
+    when (message.messageId) {
+      EventBusMessageID.FINISH_ACTIVITY -> {
+        finish()
       }
     }
   }

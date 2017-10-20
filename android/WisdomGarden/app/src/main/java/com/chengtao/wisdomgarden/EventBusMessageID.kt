@@ -9,5 +9,6 @@ package com.chengtao.wisdomgarden
 interface EventBusMessageID {
   companion object {
     const val CHANGE_BASE_URL: Short = 1
+    const val FINISH_ACTIVITY: Short = 1
   }
 }

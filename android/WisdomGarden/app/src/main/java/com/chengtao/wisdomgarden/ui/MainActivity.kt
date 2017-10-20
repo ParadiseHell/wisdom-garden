@@ -10,11 +10,13 @@ import butterknife.BindView
 import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.BasePresenter
 import com.chengtao.wisdomgarden.R
+import com.chengtao.wisdomgarden.ui.login.LoginActivity
 import com.chengtao.wisdomgarden.ui.main.plants.PlantsFragment
 import com.chengtao.wisdomgarden.ui.main.route.RouteFragment
 import com.chengtao.wisdomgarden.ui.main.service.ServiceFragment
 import com.chengtao.wisdomgarden.ui.main.setting.SettingActivity
 import com.chengtao.wisdomgarden.ui.main.sight.SightFragment
+import com.chengtao.wisdomgarden.utils.UserUtils
 
 
 class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -54,13 +56,19 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.main, menu)
+    menuInflater.inflate(R.menu.menu_main, menu)
     return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
     R.id.action_settings -> {
       SettingActivity.invoke(mContext!!)
+      true
+    }
+    R.id.action_logout -> {
+      UserUtils.clean()
+      LoginActivity.invoke(mContext!!)
+      finish()
       true
     }
     else -> {

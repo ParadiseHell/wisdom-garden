@@ -33,4 +33,6 @@
   <string name="sight_list">所经过景点</string>
   <string name="sight_inside">所在景点</string>
   <string name="count">个数</string>
+  <string name="logout">登出</string>
+  <string name="location">位置</string>
 </resources>

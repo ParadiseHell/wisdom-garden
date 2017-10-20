@@ -1,12 +1,16 @@
 package com.chengtao.wisdomgarden.ui.register
 
 import android.content.Context
+import com.chengtao.wisdomgarden.EventBusMessageID
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.api.ErrorType
+import com.chengtao.wisdomgarden.entity.EventBusMessage
 import com.chengtao.wisdomgarden.request.RegisterRequest
+import com.chengtao.wisdomgarden.ui.MainActivity
 import com.chengtao.wisdomgarden.utils.MD5Util
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.UserUtils
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Author : ChengTao(chengtaolearn@163.com)
@@ -59,6 +63,8 @@ class RegisterPresenter(view: RegisterContract.View,
             UserUtils.saveUser(userName!!, password!!)
           }
           mView?.toast("注册成功")
+          EventBus.getDefault().post(EventBusMessage(EventBusMessageID.FINISH_ACTIVITY, true))
+          MainActivity.invoke(mContext!!)
         }
       }
     }

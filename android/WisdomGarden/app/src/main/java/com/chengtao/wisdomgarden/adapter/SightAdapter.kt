@@ -22,6 +22,9 @@ class SightAdapter(sightsList: ArrayList<Sight>) : BaseQuickAdapter<Sight, BaseV
     if (holder != null && item != null) {
       holder.setText(R.id.name, if (item.name == null) "" else item.name)
       holder.setText(R.id.description, if (item.description == null) "" else item.description)
+      if (item.latitude != null && item.longitude != null) {
+        holder.setText(R.id.location, "(${item.latitude},${item.longitude})")
+      }
       val ecology = item.ecology
       if (ecology == null) {
         holder.getView<View>(R.id.ll_ecology).visibility = View.GONE

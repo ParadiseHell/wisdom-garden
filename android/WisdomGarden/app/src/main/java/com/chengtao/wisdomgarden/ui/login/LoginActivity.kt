@@ -1,5 +1,7 @@
 package com.chengtao.wisdomgarden.ui.login
 
+import android.content.Context
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,6 +22,12 @@ import com.chengtao.wisdomgarden.ui.register.RegisterActivity
  * Description :
  */
 class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.LoginView, OnClickListener {
+  companion object {
+    fun invoke(context: Context) {
+      context.startActivity(Intent(context, LoginActivity::class.java))
+    }
+  }
+
   //控件
   @BindView(R.id.et_user_name)
   lateinit var etUserName: EditText
@@ -60,7 +68,7 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Log
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.main, menu)
+    menuInflater.inflate(R.menu.menu_setting, menu)
     return true
   }
 
