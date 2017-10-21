@@ -63,6 +63,7 @@ class LoginPresenter(
           }
           mView?.toast("登录成功")
           MainActivity.invoke(mContext!!)
+          finish()
         }
       }
     }

@@ -65,6 +65,7 @@ class RegisterPresenter(view: RegisterContract.View,
           mView?.toast("注册成功")
           EventBus.getDefault().post(EventBusMessage(EventBusMessageID.FINISH_ACTIVITY, true))
           MainActivity.invoke(mContext!!)
+          finish()
         }
       }
     }
@@ -76,7 +77,6 @@ class RegisterPresenter(view: RegisterContract.View,
       REGISTER_REQUEST -> {
         when (errorType) {
           ErrorType.USER_EXIST ->
-            //结束注册界面
             finish()
         }
       }
