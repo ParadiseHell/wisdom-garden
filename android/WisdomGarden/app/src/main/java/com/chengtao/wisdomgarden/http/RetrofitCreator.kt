@@ -9,7 +9,6 @@ import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import java.util.HashMap
 
 
 /**
@@ -21,9 +20,10 @@ import java.util.HashMap
 @Suppress("MemberVisibilityCanPrivate")
 abstract class RetrofitCreator protected constructor() {
   companion object {
-    private val retrofitMap = HashMap<String, Retrofit>()
     private var dynamicRetrofit: Retrofit? = null
   }
+
+  var retrofitMap: HashMap<String, Retrofit> = HashMap()
 
   init {
     initRetrofit()
@@ -34,6 +34,7 @@ abstract class RetrofitCreator protected constructor() {
   }
 
   private fun getRetrofit(): Retrofit {
+    Log.e("TAG", "getRetrofit")
     val builder = Retrofit.Builder()
     if (useBaseUrl()) {
       if (getBaseUrl() == "") {

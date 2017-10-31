@@ -17,5 +17,4 @@ class GetAllPlantsRequest(
     httpResponseListener) {
   override fun getObservable(): Observable<Response<ArrayList<Plants>>>? =
       retrofit?.create(PlantsAPI::class.java)?.getAllPlants()
-
 }

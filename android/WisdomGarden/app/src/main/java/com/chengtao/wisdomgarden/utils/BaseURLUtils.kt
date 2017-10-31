@@ -1,5 +1,7 @@
 package com.chengtao.wisdomgarden.utils
 
+import android.util.Log
+
 /**
  * Author : ChengTao(chengtaolearn@163.com)
  * Date : 10/20/17
@@ -45,7 +47,7 @@ object BaseURLUtils {
       if (StringUtils.isStringNull(domainOrIp, port)) {
         ""
       } else {
-        "http://$domainOrIp:$port"
+        "http://$domainOrIp:$port/"
       }
     } else {
       ""

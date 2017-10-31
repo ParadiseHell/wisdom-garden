@@ -7,6 +7,7 @@ import com.chengtao.wisdomgarden.EventBusMessageID
 import com.chengtao.wisdomgarden.WisdomGardenPresenter
 import com.chengtao.wisdomgarden.api.WisdomGardenRetrofitCreator
 import com.chengtao.wisdomgarden.entity.EventBusMessage
+import com.chengtao.wisdomgarden.http.HttpRequest
 import com.chengtao.wisdomgarden.utils.BaseURLUtils
 import org.greenrobot.eventbus.EventBus
 
@@ -40,8 +41,13 @@ class SettingPresenter(view: SettingContract.View,
         } else if (port.toInt() !in 0..65535) {
           mView?.toast("端口必须在0到65535之间")
         } else {
-          WisdomGardenRetrofitCreator.baseUrl = "http://$domainOrIp:$port"
+          WisdomGardenRetrofitCreator.baseUrl = "http://$domainOrIp:$port/"
+          //清除之前的retrofit缓存
+          WisdomGardenRetrofitCreator.instance.retrofitMap.clear()
+          HttpRequest.retrofit = null
+          //保存ip和端口
           BaseURLUtils.changeBaseURl(domainOrIp, port)
+          //通知界面
           EventBus.getDefault().post(EventBusMessage(EventBusMessageID.CHANGE_BASE_URL, true))
           finish()
         }

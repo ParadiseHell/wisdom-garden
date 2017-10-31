@@ -17,5 +17,4 @@ class GetAllRoutesRequest(
     httpResponseListener) {
   override fun getObservable(): Observable<Response<ArrayList<Route>>>? =
       retrofit?.create(RouteAPI::class.java)?.getAllRoute()
-
 }

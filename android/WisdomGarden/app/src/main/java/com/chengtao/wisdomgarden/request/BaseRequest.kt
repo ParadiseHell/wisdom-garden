@@ -32,7 +32,7 @@ abstract class BaseRequest<T>() : HttpRequest<T>() {
 
   companion object {
     val mGson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create()
+        .create()!!
   }
 
   override fun getRetrofitCreator(): RetrofitCreator = WisdomGardenRetrofitCreator.instance

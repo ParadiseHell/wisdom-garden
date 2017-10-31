@@ -1,10 +1,10 @@
 package com.chengtao.wisdomgarden.api
 
 import android.text.TextUtils
+import android.util.Log
 import com.chengtao.wisdomgarden.http.RetrofitCreator
 import com.chengtao.wisdomgarden.utils.BaseURLUtils
 import com.chengtao.wisdomgarden.utils.UserUtils
-import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
@@ -27,7 +27,11 @@ class WisdomGardenRetrofitCreator private constructor() : RetrofitCreator() {
     var baseUrl: String? = null
   }
 
-  override fun getBaseUrl(): String = BaseURLUtils.getBaseUrl()
+  override fun getBaseUrl(): String = if (TextUtils.isEmpty(baseUrl)) {
+    BaseURLUtils.getBaseUrl()
+  } else {
+    baseUrl!!
+  }
 
   override fun getOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder().writeTimeout(60, TimeUnit.SECONDS)

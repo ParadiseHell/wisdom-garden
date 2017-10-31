@@ -12,20 +12,24 @@ import retrofit2.Retrofit
  * Time : 4:27 AM
  * Description :
  */
-@Suppress("MemberVisibilityCanPrivate")
+@Suppress("MemberVisibilityCanPrivate", "LeakingThis")
 abstract class HttpRequest<T>() : HttpRequestListener {
   companion object {
     var httpClient = HttpClient()
+    var retrofit: Retrofit? = null
   }
 
   var requestId: Short = 0
-  var retrofit: Retrofit? = null
   var disposable: Disposable? = null//用于取消请求
 
   init {
     if (retrofit == null) {
       retrofit = getRetrofitCreator().create()
     }
+  }
+
+  fun createNewRetrofit() {
+    retrofit = getRetrofitCreator().create()
   }
 
   fun execute() {
