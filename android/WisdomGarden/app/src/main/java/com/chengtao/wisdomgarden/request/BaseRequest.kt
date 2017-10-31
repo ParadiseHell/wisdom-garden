@@ -1,14 +1,15 @@
 package com.chengtao.wisdomgarden.request
 
+import android.util.Log
 import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.api.ErrorString
 import com.chengtao.wisdomgarden.api.ErrorType
+import com.chengtao.wisdomgarden.api.WisdomGardenRetrofitCreator
 import com.chengtao.wisdomgarden.entity.Error
 import com.chengtao.wisdomgarden.http.HttpClient
 import com.chengtao.wisdomgarden.http.HttpRequest
 import com.chengtao.wisdomgarden.http.HttpResponseListener
 import com.chengtao.wisdomgarden.http.RetrofitCreator
-import com.chengtao.wisdomgarden.api.WisdomGardenRetrofitCreator
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -113,6 +114,7 @@ abstract class BaseRequest<T>() : HttpRequest<T>() {
         error = mGson.fromJson(errorBody.string(), Error::class.java)
       } catch (e: Exception) {
         //do nothing
+        Log.e("TAG", "e${e.message}")
       }
     }
     if (error == null) {

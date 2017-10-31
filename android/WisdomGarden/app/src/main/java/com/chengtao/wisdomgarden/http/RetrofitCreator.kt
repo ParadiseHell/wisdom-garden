@@ -19,34 +19,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
  */
 @Suppress("MemberVisibilityCanPrivate")
 abstract class RetrofitCreator protected constructor() {
-  companion object {
-    private var dynamicRetrofit: Retrofit? = null
-  }
-
-  var retrofitMap: HashMap<String, Retrofit> = HashMap()
-
-  init {
-    initRetrofit()
-  }
-
-  private fun initRetrofit() {
-    retrofitMap.put(getRetrofitName(), getRetrofit())
-  }
 
   private fun getRetrofit(): Retrofit {
     Log.e("TAG", "getRetrofit")
     val builder = Retrofit.Builder()
-    if (useBaseUrl()) {
-      if (getBaseUrl() == "") {
-        builder.baseUrl("http://39.106.63.196:8080/")
-      } else if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(
-          getBaseUrl()))) {
-        builder.baseUrl("http://39.106.63.196:8080/")
-      } else {
-        builder.baseUrl(getBaseUrl())
-      }
-    } else {
+    if (getBaseUrl() == "") {
       builder.baseUrl("http://39.106.63.196:8080/")
+    } else if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(
+        getBaseUrl()))) {
+      builder.baseUrl("http://39.106.63.196:8080/")
+    } else {
+      builder.baseUrl(getBaseUrl())
     }
     return builder.client(getOkHttpClient().newBuilder().addInterceptor(
         HttpLoggingInterceptor(HttpLogger()).setLevel(BODY)).build())
@@ -54,32 +37,9 @@ abstract class RetrofitCreator protected constructor() {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
   }
 
-  fun create(): Retrofit? {
-    return if (useBaseUrl()) {
-      if (retrofitMap.isEmpty()) {
-        initRetrofit()
-      }
-      if (retrofitMap[getRetrofitName()] == null) {
-        initRetrofit()
-      }
-      retrofitMap[getRetrofitName()]
-    } else {
-      if (dynamicRetrofit == null) {
-        dynamicRetrofit = getRetrofit()
-      }
-      dynamicRetrofit
-    }
+  fun create(): Retrofit {
+    return getRetrofit()
   }
-
-  /**
-   * 获取创建retrofit类的名字,以便生成最少的retrofit实例
-   */
-  protected fun getRetrofitName(): String = this::class.toString()
-
-  /**
-   * 是否使用baseURL,默认是
-   */
-  protected fun useBaseUrl(): Boolean = true
 
   /**
    * 获取 BaseUrl

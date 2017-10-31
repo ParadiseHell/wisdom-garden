@@ -13,23 +13,19 @@ import retrofit2.Retrofit
  * Description :
  */
 @Suppress("MemberVisibilityCanPrivate", "LeakingThis")
-abstract class HttpRequest<T>() : HttpRequestListener {
+abstract class HttpRequest<T> : HttpRequestListener {
   companion object {
     var httpClient = HttpClient()
-    var retrofit: Retrofit? = null
+    val retrofitMap: HashMap<String, Retrofit> = HashMap()
   }
 
   var requestId: Short = 0
   var disposable: Disposable? = null//用于取消请求
 
   init {
-    if (retrofit == null) {
-      retrofit = getRetrofitCreator().create()
+    if (!retrofitMap.containsKey(getRetrofitName())) {
+      retrofitMap.put(getRetrofitName(), getRetrofitCreator().create())
     }
-  }
-
-  fun createNewRetrofit() {
-    retrofit = getRetrofitCreator().create()
   }
 
   fun execute() {
@@ -40,6 +36,16 @@ abstract class HttpRequest<T>() : HttpRequestListener {
     disposable?.dispose()
   }
 
+  /**
+   * 检查retrofit,如果为空则初始化
+   */
+  fun checkRetrofitNotNull() {
+    synchronized(retrofitMap) {
+      if (retrofitMap[getRetrofitName()] == null) {
+        retrofitMap.put(getRetrofitName(), getRetrofitCreator().create())
+      }
+    }
+  }
   //-----抽象方法,需要实现
 
   /**
@@ -55,4 +61,8 @@ abstract class HttpRequest<T>() : HttpRequestListener {
    * @return RetrofitCreator对象
    */
   protected abstract fun getRetrofitCreator(): RetrofitCreator
+
+  protected fun getRetrofitName(): String {
+    return "com.chengtao.wisdomgarden.http.HttpRequest"
+  }
 }

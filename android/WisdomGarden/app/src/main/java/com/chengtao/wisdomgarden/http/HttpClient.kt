@@ -23,9 +23,8 @@ class HttpClient {
   }
 
   fun <T> execute(request: HttpRequest<T>) {
-    if (HttpRequest.retrofit == null) {
-      request.createNewRetrofit()
-    }
+    //检查retrofit
+    request.checkRetrofitNotNull()
     if (request.getObservable() == null) {
       Log.e("TAG", "executeRequest(CoreSateClient.java:" + Thread.currentThread()
           .stackTrace[2].lineNumber + ")" + "request is not be executed")

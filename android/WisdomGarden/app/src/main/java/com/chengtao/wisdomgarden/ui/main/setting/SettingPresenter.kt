@@ -42,9 +42,8 @@ class SettingPresenter(view: SettingContract.View,
           mView?.toast("端口必须在0到65535之间")
         } else {
           WisdomGardenRetrofitCreator.baseUrl = "http://$domainOrIp:$port/"
-          //清除之前的retrofit缓存
-          WisdomGardenRetrofitCreator.instance.retrofitMap.clear()
-          HttpRequest.retrofit = null
+          //清除所有请求的retrofit缓存
+          HttpRequest.retrofitMap.clear()
           //保存ip和端口
           BaseURLUtils.changeBaseURl(domainOrIp, port)
           //通知界面

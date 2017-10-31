@@ -16,6 +16,6 @@ class GetAllSightsRequest(
     httpResponseListener: HttpResponseListener) : BaseRequest<ArrayList<Sight>>(
     httpResponseListener) {
   override fun getObservable(): Observable<Response<ArrayList<Sight>>>? =
-      retrofit?.create(SightAPI::class.java)?.getAllSights()
+      retrofitMap[getRetrofitName()]?.create(SightAPI::class.java)?.getAllSights()
 
 }

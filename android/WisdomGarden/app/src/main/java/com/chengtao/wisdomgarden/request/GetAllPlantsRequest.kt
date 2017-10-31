@@ -1,8 +1,8 @@
 package com.chengtao.wisdomgarden.request
 
 import com.chengtao.wisdomgarden.api.PlantsAPI
-import com.chengtao.wisdomgarden.http.HttpResponseListener
 import com.chengtao.wisdomgarden.entity.Plants
+import com.chengtao.wisdomgarden.http.HttpResponseListener
 import io.reactivex.Observable
 import retrofit2.Response
 
@@ -16,5 +16,5 @@ class GetAllPlantsRequest(
     httpResponseListener: HttpResponseListener) : BaseRequest<ArrayList<Plants>>(
     httpResponseListener) {
   override fun getObservable(): Observable<Response<ArrayList<Plants>>>? =
-      retrofit?.create(PlantsAPI::class.java)?.getAllPlants()
+      retrofitMap[getRetrofitName()]?.create(PlantsAPI::class.java)?.getAllPlants()
 }

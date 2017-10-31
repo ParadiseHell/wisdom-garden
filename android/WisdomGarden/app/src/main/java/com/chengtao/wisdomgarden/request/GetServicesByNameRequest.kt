@@ -21,7 +21,7 @@ class GetServicesByNameRequest(
     return if (StringUtils.isStringNull(name)) {
       null
     } else {
-      retrofit?.create(ServiceAPI::class.java)?.getServicesByName(name!!)
+      retrofitMap[getRetrofitName()]?.create(ServiceAPI::class.java)?.getServicesByName(name!!)
     }
   }
 

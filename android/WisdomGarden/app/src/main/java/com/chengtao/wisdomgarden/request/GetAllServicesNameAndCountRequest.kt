@@ -16,6 +16,6 @@ class GetAllServicesNameAndCountRequest(
     httpResponseListener: HttpResponseListener) : BaseRequest<ArrayList<ServiceNameAndCount>>(
     httpResponseListener) {
   override fun getObservable(): Observable<Response<ArrayList<ServiceNameAndCount>>>? =
-      retrofit?.create(ServiceAPI::class.java)?.getServiceNameAncCount()
+      retrofitMap[getRetrofitName()]?.create(ServiceAPI::class.java)?.getServiceNameAncCount()
 
 }

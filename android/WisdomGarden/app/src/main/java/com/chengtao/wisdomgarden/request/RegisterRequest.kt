@@ -19,7 +19,7 @@ class RegisterRequest(httpResponseListener: HttpResponseListener) : BaseRequest<
   var password: String? = null
   override fun getObservable(): Observable<Response<User>>? {
     if (!StringUtils.isStringNull(userName, password)) {
-      return retrofit?.create(UserAPI::class.java)?.register(userName!!, password!!)
+      return retrofitMap[getRetrofitName()]?.create(UserAPI::class.java)?.register(userName!!, password!!)
     }
     return null
   }
