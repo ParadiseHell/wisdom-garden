@@ -36,17 +36,16 @@ abstract class RetrofitCreator protected constructor() {
   private fun getRetrofit(): Retrofit {
     val builder = Retrofit.Builder()
     if (useBaseUrl()) {
-      Log.e("TAG", "getBaseUrl():${getBaseUrl()}")
       if (getBaseUrl() == "") {
-        builder.baseUrl("http://localhost/")
+        builder.baseUrl("http://39.106.63.196:8080/")
       } else if (!(URLUtil.isHttpUrl(getBaseUrl()) || URLUtil.isHttpsUrl(
           getBaseUrl()))) {
-        builder.baseUrl("http://localhost/")
+        builder.baseUrl("http://39.106.63.196:8080/")
       } else {
         builder.baseUrl(getBaseUrl())
       }
     } else {
-      builder.baseUrl("http://localhost/")
+      builder.baseUrl("http://39.106.63.196:8080/")
     }
     return builder.client(getOkHttpClient().newBuilder().addInterceptor(
         HttpLoggingInterceptor(HttpLogger()).setLevel(BODY)).build())
