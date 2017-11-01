@@ -44,6 +44,10 @@
                                 <a href="<%=Routers.SIGHT%>/${sight.id}"
                                    class="btn btn-primary" role="button"
                                    style="margin-top: 4px">详情</a>
+                                <c:if test="${not empty isManager}">
+                                    <a href="<%=Routers.SIGHT_DELETE%>/${sight.id}"
+                                       class="btn btn-outline-danger btn-sm float-left">删除</a>
+                                </c:if>
                             </div>
                         </div>
                     </div>

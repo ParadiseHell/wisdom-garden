@@ -131,4 +131,10 @@ class SightController : BaseController() {
       else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  @GetMapping("${Routers.SIGHT_DELETE}/{id}")
+  fun deleteSightById(@PathVariable("id") id: Int): String {
+    sightDao.deleteSightById(id)
+    return Routers.SIGHT.redirect()
+  }
 }
