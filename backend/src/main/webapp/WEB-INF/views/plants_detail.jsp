@@ -10,9 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <jsp:include page="head.jsp"/>
-
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <jsp:include page="main_nav.jsp"/>
 <div class="content-wrapper">
@@ -25,6 +23,9 @@
                     <c:if test="${not empty isManager}">
                         <a href="<%=Routers.PLANTS_DELETE%>/${plants.plantsId}"
                            class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
+                        <a href="<%=Routers.PLANTS%>/${plants.plantsId}<%=Routers.UPDATE%>"
+                           style="margin-right:5px"
+                           class="btn btn-outline-success float-right btn-sm" role="button">更新</a>
                     </c:if>
                 </div>
                 <div class="card-body">

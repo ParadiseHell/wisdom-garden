@@ -35,9 +35,8 @@
                             <c:if test="${plants.files != null && !plants.files.isEmpty()}">
                                 <img class="card-img-top" src="..." alt="Card image cap">
                             </c:if>
-                            <c:if test="${plants.files == null || !plants.files.isEmpty()}">
-                                <img class="card-img-top" src="../statics/images/no_image.png"
-                                     alt="Card image cap">
+                            <c:if test="${plants.files == null}">
+                                <img class="card-img-top" src="../statics/images/no_image.png">
                             </c:if>
                             <div class="card-body">
                                 <h4 class="card-title">${plants.name}</h4>

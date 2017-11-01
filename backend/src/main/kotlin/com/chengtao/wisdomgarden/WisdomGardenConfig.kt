@@ -108,6 +108,7 @@ interface Routers {
     const val SERVICE_DELETE = "/service/delete"
     const val ECOLOGY = "/ecology"
     const val UPLOAD = "/upload"
+    const val UPDATE = "/update"
     //静态资源
     const val STATICS = "/statics"
     //API

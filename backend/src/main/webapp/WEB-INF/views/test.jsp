@@ -12,14 +12,26 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="/statics/css/dropzone.min.css"/>
+    <script src="/statics/js/dropzone.min.js"></script>
 </head>
 <body>
-<form method="POST" enctype="multipart/form-data" action="<%=Routers.PLANTS%>/1<%=Routers.UPLOAD%>">
-    File to upload:<input type="file" name="<%=Parameters.FILE%>"/>
+<form class="dropzone" method="POST" enctype="multipart/form-data"
+      id="plantsImages"
+      action="<%=Routers.PLANTS%>/1<%=Routers.UPLOAD%>">
     <input type="text" name="<%=Parameters.FILE_CATEGORY%>"
-           value="<%=FileCategory.VIDEO.getValue()%>"
+           value="<%=FileCategory.IMAGE.getValue()%>"
            hidden/>
-    <input type="submit" value="Upload"/>
 </form>
 </body>
+<script language="JavaScript">
+  Dropzone.options.plantsImages = {
+    maxFilesize: 5, // MB
+    acceptedFiles: "image/*",
+    dictDefaultMessage: "将图片拖拽到此区域(最大为5M)",
+    dictFileTooBig: "文件大于5M",
+    dictFallbackMessage: "你的浏览器不支持拖拽文件",
+    dictInvalidFileType: "你不能上传此类型的文件"
+  };
+</script>
 </html>

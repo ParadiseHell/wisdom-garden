@@ -65,6 +65,7 @@
 <script src="/statics/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="/statics/js/messages_zh.min.js" type="text/javascript"></script>
 <script src="/statics/js/select2.min.js" type="text/javascript"></script>
+<script src="/statics/js/dropzone.min.js" type="text/javascript"></script>
 <%
     Object errorMessage = session.getAttribute(Attributes.ERROR_MESSAGE);
     Object successMessage = session.getAttribute(Attributes.SUCCESS_MESSAGE);
