@@ -3,6 +3,7 @@ package com.chengtao.wisdomgarden.db.impl
 import com.chengtao.wisdomgarden.db.dao.EcologyDao
 import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.dao.SightFileDao
+import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.Sight
 import com.chengtao.wisdomgarden.entity.SightCateGory
 import com.chengtao.wisdomgarden.utils.StringUtils
@@ -197,7 +198,30 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
         sight.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         sight.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
         if (sight.id != null) {
-          sight.files = sightFileDao.querySightFiles(sight.id!!)
+          sightFileDao.querySightFiles(sight.id!!)?.forEach {
+            if (it.category != null) {
+              when (it.category) {
+                FileCategory.IMAGE -> {
+                  if (sight.images == null) {
+                    sight.images = ArrayList()
+                  }
+                  sight.images!!.add(it)
+                }
+                FileCategory.VIDEO -> {
+                  if (sight.videos == null) {
+                    sight.videos = ArrayList()
+                  }
+                  sight.videos!!.add(it)
+                }
+                FileCategory.AUDIO -> {
+                  if (sight.audios == null) {
+                    sight.audios = ArrayList()
+                  }
+                  sight.audios!!.add(it)
+                }
+              }
+            }
+          }
           sight.ecology = ecologyDao.queryEcologyBySightId(sight.id!!)
         }
         resultList.add(sight)

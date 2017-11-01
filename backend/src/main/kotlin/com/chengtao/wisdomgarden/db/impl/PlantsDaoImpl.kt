@@ -142,16 +142,16 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
                   plants.images!!.add(it)
                 }
                 FileCategory.VIDEO -> {
-                  if (plants.video == null) {
-                    plants.video = ArrayList()
+                  if (plants.videos == null) {
+                    plants.videos = ArrayList()
                   }
-                  plants.video!!.add(it)
+                  plants.videos!!.add(it)
                 }
                 FileCategory.AUDIO -> {
-                  if (plants.audio == null) {
-                    plants.audio = ArrayList()
+                  if (plants.audios == null) {
+                    plants.audios = ArrayList()
                   }
-                  plants.audio!!.add(it)
+                  plants.audios!!.add(it)
                 }
               }
             }

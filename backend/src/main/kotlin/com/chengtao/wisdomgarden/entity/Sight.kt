@@ -14,12 +14,17 @@ class Sight {
   var longitude: Float? = null
   var createdAt: Date? = null
   var updatedAt: Date? = null
-  var files: ArrayList<SightFile>? = null
+  var images: ArrayList<SightFile>? = null
+  var videos: ArrayList<SightFile>? = null
+  var audios: ArrayList<SightFile>? = null
   var ecology: Ecology? = null
   override fun toString(): String {
-    return "Sight(id=$id, name=$name, description=$description, latitude=$latitude, longitude=$longitude, " +
-        "createdAt=$createdAt, updatedAt=$updatedAt, files=$files, ecology=$ecology)"
+    return "Sight(id=$id, type=$type, name=$name, description=$description," +
+        " latitude=$latitude, longitude=$longitude, " +
+        "createdAt=$createdAt, updatedAt=$updatedAt, " +
+        "images=$images, videos=$videos, audios=$audios, ecology=$ecology)"
   }
+
 }
 
 enum class SightCateGory(val value: Int) {
