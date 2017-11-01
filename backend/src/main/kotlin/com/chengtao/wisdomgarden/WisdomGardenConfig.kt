@@ -61,6 +61,7 @@ interface Attributes {
     const val ROUTE = "route"
     const val ROUTE_COUNT = "routeCount"
     const val ROUTE_LIST = "routeList"
+    const val SERVICE = "service"
     const val SERVICE_COUNT = "serviceCount"
     const val SERVICE_NAME_COUNT_LIST = "serviceNameCountList"
     const val SERVICE_LIST = "serviceList"

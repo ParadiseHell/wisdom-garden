@@ -18,28 +18,58 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <div class="card-body">
-            <form action="<%=Routers.SERVICE%>" method="post" id="sightForm">
-                <div class="form-group">
-                    <label>服务设施名称</label>
-                    <input type="text" class="form-control"
-                           placeholder="请输入服务设施名称" name="<%=Parameters.NAME%>">
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <label>服务设施经度</label>
-                            <input type="number" class="form-control"
-                                   placeholder="请输入服务设施经度" name="<%=Parameters.LONGITUDE%>"/>
-                        </div>
-                        <div class="col-6">
-                            <label>服务设施纬度</label>
-                            <input type="number" class="form-control"
-                                   placeholder="请输入服务设施纬度" name="<%=Parameters.LATITUDE%>"/>
+            <c:if test="${not empty service}">
+                <form action="<%=Routers.SERVICE%>/${service.serviceId}" method="post"
+                      id="sightForm">
+                    <div class="form-group">
+                        <label>服务设施名称</label>
+                        <input type="text" class="form-control"
+                               placeholder="请输入服务设施名称" name="<%=Parameters.NAME%>"
+                               value="${service.name}">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label>服务设施经度</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入服务设施经度" name="<%=Parameters.LONGITUDE%>"
+                                       value="${service.longitude}"/>
+                            </div>
+                            <div class="col-6">
+                                <label>服务设施纬度</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入服务设施纬度" name="<%=Parameters.LATITUDE%>"
+                                       value="${service.latitude}"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-success btn-lg btn-block">创建服务设施</button>
-            </form>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">更新服务设施</button>
+                </form>
+            </c:if>
+            <c:if test="${service == null}">
+                <form action="<%=Routers.SERVICE%>" method="post" id="sightForm">
+                    <div class="form-group">
+                        <label>服务设施名称</label>
+                        <input type="text" class="form-control"
+                               placeholder="请输入服务设施名称" name="<%=Parameters.NAME%>">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label>服务设施经度</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入服务设施经度" name="<%=Parameters.LONGITUDE%>"/>
+                            </div>
+                            <div class="col-6">
+                                <label>服务设施纬度</label>
+                                <input type="number" class="form-control"
+                                       placeholder="请输入服务设施纬度" name="<%=Parameters.LATITUDE%>"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">创建服务设施</button>
+                </form>
+            </c:if>
         </div>
     </div>
     <jsp:include page="foot.jsp"/>

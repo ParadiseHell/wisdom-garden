@@ -23,13 +23,16 @@
             <hr/>
             <div class="row">
                 <c:forEach items="${serviceList}" var="service">
-                    <div class="col-sm-4 col-md-3">
+                    <div class="col-sm-6 col-md-4">
                         <div class="card border-danger">
                             <div class="card-header text-danger">
                                 <i class="fa fa-globe"></i>&nbsp;服务设施详情
                                 <c:if test="${not empty isManager}">
                                     <a href="<%=Routers.SERVICE_DELETE%>/${service.serviceId}"
                                        class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
+                                    <a href="<%=Routers.SERVICE%>/${service.serviceId}<%=Routers.UPDATE%>"
+                                       style="margin-right:5px"
+                                       class="btn btn-outline-danger float-right btn-sm" role="button">更新</a>
                                 </c:if>
                             </div>
                             <div class="card-body">

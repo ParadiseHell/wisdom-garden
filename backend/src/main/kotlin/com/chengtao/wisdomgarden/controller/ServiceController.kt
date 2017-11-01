@@ -53,6 +53,25 @@ class ServiceController : BaseController() {
     return modelAndView
   }
 
+  @GetMapping("${Routers.SERVICE}/{id}${Routers.UPDATE}")
+  fun getServiceUpdateView(@PathVariable("id") id: Int, session: HttpSession): Any {
+    val modelAndView: ModelAndView
+    val service = serviceDao.queryByServiceId(id)
+    return if (service != null) {
+      modelAndView = ModelAndView(Views.SERVICE_EDIT)
+      val viewAndRouter = ArrayList<ViewAndRouter>()
+      viewAndRouter.add(ViewAndRouter("服务设施", Routers.SERVICE))
+      viewAndRouter.add(ViewAndRouter(service.name!!, "${Routers.SERVICE}/${service.name!!}"))
+      viewAndRouter.add(ViewAndRouter("更新", "${Routers.SERVICE}/$id${Routers.UPDATE}"))
+      modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouter)
+      modelAndView.addObject(Attributes.SERVICE, service)
+      modelAndView
+    } else {
+      addErrorMessage(session, "该服务设施已不存在")
+      Routers.SERVICE.redirect()
+    }
+  }
+
   @PostMapping(Routers.SERVICE)
   fun createService(@RequestParam(value = Parameters.NAME) name: String,
                     @RequestParam(value = Parameters.LATITUDE) latitude: Float,
@@ -72,6 +91,34 @@ class ServiceController : BaseController() {
       addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
     return Routers.SERVICE_EDIT.redirect()
+  }
+
+  @PostMapping("${Routers.SERVICE}/{id}")
+  fun updateService(
+      @PathVariable("id") id: Int,
+      @RequestParam(value = Parameters.NAME) name: String,
+      @RequestParam(value = Parameters.LATITUDE) latitude: Float,
+      @RequestParam(value = Parameters.LONGITUDE) longitude: Float,
+      session: HttpSession): String {
+    val service = serviceDao.queryByServiceId(id)
+    if (service == null) {
+      addErrorMessage(session, "该服务设施已不存在")
+      return Routers.SERVICE.redirect()
+    }
+    if (!StringUtils.isStringNull(name) && latitude.isLatitude() && longitude.isLongitude()) {
+      if (serviceDao.queryService(name, latitude, longitude) == null) {
+        if (serviceDao.updateService(id, name, latitude, longitude) != null) {
+          addSuccessMessage(session, "更新服务设施成功")
+        } else {
+          addErrorMessage(session, Errors.UNKNOWN_ERROR)
+        }
+      } else {
+        addErrorMessage(session, "该位置已有相同服务设施")
+      }
+    } else {
+      addErrorMessage(session, Errors.PARAMETERS_ERROR)
+    }
+    return "${Routers.SERVICE}/$id${Routers.UPDATE}".redirect()
   }
 
   @GetMapping("${Routers.SERVICE_DELETE}/{id}")

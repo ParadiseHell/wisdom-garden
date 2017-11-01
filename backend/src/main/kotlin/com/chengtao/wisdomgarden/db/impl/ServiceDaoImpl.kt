@@ -59,7 +59,7 @@ class ServiceDaoImpl : BaseDaoImpl(), ServiceDao {
       parameters.add(name)
     }
     if (latitude != null && longitude != null) {
-      updateSQL += "$FIELD_LATITUDE = ?,$FIELD_LONGITUDE = ?"
+      updateSQL += "$FIELD_LATITUDE = ?,$FIELD_LONGITUDE = ?,"
       parameters.add(latitude)
       parameters.add(longitude)
     }
