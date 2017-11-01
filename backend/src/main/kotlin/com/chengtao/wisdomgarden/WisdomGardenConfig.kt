@@ -79,6 +79,8 @@ interface Errors {
 //静态资源
 interface UploadFilePath {
   companion object {
+    const val REAL_PATH = "127.0.0.1:8080/files"
+    const val UPLOAD_DIRECTORY = "/home/chengtao/wisdomgarden"
     const val UPLOAD_IMAGES = "/upload/images"
     const val UPLOAD_AUDIO = "/upload/audio"
     const val UPLOAD_VIDEO = "/upload/video"
@@ -94,7 +96,6 @@ interface Routers {
     const val REGISTER = "/register"
     const val SIGHT = "/sight"
     const val SIGHT_EDIT = "/sight/edit"
-    const val SIGHT_UPLOAD_FILE = "/sight/upload"
     const val SIGHT_DELETE = "/sight/delete"
     const val PLANTS = "/plants"
     const val PLANTS_EDIT = "/plants/edit"
@@ -106,6 +107,7 @@ interface Routers {
     const val SERVICE_EDIT = "/service/edit"
     const val SERVICE_DELETE = "/service/delete"
     const val ECOLOGY = "/ecology"
+    const val UPLOAD = "/upload"
     //静态资源
     const val STATICS = "/statics"
     //API

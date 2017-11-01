@@ -6,23 +6,15 @@ import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
 import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.SightCateGory
 import com.chengtao.wisdomgarden.entity.ViewAndRouter
-import com.chengtao.wisdomgarden.utils.StringUtils
-import com.chengtao.wisdomgarden.utils.isLatitude
-import com.chengtao.wisdomgarden.utils.isLongitude
-import com.chengtao.wisdomgarden.utils.redirect
+import com.chengtao.wisdomgarden.utils.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
-import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
-import kotlin.collections.ArrayList
 
 
 /**
@@ -106,29 +98,29 @@ class SightController : BaseController() {
     return Routers.SIGHT_EDIT.redirect()
   }
 
-  @PostMapping(Routers.SIGHT_UPLOAD_FILE)
+  @PostMapping("${Routers.SIGHT}/{id}${Routers.UPLOAD}")
   @ResponseBody
-  fun uploadSightFile(@RequestParam(Parameters.FILE) file: MultipartFile,
+  fun uploadSightFile(@PathVariable("id") id: Int, @RequestParam(Parameters.FILE) file: MultipartFile,
                       @RequestParam(Parameters.FILE_CATEGORY) type: String,
                       request: HttpServletRequest): ResponseEntity<Any> {
-    return when (type) {
+    println("sightId:$id")
+    var realFilePath: String? = null
+    when (type) {
       FileCategory.IMAGE.value -> {
-        val fileName = UUID.randomUUID().toString() +
-            file.originalFilename.substring(file.originalFilename.lastIndexOf("."))
-        val path = request.servletContext.getRealPath(UploadFilePath.UPLOAD_IMAGES)
-        val fileDir = File(path)
-        if (!fileDir.exists()) {
-          fileDir.mkdirs()
-        }
-        val mFile = File(fileDir, fileName)
-        val fos = FileOutputStream(mFile)
-        val bos = BufferedOutputStream(fos)
-        bos.write(file.bytes)
-        return ResponseEntity(HttpStatus.NO_CONTENT)
+        realFilePath = FileUtils.saveFile(file, UploadFilePath.UPLOAD_IMAGES)
       }
-      FileCategory.VIDEO.value -> ResponseEntity(HttpStatus.NO_CONTENT)
-      FileCategory.VIDEO.value -> ResponseEntity(HttpStatus.NO_CONTENT)
-      else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+      FileCategory.VIDEO.value -> {
+        realFilePath = FileUtils.saveFile(file, UploadFilePath.UPLOAD_VIDEO)
+      }
+      FileCategory.AUDIO.value -> {
+        realFilePath = FileUtils.saveFile(file, UploadFilePath.UPLOAD_AUDIO)
+      }
+    }
+    return if (StringUtils.isStringNull(realFilePath)) {
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+    } else {
+      println("realFilePath:$realFilePath")
+      ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
   }
 
@@ -136,5 +128,10 @@ class SightController : BaseController() {
   fun deleteSightById(@PathVariable("id") id: Int): String {
     sightDao.deleteSightById(id)
     return Routers.SIGHT.redirect()
+  }
+
+  @GetMapping("/test")
+  fun test(): String {
+    return "test"
   }
 }
