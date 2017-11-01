@@ -14,10 +14,10 @@
     <title>Title</title>
 </head>
 <body>
-<form method="POST" enctype="multipart/form-data" action="<%=Routers.SIGHT%>/1<%=Routers.UPLOAD%>">
+<form method="POST" enctype="multipart/form-data" action="<%=Routers.PLANTS%>/1<%=Routers.UPLOAD%>">
     File to upload:<input type="file" name="<%=Parameters.FILE%>"/>
     <input type="text" name="<%=Parameters.FILE_CATEGORY%>"
-           value="<%=FileCategory.IMAGE.getValue()%>"
+           value="<%=FileCategory.VIDEO.getValue()%>"
            hidden/>
     <input type="submit" value="Upload"/>
 </form>

@@ -2,18 +2,23 @@ package com.chengtao.wisdomgarden.controller
 
 import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.dao.PlantsDao
+import com.chengtao.wisdomgarden.db.dao.PlantsFileDao
 import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.PlantsDaoImpl
+import com.chengtao.wisdomgarden.db.impl.PlantsFileDaoImpl
 import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
+import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.ViewAndRouter
+import com.chengtao.wisdomgarden.utils.FileUtils
 import com.chengtao.wisdomgarden.utils.StringUtils
 import com.chengtao.wisdomgarden.utils.redirect
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
 /**
@@ -24,6 +29,7 @@ class PlantsController : BaseController() {
   companion object {
     val plantsDao: PlantsDao = PlantsDaoImpl()
     val sightDao: SightDao = SightDaoImpl()
+    val plantsFileDao: PlantsFileDao = PlantsFileDaoImpl()
   }
 
   @GetMapping(Routers.PLANTS)
@@ -92,5 +98,37 @@ class PlantsController : BaseController() {
   fun deleteSightById(@PathVariable("id") id: Int): String {
     plantsDao.deletePlantsById(id)
     return Routers.PLANTS.redirect()
+  }
+
+  @PostMapping("${Routers.PLANTS}/{id}${Routers.UPLOAD}")
+  @ResponseBody
+  fun uploadSightFile(@PathVariable("id") id: Int, @RequestParam(Parameters.FILE) file: MultipartFile,
+                      @RequestParam(Parameters.FILE_CATEGORY) type: String,
+                      request: HttpServletRequest): ResponseEntity<Any> {
+    var array: Array<String>? = null
+    var category: FileCategory? = null
+    when (type) {
+      FileCategory.IMAGE.value -> {
+        category = FileCategory.IMAGE
+        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_IMAGES)
+      }
+      FileCategory.VIDEO.value -> {
+        category = FileCategory.VIDEO
+        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_VIDEO)
+      }
+      FileCategory.AUDIO.value -> {
+        category = FileCategory.AUDIO
+        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_AUDIO)
+      }
+    }
+    var isSuccess = false
+    if (array != null && array.size == 2 && category != null) {
+      isSuccess = plantsFileDao.insertPlantsFile(id, array[0], category.value, array[1])
+    }
+    return if (isSuccess) {
+      ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+    } else {
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+    }
   }
 }
