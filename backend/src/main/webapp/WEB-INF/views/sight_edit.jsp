@@ -74,7 +74,9 @@
                                   name="<%=Parameters.DESCRIPTION%>"
                                   value="${sight.description}"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block">更新景点</button>
+                    <button type="submit" class="btn btn-success btn-lg btn-block"
+                            style="margin-bottom: 15px">更新景点
+                    </button>
                 </form>
                 <div class="form-group">
                     <label>景点相关图片</label>

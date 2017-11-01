@@ -74,12 +74,16 @@ class SightDaoImpl : BaseDaoImpl(), SightDao {
     return result
   }
 
-  override fun updateSight(id: Int, name: String?, description: String?, latitude: Float?, longitude: Float?): Sight? {
+  override fun updateSight(id: Int, category: Int?, name: String?, description: String?, latitude: Float?, longitude: Float?): Sight? {
     if (StringUtils.isStringNull(name) && StringUtils.isStringNull(description) && latitude == null && longitude == null) {
       return null
     }
     var updateSQL = "UPDATE $TABLE_NAME SET "
     val parameters = ArrayList<Any>()
+    if (category != null) {
+      updateSQL += "$FIELD_TYPE = ?,"
+      parameters.add(category)
+    }
     if (name != null && name != "") {
       updateSQL += "$FIELD_NAME = ?,"
       parameters.add(name)

@@ -54,6 +54,35 @@ class PlantsController : BaseController() {
     return modelAndView
   }
 
+  @PostMapping("${Routers.PLANTS}/{id}")
+  fun updatePlants(@PathVariable(value = "id") id: Int,
+                   @RequestParam(value = Parameters.NAME) name: String?,
+                   @RequestParam(value = Parameters.DESCRIPTION) description: String?,
+                   @RequestParam(value = Parameters.SIGHT_IDS) sightIds: String?,
+                   session: HttpSession): String {
+    if (plantsDao.queryPlantsById(id) == null) {
+      addErrorMessage(session, "该植物已不存在")
+      return Routers.PLANTS.redirect()
+    } else {
+      if (!StringUtils.isStringNull(name, description, sightIds)) {
+        val sightIdsList: ArrayList<Int>? = ArrayList()
+        val list = sightIds!!.split(",")
+        list.forEach {
+          sightIdsList!!.add(it.toInt())
+        }
+        if (plantsDao.updatePlants(id, name, description, sightIdsList) != null) {
+          addSuccessMessage(session, "更新植物成功")
+        } else {
+          addErrorMessage(session, Errors.UNKNOWN_ERROR)
+        }
+      } else {
+        addErrorMessage(session, Errors.PARAMETERS_ERROR)
+      }
+    }
+    return "${Routers.PLANTS}/$id".redirect()
+  }
+
+
   @GetMapping(Routers.PLANTS_EDIT)
   fun getPlantsCreateView(): ModelAndView {
     val modelAndView = ModelAndView(Views.PLANTS_EDIT)

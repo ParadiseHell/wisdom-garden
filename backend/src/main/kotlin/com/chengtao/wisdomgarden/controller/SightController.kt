@@ -58,6 +58,55 @@ class SightController : BaseController() {
     return sightCreateModelView
   }
 
+  @PostMapping("${Routers.SIGHT}/{id}")
+  fun updateSight(
+      @PathVariable("id") id: Int,
+      @RequestParam(value = Parameters.NAME) name: String,
+      @RequestParam(value = Parameters.CATEGORY, defaultValue = "-1") category: Int,
+      @RequestParam(value = Parameters.LATITUDE, defaultValue = "360") latitude: Float,
+      @RequestParam(value = Parameters.LONGITUDE, defaultValue = "360") longitude: Float,
+      @RequestParam(value = Parameters.DESCRIPTION) description: String,
+      session: HttpSession): String {
+    val sight = sightDao.querySightById(id)
+    if (sight == null) {
+      addErrorMessage(session, "景点已不存在")
+      return Routers.SIGHT.redirect()
+    }
+    if (!StringUtils.isStringNull(name, description) && (category in 0..2) && latitude.isLatitude()
+        && longitude.isLongitude()) {
+      val tempSight = sightDao.querySightByName(name)
+      if (tempSight == null || tempSight.name == sight.name) {
+        var canUpdate = true
+        when (category) {
+          SightCateGory.ENTRANCE.value -> {
+            if (sightDao.existEntrance() && sight.type!! != SightCateGory.ENTRANCE) {
+              canUpdate = false
+              addErrorMessage(session, "入口已存在")
+            }
+          }
+          SightCateGory.EXIT.value -> {
+            if (sightDao.existExit() && sight.type!! != SightCateGory.EXIT) {
+              canUpdate = false
+              addErrorMessage(session, "出口已存在")
+            }
+          }
+        }
+        if (canUpdate) {
+          if (sightDao.updateSight(id, category, name, description, latitude, longitude) == null) {
+            addErrorMessage(session, Errors.UNKNOWN_ERROR)
+          } else {
+            addSuccessMessage(session, "更新景点成功")
+          }
+        }
+      } else {
+        addErrorMessage(session, "景点名称已存在")
+      }
+    } else {
+      addErrorMessage(session, Errors.PARAMETERS_ERROR)
+    }
+    return "${Routers.SIGHT}/$id${Routers.UPDATE}".redirect()
+  }
+
   @GetMapping("${Routers.SIGHT}/{id}${Routers.UPDATE}")
   fun updatePlants(@PathVariable("id") id: Int, session: HttpSession): Any {
     val modelAndView: ModelAndView
