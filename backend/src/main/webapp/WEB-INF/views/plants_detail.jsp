@@ -19,8 +19,13 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <c:if test="${not empty plants}">
-            <div class="card border-success mb-3 w-50">
-                <div class="card-header text-success"><i class="fa fa-pagelines"></i>&nbsp;植物详情
+            <div class="card border-success mb-3">
+                <div class="card-header text-success">
+                    <i class="fa fa-pagelines"></i>&nbsp;植物详情
+                    <c:if test="${not empty isManager}">
+                        <a href="<%=Routers.PLANTS_DELETE%>/${plants.plantsId}"
+                           class="btn btn-outline-danger float-right" role="button">删除</a>
+                    </c:if>
                 </div>
                 <div class="card-body">
                     <h4 class="card-title text-success">植物名称&nbsp;:&nbsp;<span

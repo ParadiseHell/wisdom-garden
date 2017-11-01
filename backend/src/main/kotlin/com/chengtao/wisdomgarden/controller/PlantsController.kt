@@ -87,4 +87,10 @@ class PlantsController : BaseController() {
     }
     return Routers.PLANTS_CREATE.redirect()
   }
+
+  @GetMapping("${Routers.PLANTS_DELETE}/{id}")
+  fun deleteSightById(@PathVariable("id") id: Int): String {
+    plantsDao.deletePlantsById(id)
+    return Routers.PLANTS.redirect()
+  }
 }

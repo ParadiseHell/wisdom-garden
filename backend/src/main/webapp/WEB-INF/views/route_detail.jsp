@@ -19,8 +19,13 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <c:if test="${not empty route}">
-            <div class="card border-warning mb-3 w-50">
-                <div class="card-header text-warning"><i class="fa fa-pagelines"></i>&nbsp;线路详情
+            <div class="card border-warning mb-3">
+                <div class="card-header text-warning">
+                    <i class="fa fa-pagelines"></i>&nbsp;线路详情
+                    <c:if test="${not empty isManager}">
+                        <a href="<%=Routers.ROUTE_DELETE%>/${route.routeId}"
+                           class="btn btn-outline-danger float-right" role="button">删除</a>
+                    </c:if>
                 </div>
                 <div class="card-body">
                     <h4 class="card-title text-warning">线路名称&nbsp;:&nbsp;<span

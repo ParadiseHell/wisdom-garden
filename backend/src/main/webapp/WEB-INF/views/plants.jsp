@@ -43,9 +43,14 @@
                                 <h4 class="card-title">${plants.name}</h4>
                                 <p class="card-text text-secondary multiline-ellipsis"
                                    style="height: 12rem">${plants.description}</p>
-                                <a href="<%=Routers.PLANTS%>/${plants.plantsId}"
-                                   class="btn btn-success" role="button"
-                                   style="margin-top: 4px">详情</a>
+                                <div style="margin-top: 4px">
+                                    <c:if test="${not empty isManager}">
+                                        <a href="<%=Routers.PLANTS_DELETE%>/${plants.plantsId}"
+                                           class="btn btn-danger float-left" role="button">删除</a>
+                                    </c:if>
+                                    <a href="<%=Routers.PLANTS%>/${plants.plantsId}"
+                                       class="btn btn-success float-right" role="button">详情</a>
+                                </div>
                             </div>
                         </div>
                     </div>

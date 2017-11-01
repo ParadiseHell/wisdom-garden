@@ -36,9 +36,14 @@
                                 <h4 class="card-title">${route.name}</h4>
                                 <p class="card-text text-secondary multiline-ellipsis"
                                    style="height: 6rem">${route.description}</p>
-                                <a href="<%=Routers.ROUTE%>/${route.routeId}"
-                                   class="btn btn-warning" role="button"
-                                   style="margin-top: 4px">详情</a>
+                                <div style="margin-top: 4px">
+                                    <c:if test="${not empty isManager}">
+                                        <a href="<%=Routers.ROUTE_DELETE%>/${route.routeId}"
+                                           class="btn btn-danger float-left" role="button">删除</a>
+                                    </c:if>
+                                    <a href="<%=Routers.ROUTE%>/${route.routeId}"
+                                       class="btn btn-warning float-right" role="button">详情</a>
+                                </div>
                             </div>
                         </div>
                     </div>

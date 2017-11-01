@@ -18,7 +18,12 @@
         <jsp:include page="bread_nav.jsp"/>
         <c:if test="${not empty sight}">
             <div class="card border-primary mb-3">
-                <div class="card-header text-primary"><i class="fa fa-fw fa-area-chart"></i>&nbsp;景点详情
+                <div class="card-header text-primary">
+                    <i class="fa fa-fw fa-area-chart"></i>&nbsp;景点详情
+                    <c:if test="${not empty isManager}">
+                        <a href="<%=Routers.SIGHT_DELETE%>/${sight.id}"
+                           class="btn btn-outline-danger float-right" role="button">删除</a>
+                    </c:if>
                 </div>
                 <div class="card-body">
                     <h4 class="card-title text-primary">景点名称&nbsp;:&nbsp;<span

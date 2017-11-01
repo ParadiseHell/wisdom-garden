@@ -39,12 +39,12 @@ class RouteController : BaseController() {
   fun getRouteDetailView(@PathVariable(value = "id") id: Int): ModelAndView {
     val route = routeDao.queryRouteById(id)
     val modelAndView = ModelAndView(Views.ROUTE_DETAIL)
-    if (route != null){
+    if (route != null) {
       val viewRouterList = ArrayList<ViewAndRouter>()
-      viewRouterList.add(ViewAndRouter("线路",Routers.ROUTE))
-      viewRouterList.add(ViewAndRouter(route.name!!,"${Routers.ROUTE}/$id"))
-      modelAndView.addObject(Attributes.VIEW_AND_ROUTER,viewRouterList)
-      modelAndView.addObject(Attributes.ROUTE,route)
+      viewRouterList.add(ViewAndRouter("线路", Routers.ROUTE))
+      viewRouterList.add(ViewAndRouter(route.name!!, "${Routers.ROUTE}/$id"))
+      modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewRouterList)
+      modelAndView.addObject(Attributes.ROUTE, route)
     }
     return modelAndView
   }
@@ -87,6 +87,12 @@ class RouteController : BaseController() {
     initNavTitle(modelAndView, "创建路线", Routers.ROUTE_EDIT)
     modelAndView.addObject(Attributes.SIGHT_LIST, sightDao.queryAllSight())
     return modelAndView
+  }
+
+  @GetMapping("${Routers.ROUTE_DELETE}/{id}")
+  fun deleteSightById(@PathVariable("id") id: Int): String {
+    routeDao.deleteRouteById(id)
+    return Routers.ROUTE.redirect()
   }
 
 }
