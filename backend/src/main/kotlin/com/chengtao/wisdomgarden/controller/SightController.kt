@@ -2,7 +2,9 @@ package com.chengtao.wisdomgarden.controller
 
 import com.chengtao.wisdomgarden.*
 import com.chengtao.wisdomgarden.db.dao.SightDao
+import com.chengtao.wisdomgarden.db.dao.SightFileDao
 import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
+import com.chengtao.wisdomgarden.db.impl.SightFileDaoImpl
 import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.SightCateGory
 import com.chengtao.wisdomgarden.entity.ViewAndRouter
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpSession
 class SightController : BaseController() {
   companion object {
     val sightDao: SightDao = SightDaoImpl()
+    val sightFileDao: SightFileDao = SightFileDaoImpl()
   }
 
   @GetMapping(Routers.SIGHT)
@@ -103,24 +106,30 @@ class SightController : BaseController() {
   fun uploadSightFile(@PathVariable("id") id: Int, @RequestParam(Parameters.FILE) file: MultipartFile,
                       @RequestParam(Parameters.FILE_CATEGORY) type: String,
                       request: HttpServletRequest): ResponseEntity<Any> {
-    println("sightId:$id")
-    var realFilePath: String? = null
+    var array: Array<String>? = null
+    var category: FileCategory? = null
     when (type) {
       FileCategory.IMAGE.value -> {
-        realFilePath = FileUtils.saveFile(file, UploadFilePath.UPLOAD_IMAGES)
+        category = FileCategory.IMAGE
+        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_IMAGES)
       }
       FileCategory.VIDEO.value -> {
-        realFilePath = FileUtils.saveFile(file, UploadFilePath.UPLOAD_VIDEO)
+        category = FileCategory.VIDEO
+        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_VIDEO)
       }
       FileCategory.AUDIO.value -> {
-        realFilePath = FileUtils.saveFile(file, UploadFilePath.UPLOAD_AUDIO)
+        category = FileCategory.AUDIO
+        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_AUDIO)
       }
     }
-    return if (StringUtils.isStringNull(realFilePath)) {
-      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
-    } else {
-      println("realFilePath:$realFilePath")
+    var isSuccess = false
+    if (array != null && array.size == 2 && category != null) {
+      isSuccess = sightFileDao.insertSightFile(id, array[0], category.value, array[1])
+    }
+    return if (isSuccess) {
       ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+    } else {
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
     }
   }
 

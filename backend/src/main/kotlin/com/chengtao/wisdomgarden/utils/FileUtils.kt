@@ -11,7 +11,7 @@ import java.util.*
  * Created by chengtao on 11/1/17.
  */
 object FileUtils {
-  fun saveFile(file: MultipartFile, fileSubDirectory: String): String? {
+  fun saveFile(file: MultipartFile, fileSubDirectory: String): Array<String>? {
     try {
       val fileName = UUID.randomUUID().toString() +
           file.originalFilename.substring(file.originalFilename.lastIndexOf("."))
@@ -23,7 +23,8 @@ object FileUtils {
       val fos = FileOutputStream(mFile)
       val bos = BufferedOutputStream(fos)
       bos.write(file.bytes)
-      return UploadFilePath.REAL_PATH + fileSubDirectory + File.separator + fileName
+      val url = UploadFilePath.REAL_PATH + fileSubDirectory + File.separator + fileName
+      return arrayOf(fileName, url)
     } catch (e: Exception) {
       println("FileUtils.saveFile-->e:${e.message}")
     }
