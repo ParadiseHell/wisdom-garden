@@ -58,6 +58,25 @@ class SightController : BaseController() {
     return sightCreateModelView
   }
 
+  @GetMapping("${Routers.SIGHT}/{id}${Routers.UPDATE}")
+  fun updatePlants(@PathVariable("id") id: Int, session: HttpSession): Any {
+    val modelAndView: ModelAndView
+    val sight = sightDao.querySightById(id)
+    return if (sight != null) {
+      modelAndView = ModelAndView(Views.SIGHT_EDIT)
+      val viewAndRouter = ArrayList<ViewAndRouter>()
+      viewAndRouter.add(ViewAndRouter("景点", Routers.SIGHT))
+      viewAndRouter.add(ViewAndRouter(sight.name!!, "${Routers.SIGHT}/$id"))
+      viewAndRouter.add(ViewAndRouter("更新", "${Routers.SIGHT}/$id${Routers.UPDATE}"))
+      modelAndView.addObject(Attributes.VIEW_AND_ROUTER, viewAndRouter)
+      modelAndView.addObject(Attributes.SIGHT, sight)
+      modelAndView
+    } else {
+      addErrorMessage(session, "该景点已不存在")
+      Routers.SIGHT.redirect()
+    }
+  }
+
   @PostMapping(Routers.SIGHT)
   fun createSight(@RequestParam(value = Parameters.NAME) name: String,
                   @RequestParam(value = Parameters.CATEGORY, defaultValue = "-1") category: Int,

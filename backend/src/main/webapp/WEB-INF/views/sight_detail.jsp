@@ -23,6 +23,9 @@
                     <c:if test="${not empty isManager}">
                         <a href="<%=Routers.SIGHT_DELETE%>/${sight.id}"
                            class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
+                        <a href="<%=Routers.SIGHT%>/${sight.id}<%=Routers.UPDATE%>"
+                           style="margin-right:5px"
+                           class="btn btn-outline-primary float-right btn-sm" role="button">更新</a>
                     </c:if>
                 </div>
                 <div class="card-body">

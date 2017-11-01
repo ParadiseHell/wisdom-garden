@@ -1,5 +1,6 @@
 <%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: chengtao
@@ -30,12 +31,12 @@
                 <c:forEach items="${sightList}" var="sight">
                     <div class="col-sm-4 col-md-3 mt-2">
                         <div class="card">
-                            <c:if test="${sight.files != null && !sight.files.isEmpty()}">
-                                <img class="card-img-top" src="..." alt="Card image cap">
+                            <c:if test="${fn:length(sight.images) gt 0}">
+                                <img class="card-img-top" src="${sight.images[0].url}"
+                                     alt="${sight.name}">
                             </c:if>
-                            <c:if test="${sight.files == null || !sight.files.isEmpty()}">
-                                <img class="card-img-top" src="../statics/images/no_image.png"
-                                     alt="Card image cap">
+                            <c:if test="${sight.images == null}">
+                                <img class="card-img-top" src="/statics/images/no_image.png">
                             </c:if>
                             <div class="card-body">
                                 <h4 class="card-title">${sight.name}</h4>

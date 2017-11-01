@@ -38,7 +38,7 @@
                                      alt="${plants.name}">
                             </c:if>
                             <c:if test="${plants.images == null}">
-                                <img class="card-img-top" src="../statics/images/no_image.png">
+                                <img class="card-img-top" src="/statics/images/no_image.png">
                             </c:if>
                             <div class="card-body">
                                 <h4 class="card-title">${plants.name}</h4>
