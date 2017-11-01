@@ -41,13 +41,14 @@
                                 <h4 class="card-title">${sight.name}</h4>
                                 <p class="card-text text-secondary multiline-ellipsis"
                                    style="height: 8rem">${sight.description}</p>
-                                <a href="<%=Routers.SIGHT%>/${sight.id}"
-                                   class="btn btn-primary" role="button"
-                                   style="margin-top: 4px">详情</a>
-                                <c:if test="${not empty isManager}">
-                                    <a href="<%=Routers.SIGHT_DELETE%>/${sight.id}"
-                                       class="btn btn-outline-danger btn-sm float-left">删除</a>
-                                </c:if>
+                                <div style="margin-top: 4px">
+                                    <c:if test="${not empty isManager}">
+                                        <a href="<%=Routers.SIGHT_DELETE%>/${sight.id}"
+                                           class="btn btn-danger float-left" role="button">删除</a>
+                                    </c:if>
+                                    <a href="<%=Routers.SIGHT%>/${sight.id}"
+                                       class="btn btn-primary float-right" role="button">详情</a>
+                                </div>
                             </div>
                         </div>
                     </div>
