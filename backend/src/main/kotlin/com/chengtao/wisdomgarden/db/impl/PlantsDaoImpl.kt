@@ -3,6 +3,7 @@ package com.chengtao.wisdomgarden.db.impl
 import com.chengtao.wisdomgarden.db.dao.PlantsDao
 import com.chengtao.wisdomgarden.db.dao.PlantsFileDao
 import com.chengtao.wisdomgarden.db.dao.PlantsToSightDao
+import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.Plants
 import com.chengtao.wisdomgarden.utils.StringUtils
 import java.sql.ResultSet
@@ -131,7 +132,30 @@ class PlantsDaoImpl : BaseDaoImpl(), PlantsDao {
         plants.createdAt = resultSet.getDate(FIELD_CREATED_AT)
         plants.updatedAt = resultSet.getDate(FIELD_UPDATED_AT)
         if (plants.plantsId != null) {
-          plants.files = plantsFileDao.queryPlantsAllFiles(plants.plantsId!!)
+          plantsFileDao.queryPlantsAllFiles(plants.plantsId!!)?.forEach {
+            if (it.category != null) {
+              when (it.category) {
+                FileCategory.IMAGE -> {
+                  if (plants.images == null) {
+                    plants.images = ArrayList()
+                  }
+                  plants.images!!.add(it)
+                }
+                FileCategory.VIDEO -> {
+                  if (plants.video == null) {
+                    plants.video = ArrayList()
+                  }
+                  plants.video!!.add(it)
+                }
+                FileCategory.AUDIO -> {
+                  if (plants.audio == null) {
+                    plants.audio = ArrayList()
+                  }
+                  plants.audio!!.add(it)
+                }
+              }
+            }
+          }
           plants.sights = plantsToSightDao.queryPlantsAllSights(plants.plantsId!!)
         }
         plantsList.add(plants)
