@@ -25,6 +25,9 @@
                     <c:if test="${not empty isManager}">
                         <a href="<%=Routers.ROUTE_DELETE%>/${route.routeId}"
                            class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
+                        <a href="<%=Routers.ROUTE%>/${route.routeId}<%=Routers.UPDATE%>"
+                           style="margin-right:5px"
+                           class="btn btn-outline-warning float-right btn-sm" role="button">更新</a>
                     </c:if>
                 </div>
                 <div class="card-body">

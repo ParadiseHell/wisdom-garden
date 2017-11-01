@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page import="com.chengtao.wisdomgarden.Parameters" %>
 <%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,34 +19,70 @@
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
         <div class="card-body">
-            <form action="<%=Routers.ROUTE%>" method="post" id="routeForm">
-                <div class="form-group">
-                    <div class="form-row">
-                        <label>路线名称</label>
-                        <input type="text" class="form-control"
-                               placeholder="请输入路线名称" name="<%=Parameters.NAME%>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>路线描述</label>
-                    <textarea class="form-control" rows="5"
-                              placeholder="请填写路线相关描述"
-                              name="<%=Parameters.DESCRIPTION%>"></textarea>
-                </div>
-                <c:if test="${sightList != null && !sightList.isEmpty()}">
+            <c:if test="${not empty route}">
+                <form action="<%=Routers.ROUTE%>/${route.routeId}" method="post" id="routeForm">
                     <div class="form-group">
-                        <label>路线所经过景点(第一个景点必须为入口,最后一个景点必须为出口)</label>
-                        <input type="text" hidden name="<%=Parameters.SIGHT_IDS%>" id="sightIds">
-                        <select id="sightSelect" name="states[]" multiple="multiple"
-                                class="form-control">
-                            <c:forEach items="${sightList}" var="sight">
-                                <option value="${sight.id}">${sight.name}</option>
-                            </c:forEach>
-                        </select>
+                        <div class="form-row">
+                            <label>路线名称</label>
+                            <input type="text" class="form-control"
+                                   placeholder="请输入路线名称" name="<%=Parameters.NAME%>"
+                                   value="${route.name}">
+                        </div>
                     </div>
-                </c:if>
-                <button type="submit" class="btn btn-success btn-lg btn-block">创建路线</button>
-            </form>
+                    <div class="form-group">
+                        <label>路线描述</label>
+                        <textarea class="form-control" rows="5"
+                                  placeholder="请填写路线相关描述"
+                                  name="<%=Parameters.DESCRIPTION%>"
+                                  value="${route.description}"></textarea>
+                    </div>
+                    <c:if test="${sightList != null && !sightList.isEmpty()}">
+                        <div class="form-group">
+                            <label>路线所经过景点(第一个景点必须为入口,最后一个景点必须为出口)</label>
+                            <input type="text" hidden name="<%=Parameters.SIGHT_IDS%>"
+                                   id="sightIds">
+                            <select id="sightSelect" name="states[]" multiple="multiple"
+                                    class="form-control">
+                                <c:forEach items="${sightList}" var="sight">
+                                    <option value="${sight.id}">${sight.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </c:if>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">更新路线</button>
+                </form>
+            </c:if>
+            <c:if test="${route == null}">
+                <form action="<%=Routers.ROUTE%>" method="post" id="routeForm">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label>路线名称</label>
+                            <input type="text" class="form-control"
+                                   placeholder="请输入路线名称" name="<%=Parameters.NAME%>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>路线描述</label>
+                        <textarea class="form-control" rows="5"
+                                  placeholder="请填写路线相关描述"
+                                  name="<%=Parameters.DESCRIPTION%>"></textarea>
+                    </div>
+                    <c:if test="${sightList != null && !sightList.isEmpty()}">
+                        <div class="form-group">
+                            <label>路线所经过景点(第一个景点必须为入口,最后一个景点必须为出口)</label>
+                            <input type="text" hidden name="<%=Parameters.SIGHT_IDS%>"
+                                   id="sightIds">
+                            <select id="sightSelect" name="states[]" multiple="multiple"
+                                    class="form-control">
+                                <c:forEach items="${sightList}" var="sight">
+                                    <option value="${sight.id}">${sight.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </c:if>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">创建路线</button>
+                </form>
+            </c:if>
         </div>
     </div>
     <jsp:include page="foot.jsp"/>
