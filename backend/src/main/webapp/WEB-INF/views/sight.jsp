@@ -20,7 +20,7 @@
         <h5 class="text-primary">
             <i class="fa fa-pagelines"></i>&nbsp;景点列表
             <c:if test="${not empty isManager}">
-                <a href="<%=Routers.SIGHT_CREATE%>"
+                <a href="<%=Routers.SIGHT_EDIT%>"
                    class="btn btn-outline-primary btn-sm float-right">创建景点</a>
             </c:if>
         </h5>

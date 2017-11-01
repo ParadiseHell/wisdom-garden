@@ -45,11 +45,11 @@ class ServiceController : BaseController() {
     return modelAndView
   }
 
-  @GetMapping(Routers.SERVICE_CREATE)
+  @GetMapping(Routers.SERVICE_EDIT)
   fun getServiceCreateView(): ModelAndView {
-    val modelAndView = ModelAndView(Views.SERVICE_CREATE)
+    val modelAndView = ModelAndView(Views.SERVICE_EDIT)
     initMainModelAndView(modelAndView)
-    initNavTitle(modelAndView, "创建服务设施", Routers.SERVICE_CREATE)
+    initNavTitle(modelAndView, "创建服务设施", Routers.SERVICE_EDIT)
     return modelAndView
   }
 
@@ -71,7 +71,7 @@ class ServiceController : BaseController() {
     } else {
       addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
-    return Routers.SERVICE_CREATE.redirect()
+    return Routers.SERVICE_EDIT.redirect()
   }
 
   @GetMapping("${Routers.SERVICE_DELETE}/{id}")

@@ -22,7 +22,7 @@
         <h5 class="text-success ">
             <i class="fa fa-pagelines"></i>&nbsp;植物列表
             <c:if test="${not empty isManager}">
-                <a href="<%=Routers.PLANTS_CREATE%>"
+                <a href="<%=Routers.PLANTS_EDIT%>"
                    class="btn btn-outline-success btn-sm float-right">创建植物</a>
             </c:if>
         </h5>

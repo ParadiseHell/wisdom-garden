@@ -22,7 +22,7 @@
         <h5 class="text-danger">
             <i class="fa fa-globe"></i>&nbsp;服务设施列表
             <c:if test="${not empty isManager}">
-                <a href="<%=Routers.SERVICE_CREATE%>"
+                <a href="<%=Routers.SERVICE_EDIT%>"
                    class="btn btn-outline-danger btn-sm float-right">创建服务设施</a>
             </c:if>
         </h5>

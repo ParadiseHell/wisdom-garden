@@ -49,11 +49,11 @@ class PlantsController : BaseController() {
     return modelAndView
   }
 
-  @GetMapping(Routers.PLANTS_CREATE)
+  @GetMapping(Routers.PLANTS_EDIT)
   fun getPlantsCreateView(): ModelAndView {
-    val modelAndView = ModelAndView(Views.PLANTS_CREATE)
+    val modelAndView = ModelAndView(Views.PLANTS_EDIT)
     initMainModelAndView(modelAndView)
-    initNavTitle(modelAndView, "创建植物", Routers.PLANTS_CREATE)
+    initNavTitle(modelAndView, "创建植物", Routers.PLANTS_EDIT)
     modelAndView.addObject(Attributes.SIGHT_LIST, sightDao.queryAllSight())
     return modelAndView
   }
@@ -85,7 +85,7 @@ class PlantsController : BaseController() {
     } else {
       addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
-    return Routers.PLANTS_CREATE.redirect()
+    return Routers.PLANTS_EDIT.redirect()
   }
 
   @GetMapping("${Routers.PLANTS_DELETE}/{id}")

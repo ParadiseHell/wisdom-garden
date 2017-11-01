@@ -57,10 +57,10 @@ class SightController : BaseController() {
     return modelAndView
   }
 
-  @GetMapping(Routers.SIGHT_CREATE)
+  @GetMapping(Routers.SIGHT_EDIT)
   fun getCreateSightView(): ModelAndView {
-    val sightCreateModelView = ModelAndView(Views.SIGHT_CREATE)
-    initNavTitle(sightCreateModelView, "创建景点", Routers.SIGHT_CREATE)
+    val sightCreateModelView = ModelAndView(Views.SIGHT_EDIT)
+    initNavTitle(sightCreateModelView, "创建景点", Routers.SIGHT_EDIT)
     return sightCreateModelView
   }
 
@@ -103,7 +103,7 @@ class SightController : BaseController() {
     } else {
       addErrorMessage(session, Errors.PARAMETERS_ERROR)
     }
-    return Routers.SIGHT_CREATE.redirect()
+    return Routers.SIGHT_EDIT.redirect()
   }
 
   @PostMapping(Routers.SIGHT_UPLOAD_FILE)
