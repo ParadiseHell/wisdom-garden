@@ -73,4 +73,10 @@ class ServiceController : BaseController() {
     }
     return Routers.SERVICE_CREATE.redirect()
   }
+
+  @GetMapping("${Routers.SERVICE_DELETE}/{id}")
+  fun deleteSightById(@PathVariable("id") id: Int): String {
+    serviceDao.deleteServiceById(id)
+    return Routers.SERVICE.redirect()
+  }
 }

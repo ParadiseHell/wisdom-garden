@@ -24,7 +24,7 @@
                     <i class="fa fa-pagelines"></i>&nbsp;线路详情
                     <c:if test="${not empty isManager}">
                         <a href="<%=Routers.ROUTE_DELETE%>/${route.routeId}"
-                           class="btn btn-outline-danger float-right" role="button">删除</a>
+                           class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
                     </c:if>
                 </div>
                 <div class="card-body">

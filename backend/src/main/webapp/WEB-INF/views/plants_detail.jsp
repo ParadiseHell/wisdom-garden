@@ -24,7 +24,7 @@
                     <i class="fa fa-pagelines"></i>&nbsp;植物详情
                     <c:if test="${not empty isManager}">
                         <a href="<%=Routers.PLANTS_DELETE%>/${plants.plantsId}"
-                           class="btn btn-outline-danger float-right" role="button">删除</a>
+                           class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
                     </c:if>
                 </div>
                 <div class="card-body">

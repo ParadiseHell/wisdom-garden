@@ -22,7 +22,7 @@
                     <i class="fa fa-fw fa-area-chart"></i>&nbsp;景点详情
                     <c:if test="${not empty isManager}">
                         <a href="<%=Routers.SIGHT_DELETE%>/${sight.id}"
-                           class="btn btn-outline-danger float-right" role="button">删除</a>
+                           class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
                     </c:if>
                 </div>
                 <div class="card-body">

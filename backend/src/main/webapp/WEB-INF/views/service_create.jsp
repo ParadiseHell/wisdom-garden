@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-lg btn-block">创建景点</button>
+                <button type="submit" class="btn btn-success btn-lg btn-block">创建服务设施</button>
             </form>
         </div>
     </div>

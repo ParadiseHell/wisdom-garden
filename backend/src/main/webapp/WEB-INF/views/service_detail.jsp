@@ -1,3 +1,4 @@
+<%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -17,7 +18,6 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
-        <jsp:include page="incon_card.jsp"/>
         <c:if test="${serviceList != null && !serviceList.isEmpty()}">
             <h5 class="text-danger"><i class="fa fa-globe"></i>&nbsp;服务设施列表</h5>
             <hr/>
@@ -25,7 +25,12 @@
                 <c:forEach items="${serviceList}" var="service">
                     <div class="col-sm-4 col-md-3">
                         <div class="card border-danger">
-                            <div class="card-header text-danger"><i class="fa fa-globe"></i>&nbsp;服务设施详情
+                            <div class="card-header text-danger">
+                                <i class="fa fa-globe"></i>&nbsp;服务设施详情
+                                <c:if test="${not empty isManager}">
+                                    <a href="<%=Routers.SERVICE_DELETE%>/${service.serviceId}"
+                                       class="btn btn-outline-danger float-right btn-sm" role="button">删除</a>
+                                </c:if>
                             </div>
                             <div class="card-body">
                                 <h4 class="card-title text-danger">服务设施&nbsp;:&nbsp;<span
