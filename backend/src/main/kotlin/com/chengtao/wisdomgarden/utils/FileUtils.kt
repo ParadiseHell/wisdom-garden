@@ -1,6 +1,7 @@
 package com.chengtao.wisdomgarden.utils
 
 import com.chengtao.wisdomgarden.UploadFilePath
+import com.chengtao.wisdomgarden.entity.FileCategory
 import org.springframework.web.multipart.MultipartFile
 import java.io.BufferedOutputStream
 import java.io.File
@@ -11,7 +12,19 @@ import java.util.*
  * Created by chengtao on 11/1/17.
  */
 object FileUtils {
-  fun saveFile(file: MultipartFile, fileSubDirectory: String): Array<String>? {
+  fun saveFile(file: MultipartFile, type: String): Array<String>? {
+    var fileSubDirectory: String? = null
+    when (type) {
+      FileCategory.IMAGE.value -> {
+        fileSubDirectory = UploadFilePath.UPLOAD_IMAGES
+      }
+      FileCategory.VIDEO.value -> {
+        fileSubDirectory = UploadFilePath.UPLOAD_VIDEO
+      }
+      FileCategory.AUDIO.value -> {
+        fileSubDirectory = UploadFilePath.UPLOAD_AUDIO
+      }
+    }
     try {
       val fileName = UUID.randomUUID().toString() +
           file.originalFilename.substring(file.originalFilename.lastIndexOf("."))

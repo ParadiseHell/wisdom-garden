@@ -7,7 +7,6 @@ import com.chengtao.wisdomgarden.db.dao.SightDao
 import com.chengtao.wisdomgarden.db.impl.PlantsDaoImpl
 import com.chengtao.wisdomgarden.db.impl.PlantsFileDaoImpl
 import com.chengtao.wisdomgarden.db.impl.SightDaoImpl
-import com.chengtao.wisdomgarden.entity.FileCategory
 import com.chengtao.wisdomgarden.entity.ViewAndRouter
 import com.chengtao.wisdomgarden.utils.FileUtils
 import com.chengtao.wisdomgarden.utils.StringUtils
@@ -103,27 +102,12 @@ class PlantsController : BaseController() {
   @PostMapping("${Routers.PLANTS}/{id}${Routers.UPLOAD}")
   @ResponseBody
   fun uploadSightFile(@PathVariable("id") id: Int, @RequestParam(Parameters.FILE) file: MultipartFile,
-                      @RequestParam(Parameters.FILE_CATEGORY) type: String,
+                      @RequestParam(Parameters.FILE_CATEGORY) category: String,
                       request: HttpServletRequest): ResponseEntity<Any> {
-    var array: Array<String>? = null
-    var category: FileCategory? = null
-    when (type) {
-      FileCategory.IMAGE.value -> {
-        category = FileCategory.IMAGE
-        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_IMAGES)
-      }
-      FileCategory.VIDEO.value -> {
-        category = FileCategory.VIDEO
-        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_VIDEO)
-      }
-      FileCategory.AUDIO.value -> {
-        category = FileCategory.AUDIO
-        array = FileUtils.saveFile(file, UploadFilePath.UPLOAD_AUDIO)
-      }
-    }
+    val array: Array<String>? = FileUtils.saveFile(file, category)
     var isSuccess = false
-    if (array != null && array.size == 2 && category != null) {
-      isSuccess = plantsFileDao.insertPlantsFile(id, array[0], category.value, array[1])
+    if (array != null && array.size == 2) {
+      isSuccess = plantsFileDao.insertPlantsFile(id, array[0], category, array[1])
     }
     return if (isSuccess) {
       ResponseEntity.status(HttpStatus.NO_CONTENT).build()
