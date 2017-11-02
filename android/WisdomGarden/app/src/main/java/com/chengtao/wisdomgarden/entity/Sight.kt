@@ -1,5 +1,6 @@
 package com.chengtao.wisdomgarden.entity
 
+import java.util.ArrayList
 import java.util.Date
 
 /**
@@ -17,8 +18,13 @@ class Sight {
   var createdAt: Date? = null
   var updatedAt: Date? = null
   var ecology: Ecology? = null
-  override fun toString(): String =
-      "Sight(id=$id, name=$name, description=$description, latitude=$latitude, longitude=$longitude, " +
-          "createdAt=$createdAt, updatedAt=$updatedAt, ecology=$ecology)"
+  var images: ArrayList<WisdomGardenFile>? = null
+  var videos: ArrayList<WisdomGardenFile>? = null
+  var audios: ArrayList<WisdomGardenFile>? = null
+  override fun toString(): String {
+    return "Sight(id=$id, name=$name, description=$description, " +
+        "latitude=$latitude, longitude=$longitude, createdAt=$createdAt, updatedAt=$updatedAt, " +
+        "ecology=$ecology, images=$images, videos=$videos, audios=$audios)"
+  }
 
 }

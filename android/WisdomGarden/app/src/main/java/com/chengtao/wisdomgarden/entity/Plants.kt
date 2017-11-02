@@ -15,7 +15,13 @@ class Plants {
   var createdAt: Date? = null
   var updatedAt: Date? = null
   var sights: ArrayList<Sight>? = null
-  override fun toString(): String =
-      "Plants(plantsId=$plantsId, name=$name, description=$description, " +
-          "createdAt=$createdAt, updatedAt=$updatedAt, sights=$sights)"
+  var images: ArrayList<WisdomGardenFile>? = null
+  var videos: ArrayList<WisdomGardenFile>? = null
+  var audios: ArrayList<WisdomGardenFile>? = null
+  override fun toString(): String {
+    return "Plants(plantsId=$plantsId, name=$name, description=$description, " +
+        "createdAt=$createdAt, updatedAt=$updatedAt, sights=$sights, " +
+        "images=$images, videos=$videos, audios=$audios)"
+  }
+
 }
