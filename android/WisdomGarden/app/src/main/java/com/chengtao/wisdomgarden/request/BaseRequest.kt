@@ -10,6 +10,7 @@ import com.chengtao.wisdomgarden.http.HttpClient
 import com.chengtao.wisdomgarden.http.HttpRequest
 import com.chengtao.wisdomgarden.http.HttpResponseListener
 import com.chengtao.wisdomgarden.http.RetrofitCreator
+import com.chengtao.wisdomgarden.utils.UserUtils
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
@@ -78,6 +79,9 @@ abstract class BaseRequest<T>() : HttpRequest<T>() {
         httpResponseListener?.onError(requestId, R.string.internal_server_error)
       }
       ErrorString.UNAUTHORIZED -> {
+        //清楚用户相关信息
+        UserUtils.clean()
+        httpResponseListener?.onError(requestId, R.string.unauthorized)
         httpResponseListener?.onSpecialError(requestId, ErrorType.UNAUTHORIZED)
       }
       ErrorString.USER_EXIST -> {

@@ -3,8 +3,10 @@ package com.chengtao.wisdomgarden
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.chengtao.wisdomgarden.api.ErrorType
 import com.chengtao.wisdomgarden.entity.EventBusMessage
 import com.chengtao.wisdomgarden.http.HttpResponseListener
+import com.chengtao.wisdomgarden.ui.login.LoginActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode.MAIN
@@ -43,6 +45,12 @@ abstract class WisdomGardenPresenter<V : BaseView>(view: V,
 
   override fun onSpecialError(requestId: Short, errorType: Short) {
     println("onSpecialError:$requestId")
+    if (errorType == ErrorType.UNAUTHORIZED) {//授权失败
+      if (mContext != null) {
+        LoginActivity.invoke(mContext)
+        finish()
+      }
+    }
   }
 
   protected fun finish() {
