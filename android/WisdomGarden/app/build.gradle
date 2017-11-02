@@ -7,7 +7,7 @@ android {
     debug {
       keyAlias 'wisdom'
       keyPassword '123456'
-      storeFile file('/home/chengtao/study/school/wisdom-garden/wisdom-garden.jks')
+      storeFile file('/home/chengtao/study/school/key/wisdom-garden.jks')
       storePassword '123456'
     }
   }
