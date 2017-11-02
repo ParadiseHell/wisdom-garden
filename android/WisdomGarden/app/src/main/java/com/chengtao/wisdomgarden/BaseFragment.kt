@@ -62,7 +62,7 @@ abstract class BaseFragment<P : BasePresenter> : Fragment(), BaseView {
   /**
    * 初始化presenter
    */
-  abstract fun initPresenter(): P
+  abstract fun initPresenter(): P?
 
   /**
    * 初始化页面

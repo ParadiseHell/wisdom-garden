@@ -17,4 +17,8 @@
       android:id="@+id/service"
       android:icon="@drawable/service"
       android:title="@string/service"/>
+  <item
+      android:id="@+id/map"
+      android:icon="@drawable/map"
+      android:title="@string/map"/>
 </menu>

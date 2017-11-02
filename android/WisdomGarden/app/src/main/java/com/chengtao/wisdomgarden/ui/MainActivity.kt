@@ -11,6 +11,7 @@ import com.chengtao.wisdomgarden.BaseActivity
 import com.chengtao.wisdomgarden.BasePresenter
 import com.chengtao.wisdomgarden.R
 import com.chengtao.wisdomgarden.ui.login.LoginActivity
+import com.chengtao.wisdomgarden.ui.main.map.MapFragment
 import com.chengtao.wisdomgarden.ui.main.plants.PlantsFragment
 import com.chengtao.wisdomgarden.ui.main.route.RouteFragment
 import com.chengtao.wisdomgarden.ui.main.service.ServiceFragment
@@ -26,6 +27,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
     const val TAB_PLANTS: Short = 2
     const val TAB_ROUTE: Short = 3
     const val TAB_SERVICE: Short = 4
+    const val TAB_MAP: Short = 5
     fun invoke(context: Context) {
       context.startActivity(Intent(context, MainActivity::class.java))
     }
@@ -39,6 +41,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
   private var plantsFragment: PlantsFragment? = null
   private var routeFragment: RouteFragment? = null
   private var serviceFragment: ServiceFragment? = null
+  private var mapFragment: MapFragment? = null
 
   override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -124,6 +127,17 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
           transaction.show(serviceFragment)
         }
       }
+      TAB_MAP -> {
+        mainNav.menu.findItem(R.id.map).isChecked = true
+        setActionBarTitle(R.string.map)
+        currentTab = TAB_MAP
+        if (mapFragment == null) {
+          mapFragment = MapFragment()
+          transaction.add(R.id.fl_main, mapFragment)
+        } else {
+          transaction.show(mapFragment)
+        }
+      }
     }
     transaction.commitAllowingStateLoss()
   }
@@ -146,6 +160,9 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
     if (serviceFragment != null) {
       transaction.hide(serviceFragment)
     }
+    if (mapFragment != null) {
+      transaction.hide(mapFragment)
+    }
   }
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -154,6 +171,7 @@ class MainActivity : BaseActivity<BasePresenter>(), BottomNavigationView.OnNavig
       R.id.plants -> changeFragment(TAB_PLANTS)
       R.id.route -> changeFragment(TAB_ROUTE)
       R.id.service -> changeFragment(TAB_SERVICE)
+      R.id.map -> changeFragment(TAB_MAP)
     }
     return true
   }

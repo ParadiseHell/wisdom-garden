@@ -33,50 +33,34 @@
         android:textSize="13sp"
         />
   </LinearLayout>
-  <LinearLayout
+  <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="4dp"
-      >
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/description"
-        android:textSize="15sp"
-        />
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:textSize="13sp"
-        />
-  </LinearLayout>
-  <LinearLayout
+      android:text="@string/description"
+      android:textSize="15sp"
+      />
+  <TextView
+      android:id="@+id/description"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:padding="4dp"
+      android:textSize="13sp"
+      />
+  <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="4dp"
-      >
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/sight_list"
-        android:textSize="15sp"
-        />
-    <TextView
-        android:id="@+id/sight_chain"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:textSize="13sp"
-        />
-  </LinearLayout>
+      android:text="@string/sight_list"
+      android:textSize="15sp"
+      />
+  <TextView
+      android:id="@+id/sight_chain"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:padding="4dp"
+      android:textSize="13sp"
+      />
 </LinearLayout>
