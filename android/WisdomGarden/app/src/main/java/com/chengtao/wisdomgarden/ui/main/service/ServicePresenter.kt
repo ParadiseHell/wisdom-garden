@@ -46,7 +46,7 @@ class ServicePresenter(view: ServiceContract.View,
             serviceNameAndCountList.addAll(list)
             serviceNameAndCountAdapter?.notifyDataSetChanged()
           } else {
-            mView?.toast("没有路线")
+            mView?.toast("没有服务设施")
           }
         }
       }
