@@ -25,21 +25,36 @@ object FileUtils {
         fileSubDirectory = UploadFilePath.UPLOAD_AUDIO
       }
     }
-    try {
-      val fileName = UUID.randomUUID().toString() +
-          file.originalFilename.substring(file.originalFilename.lastIndexOf("."))
-      val fileDir = File(UploadFilePath.UPLOAD_DIRECTORY + fileSubDirectory)
-      if (!fileDir.exists()) {
-        fileDir.mkdirs()
+    if (fileSubDirectory != null) {
+      try {
+        val fileName = UUID.randomUUID().toString() +
+            file.originalFilename.substring(file.originalFilename.lastIndexOf("."))
+        val fileDir = File(UploadFilePath.UPLOAD_DIRECTORY + fileSubDirectory)
+        var canSaveFile: Boolean? = false
+        if (!fileDir.exists()) {
+          if (!fileDir.mkdirs()) {
+            println("FileUtils.saveFile-->create directory fail")
+          } else {
+            canSaveFile = true
+            println("FileUtils.saveFile-->create directory success")
+          }
+        } else {
+          canSaveFile = true
+          println("FileUtils.saveFile-->directory is already exist")
+        }
+        if (canSaveFile!!) {
+          val mFile = File(fileDir, fileName)
+          val fos = FileOutputStream(mFile)
+          val bos = BufferedOutputStream(fos)
+          bos.write(file.bytes)
+          val url = UploadFilePath.REAL_PATH + fileSubDirectory + File.separator + fileName
+          val result = arrayOf(fileName, url)
+          println("save file success:$result")
+          return result
+        }
+      } catch (e: Exception) {
+        println("FileUtils.saveFile-->e:${e.message}")
       }
-      val mFile = File(fileDir, fileName)
-      val fos = FileOutputStream(mFile)
-      val bos = BufferedOutputStream(fos)
-      bos.write(file.bytes)
-      val url = UploadFilePath.REAL_PATH + fileSubDirectory + File.separator + fileName
-      return arrayOf(fileName, url)
-    } catch (e: Exception) {
-      println("FileUtils.saveFile-->e:${e.message}")
     }
     return null
   }
