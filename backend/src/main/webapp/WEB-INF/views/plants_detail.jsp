@@ -1,5 +1,6 @@
 <%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: chengtao
@@ -40,6 +41,35 @@
                             <a href="<%=Routers.SIGHT%>/${sight.id}"
                                class="badge badge-success" style="font-size: 15px">${sight.name}</a>
                         </c:forEach>
+                    </c:if>
+                    <c:if test="${fn:length(plants.images) gt 0}">
+                        <h5 class="card-title text-success">相关图片</h5>
+                        <div id="plantsImages" class="carousel slide w-50" data-ride="carousel">
+                            <div class="carousel-inner w-100">
+                                <c:forEach var="image" items="${plants.images}" varStatus="loop">
+                                    <c:if test="${loop.index == 0}">
+                                        <div class="carousel-item active img-wrapper w-100">
+                                            <img class="d-block w-100" src="${image.url}">
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${loop.index != 0}">
+                                        <div class="carousel-item img-wrapper w-100">
+                                            <img class="d-block w-100" src="${image.url}">
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                            <a class="carousel-control-prev" href="#plantsImages" role="button"
+                               data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#plantsImages" role="button"
+                               data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </c:if>
                 </div>
             </div>

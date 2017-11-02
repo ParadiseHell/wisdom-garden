@@ -37,4 +37,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    img.card-img {
+        height: 300px;
+        width: 100%;
+    }
+
+    div.img-wrapper {
+        height: 600px;
+    }
 </style>

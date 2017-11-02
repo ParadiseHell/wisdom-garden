@@ -32,11 +32,11 @@
                     <div class="col-sm-4 col-md-3 mt-2">
                         <div class="card">
                             <c:if test="${fn:length(sight.images) gt 0}">
-                                <img class="card-img-top" src="${sight.images[0].url}"
+                                <img class="card-img-top card-img" src="${sight.images[0].url}"
                                      alt="${sight.name}">
                             </c:if>
                             <c:if test="${sight.images == null}">
-                                <img class="card-img-top" src="/statics/images/no_image.png">
+                                <img class="card-img-top card-img" src="/statics/images/no_image.png">
                             </c:if>
                             <div class="card-body">
                                 <h4 class="card-title">${sight.name}</h4>
