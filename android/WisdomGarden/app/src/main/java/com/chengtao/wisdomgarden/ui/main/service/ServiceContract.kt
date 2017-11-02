@@ -17,5 +17,7 @@ interface ServiceContract {
 
   interface View : BaseView {
     fun initAdapter(adapter: ServiceAndNameAdapter)
+    fun hideRefreshing()
+    fun showRefreshing()
   }
 }

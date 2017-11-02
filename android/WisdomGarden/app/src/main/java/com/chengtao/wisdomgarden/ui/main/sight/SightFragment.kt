@@ -1,5 +1,6 @@
 package com.chengtao.wisdomgarden.ui.main.sight
 
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import butterknife.BindView
@@ -13,7 +14,9 @@ import com.chengtao.wisdomgarden.adapter.SightAdapter
  * Time : 10:29 AM
  * Description :
  */
-class SightFragment : BaseFragment<SightContract.Presenter>(), SightContract.View {
+class SightFragment : BaseFragment<SightContract.Presenter>(), SightContract.View, SwipeRefreshLayout.OnRefreshListener {
+  @BindView(R.id.srl_sight)
+  lateinit var srlSight: SwipeRefreshLayout
   @BindView(R.id.rv_sight)
   lateinit var rvSight: RecyclerView
 
@@ -23,9 +26,12 @@ class SightFragment : BaseFragment<SightContract.Presenter>(), SightContract.Vie
 
   override fun initView() {
     rvSight.layoutManager = LinearLayoutManager(mContext!!)
+    srlSight.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary,
+        R.color.colorPrimary)
   }
 
   override fun setListener() {
+    srlSight.setOnRefreshListener(this)
   }
 
   override fun start() {
@@ -34,5 +40,17 @@ class SightFragment : BaseFragment<SightContract.Presenter>(), SightContract.Vie
 
   override fun initAdapter(adapter: SightAdapter) {
     rvSight.adapter = adapter
+  }
+
+  override fun onRefresh() {
+    mPresenter?.init()
+  }
+
+  override fun showRefreshing() {
+    srlSight.isRefreshing = true
+  }
+
+  override fun hideRefreshing() {
+    srlSight.isRefreshing = false
   }
 }

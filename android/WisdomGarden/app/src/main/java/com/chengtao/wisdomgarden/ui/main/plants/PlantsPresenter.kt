@@ -26,12 +26,15 @@ class PlantsPresenter(view: PlantsContract.View,
   private var plantsAdapter: PlantsAdapter? = null
   private val getAllPlantsRequest = GetAllPlantsRequest(this)
   override fun init() {
-    plantsAdapter = PlantsAdapter(plantsList)
-    mView?.initAdapter(plantsAdapter!!)
+    if (plantsAdapter == null) {
+      plantsAdapter = PlantsAdapter(plantsList)
+      mView?.initAdapter(plantsAdapter!!)
+    }
     getAllPlants()
   }
 
   private fun getAllPlants() {
+    mView?.showRefreshing()
     getAllPlantsRequest.requestId = GET_ALL_PLANTS_REQUEST
     getAllPlantsRequest.execute()
   }
@@ -39,6 +42,7 @@ class PlantsPresenter(view: PlantsContract.View,
   override fun onData(requestId: Short, response: Any?) {
     when (requestId) {
       GET_ALL_PLANTS_REQUEST -> {
+        mView?.hideRefreshing()
         if (response != null) {
           val list: ArrayList<Plants> = response as ArrayList<Plants>
           if (list.size > 0) {
@@ -51,6 +55,16 @@ class PlantsPresenter(view: PlantsContract.View,
         }
       }
     }
+  }
+
+  override fun onError(requestId: Short, stringId: Int) {
+    super.onError(requestId, stringId)
+    mView?.hideRefreshing()
+  }
+
+  override fun onSpecialError(requestId: Short, errorType: Short) {
+    super.onSpecialError(requestId, errorType)
+    mView?.hideRefreshing()
   }
 
   override fun onEventBusMessage(message: EventBusMessage) {

@@ -18,5 +18,7 @@ interface RouteContract {
 
   interface View : BaseView {
     fun initAdapter(adapter: RouteAdapter)
+    fun hideRefreshing()
+    fun showRefreshing()
   }
 }

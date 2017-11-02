@@ -17,5 +17,7 @@ interface SightContract {
 
   interface View : BaseView {
     fun initAdapter(adapter: SightAdapter)
+    fun hideRefreshing()
+    fun showRefreshing()
   }
 }

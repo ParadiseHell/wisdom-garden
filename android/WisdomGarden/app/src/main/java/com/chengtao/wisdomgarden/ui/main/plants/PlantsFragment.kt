@@ -1,5 +1,6 @@
 package com.chengtao.wisdomgarden.ui.main.plants
 
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import butterknife.BindView
@@ -13,7 +14,9 @@ import com.chengtao.wisdomgarden.adapter.PlantsAdapter
  * Time : 10:29 AM
  * Description :
  */
-class PlantsFragment : BaseFragment<PlantsContract.Presenter>(), PlantsContract.View {
+class PlantsFragment : BaseFragment<PlantsContract.Presenter>(), PlantsContract.View, SwipeRefreshLayout.OnRefreshListener {
+  @BindView(R.id.srl_plants)
+  lateinit var srlPlants: SwipeRefreshLayout
   @BindView(R.id.rv_plants)
   lateinit var rvPlants: RecyclerView
 
@@ -23,9 +26,12 @@ class PlantsFragment : BaseFragment<PlantsContract.Presenter>(), PlantsContract.
 
   override fun initView() {
     rvPlants.layoutManager = LinearLayoutManager(mContext!!)
+    srlPlants.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary,
+        R.color.colorPrimary)
   }
 
   override fun setListener() {
+    srlPlants.setOnRefreshListener(this)
   }
 
   override fun start() {
@@ -34,5 +40,17 @@ class PlantsFragment : BaseFragment<PlantsContract.Presenter>(), PlantsContract.
 
   override fun initAdapter(adapter: PlantsAdapter) {
     rvPlants.adapter = adapter
+  }
+
+  override fun onRefresh() {
+    mPresenter?.init()
+  }
+
+  override fun showRefreshing() {
+    srlPlants.isRefreshing = true
+  }
+
+  override fun hideRefreshing() {
+    srlPlants.isRefreshing = false
   }
 }

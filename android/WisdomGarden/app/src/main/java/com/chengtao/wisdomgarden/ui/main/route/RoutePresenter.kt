@@ -26,12 +26,15 @@ class RoutePresenter(view: RouteContract.View,
   private var routeAdapter: RouteAdapter? = null
   private val getAllRouteRequest = GetAllRoutesRequest(this)
   override fun init() {
-    routeAdapter = RouteAdapter(routeList)
-    mView?.initAdapter(routeAdapter!!)
+    if (routeAdapter == null) {
+      routeAdapter = RouteAdapter(routeList)
+      mView?.initAdapter(routeAdapter!!)
+    }
     getAllRoute()
   }
 
   private fun getAllRoute() {
+    mView?.showRefreshing()
     getAllRouteRequest.requestId = GET_ALL_ROUTE_REQUEST
     getAllRouteRequest.execute()
   }
@@ -39,6 +42,7 @@ class RoutePresenter(view: RouteContract.View,
   override fun onData(requestId: Short, response: Any?) {
     when (requestId) {
       GET_ALL_ROUTE_REQUEST -> {
+        mView?.hideRefreshing()
         if (response != null) {
           val list: ArrayList<Route> = response as ArrayList<Route>
           if (list.size > 0) {
@@ -51,6 +55,16 @@ class RoutePresenter(view: RouteContract.View,
         }
       }
     }
+  }
+
+  override fun onError(requestId: Short, stringId: Int) {
+    super.onError(requestId, stringId)
+    mView?.hideRefreshing()
+  }
+
+  override fun onSpecialError(requestId: Short, errorType: Short) {
+    super.onSpecialError(requestId, errorType)
+    mView?.hideRefreshing()
   }
 
   override fun onEventBusMessage(message: EventBusMessage) {

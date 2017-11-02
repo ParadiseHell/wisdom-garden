@@ -26,12 +26,15 @@ class ServicePresenter(view: ServiceContract.View,
   private var serviceNameAndCountAdapter: ServiceAndNameAdapter? = null
   private val getAllServiceNameAndCountRequest = GetAllServicesNameAndCountRequest(this)
   override fun init() {
-    serviceNameAndCountAdapter = ServiceAndNameAdapter(serviceNameAndCountList)
-    mView?.initAdapter(serviceNameAndCountAdapter!!)
+    if (serviceNameAndCountAdapter == null) {
+      serviceNameAndCountAdapter = ServiceAndNameAdapter(serviceNameAndCountList)
+      mView?.initAdapter(serviceNameAndCountAdapter!!)
+    }
     getAllServiceNameAndCount()
   }
 
   private fun getAllServiceNameAndCount() {
+    mView?.showRefreshing()
     getAllServiceNameAndCountRequest.requestId = GET_ALL_SERVICE_NAME_AND_COUNT_REQUEST
     getAllServiceNameAndCountRequest.execute()
   }
@@ -39,6 +42,7 @@ class ServicePresenter(view: ServiceContract.View,
   override fun onData(requestId: Short, response: Any?) {
     when (requestId) {
       GET_ALL_SERVICE_NAME_AND_COUNT_REQUEST -> {
+        mView?.hideRefreshing()
         if (response != null) {
           val list: ArrayList<ServiceNameAndCount> = response as ArrayList<ServiceNameAndCount>
           if (list.size > 0) {
@@ -51,6 +55,16 @@ class ServicePresenter(view: ServiceContract.View,
         }
       }
     }
+  }
+
+  override fun onError(requestId: Short, stringId: Int) {
+    super.onError(requestId, stringId)
+    mView?.hideRefreshing()
+  }
+
+  override fun onSpecialError(requestId: Short, errorType: Short) {
+    super.onSpecialError(requestId, errorType)
+    mView?.hideRefreshing()
   }
 
   override fun onEventBusMessage(message: EventBusMessage) {

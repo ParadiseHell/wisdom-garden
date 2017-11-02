@@ -17,5 +17,7 @@ interface PlantsContract {
 
   interface View : BaseView {
     fun initAdapter(adapter: PlantsAdapter)
+    fun hideRefreshing()
+    fun showRefreshing()
   }
 }

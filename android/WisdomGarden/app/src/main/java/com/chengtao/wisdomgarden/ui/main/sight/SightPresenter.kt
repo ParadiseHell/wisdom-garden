@@ -27,12 +27,15 @@ class SightPresenter(view: SightContract.View,
   private var sightAdapter: SightAdapter? = null
   private val getAllSightRequest = GetAllSightsRequest(this)
   override fun init() {
-    sightAdapter = SightAdapter(sightList)
-    mView?.initAdapter(sightAdapter!!)
+    if (sightAdapter == null) {
+      sightAdapter = SightAdapter(sightList)
+      mView?.initAdapter(sightAdapter!!)
+    }
     getAllSight()
   }
 
   private fun getAllSight() {
+    mView?.showRefreshing()
     getAllSightRequest.requestId = GET_ALL_SIGHT_REQUEST
     getAllSightRequest.execute()
   }
@@ -40,6 +43,7 @@ class SightPresenter(view: SightContract.View,
   override fun onData(requestId: Short, response: Any?) {
     when (requestId) {
       GET_ALL_SIGHT_REQUEST -> {
+        mView?.hideRefreshing()
         if (response != null) {
           Log.e("TAG", response.toString())
           val list: ArrayList<Sight> = response as ArrayList<Sight>
@@ -53,6 +57,16 @@ class SightPresenter(view: SightContract.View,
         }
       }
     }
+  }
+
+  override fun onError(requestId: Short, stringId: Int) {
+    super.onError(requestId, stringId)
+    mView?.hideRefreshing()
+  }
+
+  override fun onSpecialError(requestId: Short, errorType: Short) {
+    super.onSpecialError(requestId, errorType)
+    mView?.hideRefreshing()
   }
 
   override fun onEventBusMessage(message: EventBusMessage) {
