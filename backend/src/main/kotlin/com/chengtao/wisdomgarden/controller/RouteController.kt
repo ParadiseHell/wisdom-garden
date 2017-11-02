@@ -60,7 +60,9 @@ class RouteController : BaseController() {
           val sightIdsList = ArrayList<Int>()
           val list = sightIds.split(",")
           list.forEach {
-            sightIdsList.add(it.toInt())
+            if (it != "") {
+              sightIdsList.add(it.toInt())
+            }
           }
           if (sightIdsList[0] == sightDao.queryEntranceSightId() &&
               sightIdsList[sightIdsList.size - 1] == sightDao.queryExitSightId()) {
@@ -104,7 +106,9 @@ class RouteController : BaseController() {
           val sightIdsList = ArrayList<Int>()
           val list = sightIds.split(",")
           list.forEach {
-            sightIdsList.add(it.toInt())
+            if (it != "") {
+              sightIdsList.add(it.toInt())
+            }
           }
           if (sightIdsList[0] == sightDao.queryEntranceSightId() &&
               sightIdsList[sightIdsList.size - 1] == sightDao.queryExitSightId()) {
