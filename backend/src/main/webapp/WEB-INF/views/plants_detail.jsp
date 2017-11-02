@@ -1,6 +1,7 @@
 <%@ page import="com.chengtao.wisdomgarden.Routers" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: chengtao
@@ -49,12 +50,14 @@
                                 <c:forEach var="image" items="${plants.images}" varStatus="loop">
                                     <c:if test="${loop.index == 0}">
                                         <div class="carousel-item active img-wrapper w-100">
-                                            <img class="d-block w-100" src="${image.url}">
+                                            <img class="d-block w-100" src="${image.url}"
+                                                 style="margin: auto;text-align: center">
                                         </div>
                                     </c:if>
                                     <c:if test="${loop.index != 0}">
                                         <div class="carousel-item img-wrapper w-100">
-                                            <img class="d-block w-100" src="${image.url}">
+                                            <img class="d-block w-100" src="${image.url}"
+                                                 style="margin: auto;text-align: center">
                                         </div>
                                     </c:if>
                                 </c:forEach>
@@ -69,6 +72,32 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
+                        </div>
+                    </c:if>
+                    <c:if test="${fn:length(plants.videos) gt 0}">
+                        <h5 class="card-title text-success" style="margin-top: 10px">相关视频</h5>
+                        <video id="my-player"
+                               class="video-js vjs-big-play-centered video-player
+                           vjs-paused vjs-controls-enabled vjs-user-inactive w-50"
+                               controls preload="auto" data-setup="{ techOrder: ['flash','html5']}"
+                               height="350">
+                            <source src="${plants.videos[0].url}"/>
+                            <p class="vjs-no-js">
+                                您的浏览器不支持
+                            </p>
+                        </video>
+                    </c:if>
+                    <c:if test="${fn:length(plants.audios) gt 0}">
+                        <h5 class="card-title text-success" style="margin-top: 10px">相关音频</h5>
+                        <div class="row">
+                            <c:forEach var="audio" items="${plants.audios}">
+                                <div class="card border-success mb-3 mr-3 col-md-3">
+                                    <audio controls>
+                                        <source src="${audio.url}">
+                                        您的浏览器不支持
+                                    </audio>
+                                </div>
+                            </c:forEach>
                         </div>
                     </c:if>
                 </div>

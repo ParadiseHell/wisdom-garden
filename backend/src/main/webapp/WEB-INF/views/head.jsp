@@ -21,6 +21,11 @@
     <link href="/statics/css/simply-toast.min.css" rel="stylesheet" type="text/css">
     <link href="/statics/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="/statics/css/dropzone.min.css" rel="stylesheet" type="text/css"/>
+    <%--videoJs--%>
+    <!-- cdnjs -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.3.3/video-js.css"
+          rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.3.3/video.js"></script>
 </head>
 <style type="text/css">
     label.error {
@@ -44,6 +49,6 @@
     }
 
     div.img-wrapper {
-        height: 600px;
+        height: 500px;
     }
 </style>

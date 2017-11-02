@@ -80,8 +80,6 @@ interface Errors {
 //静态资源
 interface UploadFilePath {
   companion object {
-    /*const val REAL_PATH = "http://39.106.63.196:8080/files"
-    const val UPLOAD_DIRECTORY = "/opt/tomcat/upload/wisdomgarden"*/
     const val REAL_PATH = "http://127.0.0.1:8080/files"
     const val UPLOAD_DIRECTORY = "/home/chengtao/wisdomgarden"
     const val UPLOAD_IMAGES = "/images"
