@@ -145,8 +145,11 @@ interface API {
   companion object {
     const val USER_LOGIN = "/api/user/login"
     const val USER_REGISTER = "/api/user/register"
+    const val SIGHT = "/api/sight"
     const val GET_ALL_SIGHTS = "/api/sights"
+    const val PLANT = "/api/plant"
     const val GET_ALL_PLANTS = "/api/plants"
+    const val ROUTE = "/api/route"
     const val GET_ALL_ROUTES = "/api/routes"
     const val SERVICE = "/api/service"
     const val GET_ALL_SERVICE_NAME_AND_COUNT = "/api/services/name_count"

@@ -6,6 +6,7 @@ import com.chengtao.wisdomgarden.APIParameters
 import com.chengtao.wisdomgarden.db.dao.ServiceDao
 import com.chengtao.wisdomgarden.db.impl.ServiceDaoImpl
 import com.chengtao.wisdomgarden.entity.APIError
+import com.chengtao.wisdomgarden.entity.Service
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 class APIServiceController : APIBaseController() {
   companion object {
     val serviceDao: ServiceDao = ServiceDaoImpl()
+    const val NUMBER_REGEX = "^[-+]?\\d*\\.?\\d+\$"
   }
 
   @GetMapping(API.GET_ALL_SERVICE_NAME_AND_COUNT)
@@ -38,18 +40,26 @@ class APIServiceController : APIBaseController() {
     }
   }
 
-  @GetMapping("${API.SERVICE}/{name}")
+  @GetMapping("${API.SERVICE}/{nameOrId}")
   fun getAllServicesByName(@RequestHeader(value = APIParameters.USER_NAME, required = false) userName: String?,
                            @RequestHeader(value = APIParameters.PASSWORD, required = false) password: String?,
-                           @PathVariable(value = "name") name: String): Any? {
+                           @PathVariable(value = "nameOrId") nameOrId: String): Any? {
     println("userName{${APIParameters.USER_NAME}}:$userName")
     println("password{${APIParameters.PASSWORD}}:$password")
     return if (isAuthorized(userName, password)) {
-      var serviceList = serviceDao.queryServicesByName(name)
-      if (serviceList == null) {
-        serviceList = ArrayList()
+      if (nameOrId.matches(Regex(NUMBER_REGEX))) {//id
+        var service = serviceDao.queryByServiceId(nameOrId.toInt())
+        if (service == null){
+          service = Service()
+        }
+        service
+      } else {//name
+        var serviceList = serviceDao.queryServicesByName(nameOrId)
+        if (serviceList == null) {
+          serviceList = ArrayList()
+        }
+        serviceList
       }
-      serviceList
     } else {
       ResponseEntity.status(HttpStatus.FORBIDDEN).body(APIError(APIErrorType.UNAUTHORIZED))
     }
