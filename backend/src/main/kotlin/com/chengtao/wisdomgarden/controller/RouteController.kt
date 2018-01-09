@@ -54,35 +54,29 @@ class RouteController : BaseController() {
                   @RequestParam(value = Parameters.DESCRIPTION) description: String,
                   @RequestParam(value = Parameters.SIGHT_IDS) sightIds: String,
                   session: HttpSession): String {
-    if (sightDao.existEntrance() && sightDao.existExit()) {
-      if (!StringUtils.isStringNull(name, description, sightIds)) {
-        if (routeDao.queryRouteByName(name) == null) {
-          val sightIdsList = ArrayList<Int>()
-          val list = sightIds.split(",")
-          list.forEach {
-            if (it != "") {
-              sightIdsList.add(it.toInt())
-            }
+    if (!StringUtils.isStringNull(name, description, sightIds)) {
+      if (routeDao.queryRouteByName(name) == null) {
+        val sightIdsList = ArrayList<Int>()
+        val list = sightIds.split(",")
+        list.forEach {
+          if (it != "") {
+            sightIdsList.add(it.toInt())
           }
-          if (sightIdsList[0] == sightDao.queryEntranceSightId() &&
-              sightIdsList[sightIdsList.size - 1] == sightDao.queryExitSightId()) {
-            if (routeDao.createRoute(name, description, sightIdsList) != null) {
-              addSuccessMessage(session, "创建线路成功")
-            } else {
-              addErrorMessage(session, Errors.UNKNOWN_ERROR)
-            }
+        }
+        if (list.size > 1) {
+          if (routeDao.createRoute(name, description, sightIdsList) != null) {
+            addSuccessMessage(session, "创建线路成功")
           } else {
-            addErrorMessage(session, "线路的开始必须为入口,线路的结尾必须为出口")
+            addErrorMessage(session, Errors.UNKNOWN_ERROR)
           }
         } else {
-          addErrorMessage(session, Errors.PARAMETERS_ERROR)
+          addErrorMessage(session, "路线至少包含两个景点")
         }
       } else {
-        addErrorMessage(session, "路线名已存在")
+        addErrorMessage(session, Errors.PARAMETERS_ERROR)
       }
     } else {
-      addErrorMessage(session, "还没有创建入口景点和出口景点")
-      return Routers.SIGHT_EDIT.redirect()
+      addErrorMessage(session, "路线名已存在")
     }
     return Routers.ROUTE_EDIT.redirect()
   }

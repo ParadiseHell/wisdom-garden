@@ -38,7 +38,7 @@
                     </div>
                     <c:if test="${sightList != null && !sightList.isEmpty()}">
                         <div class="form-group">
-                            <label>路线所经过景点(第一个景点必须为入口,最后一个景点必须为出口)</label>
+                            <label>路线所经过景点</label>
                             <input type="text" hidden name="<%=Parameters.SIGHT_IDS%>"
                                    id="sightIds">
                             <select id="sightSelect" name="states[]" multiple="multiple"
@@ -69,7 +69,7 @@
                     </div>
                     <c:if test="${sightList != null && !sightList.isEmpty()}">
                         <div class="form-group">
-                            <label>路线所经过景点(第一个景点必须为入口,最后一个景点必须为出口)</label>
+                            <label>路线所经过景点</label>
                             <input type="text" hidden name="<%=Parameters.SIGHT_IDS%>"
                                    id="sightIds">
                             <select id="sightSelect" name="states[]" multiple="multiple"
