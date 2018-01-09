@@ -14,7 +14,10 @@
     <meta name="author" content="<%=ApplicationConfig.AUTHOR%>">
     <title><%=ApplicationConfig.APPLICATION_NAME%>
     </title>
-    <link href="/statics/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+          crossorigin="anonymous">
     <link href="/statics/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/statics/css/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
     <link href="/statics/css/sb-admin.min.css" rel="stylesheet" type="text/css">
