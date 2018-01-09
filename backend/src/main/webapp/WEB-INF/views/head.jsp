@@ -24,6 +24,7 @@
     <link href="/statics/css/simply-toast.min.css" rel="stylesheet" type="text/css">
     <link href="/statics/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="/statics/css/dropzone.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/statics/css/marker.css" rel="stylesheet" type="text/css"/>
     <%--videoJs--%>
     <!-- cdnjs -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.3.3/video-js.css"

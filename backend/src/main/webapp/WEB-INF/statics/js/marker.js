@@ -5,7 +5,6 @@ const API_BASE_URL = "http://localhost:8888";
 /*
  const API_BASE_URL = "http://127.0.0.1:8080";*/
 const GET_ALL_SIGHTS_API = API_BASE_URL + "/api/sights";
-const GET_ALL_ROUTES_API = API_BASE_URL + "/api/routes";
 
 //
 const COOKIE_USER_NAME = "user_name";
@@ -13,14 +12,19 @@ const COOKIE_PASSWORD = "password";
 //
 var map;
 var infoWindow;
+var startLocation = [];
+var endLocation = [];
 //
-function initIndexMap() {
+function initMap() {
   map = new AMap.Map('map', {
     resizeEnable: true, zoom: 18, center: [116.397428, 39.90923]
   });
   map.plugin(["AMap.ToolBar"], function () {
     map.addControl(new AMap.ToolBar());
   });
+}
+function initIndexMap() {
+  initMap();
   initSightsMarker();
 }
 
@@ -58,8 +62,31 @@ function closeInfoWindow() {
   infoWindow.close();
 }
 
-function initRoutesMarker() {
+function initStartLocation(longitude, latitude) {
+  startLocation = [longitude, latitude];
+  console.log(startLocation);
+}
 
+function initEndLocation(longitude, latitude) {
+  endLocation = [longitude, latitude];
+  console.log(startLocation);
+}
+function loadRoute() {
+  initMap();
+  initSightsMarker();
+  //步行导航
+  if (startLocation !== [] && endLocation !== []) {
+    AMap.service(["AMap.Walking"], function () {
+      var mWalk = new AMap.Walking({
+        map: map, panel: "panel"
+      }); //构造路线导航类
+      //根据起终点坐标规划步行路线
+      mWalk.search(startLocation, endLocation, function (status, result) {
+        startLocation = [];
+        endLocation = [];
+      });
+    });
+  }
 }
 
 function addMarker(data, callback) {

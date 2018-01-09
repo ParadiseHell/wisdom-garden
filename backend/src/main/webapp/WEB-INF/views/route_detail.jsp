@@ -12,7 +12,7 @@
 <html lang="en">
 
 <jsp:include page="head.jsp"/>
-
+<script src="/statics/js/marker.js"></script>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <jsp:include page="main_nav.jsp"/>
 <div class="content-wrapper">
@@ -38,16 +38,32 @@
                     <p class="card-text text-dark">${route.description}</p>
                     <c:if test="${route.sightChain != null && !route.sightChain.isEmpty()}">
                         <h5 class="card-title text-warning">所经过景点</h5>
-                        <c:forEach items="${route.sightChain}" var="sight">
+                        <c:forEach items="${route.sightChain}" var="sight" varStatus="status">
+                            <c:if test="${status.first}">
+                                <script>
+                                  initStartLocation(${sight.longitude}, ${sight.latitude});
+                                </script>
+                            </c:if>
+                            <c:if test="${status.last}">
+                                <script>
+                                  initEndLocation(${sight.longitude}, ${sight.latitude});
+                                </script>
+                            </c:if>
                             <a href="<%=Routers.SIGHT%>/${sight.id}"
                                class="badge badge-warning" style="font-size: 15px">${sight.name}</a>
                         </c:forEach>
                     </c:if>
                 </div>
             </div>
+            <div style="width: 100%;height: 500px" id="map">
+
+            </div>
+            <div id="panel"></div>
         </c:if>
     </div>
     <jsp:include page="foot.jsp"/>
+    <script type="text/javascript"
+            src="http://webapi.amap.com/maps?v=1.4.0&key=6ce14a4fe21aa2ee8937f25cbc3d5cd4&callback=loadRoute"></script>
 </div>
 </body>
 
