@@ -1,0 +1,114 @@
+/**
+ * Created by chengtao on 12/28/17.
+ */
+const API_BASE_URL = "http://localhost:8888";
+/*
+ const API_BASE_URL = "http://127.0.0.1:8080";*/
+const GET_ALL_SIGHTS_API = API_BASE_URL + "/api/sights";
+const GET_ALL_PLANTS_API = API_BASE_URL + "/api/plants";
+const GET_ALL_ROUTES_API = API_BASE_URL + "/api/routes";
+
+//
+const COOKIE_USER_NAME = "user_name";
+const COOKIE_PASSWORD = "password";
+//
+var map;
+var infoWindow;
+//
+function initIndexMap() {
+  map = new AMap.Map('map', {
+    resizeEnable: true, zoom: 18, center: [116.397428, 39.90923]
+  });
+  map.plugin(["AMap.ToolBar"], function () {
+    map.addControl(new AMap.ToolBar());
+  });
+  initSightsMarker();
+  //initPlantsMarker();
+}
+
+function initSightsMarker() {
+  ajaxGet(GET_ALL_SIGHTS_API, function (data) {
+    for (var i = 0; i < data.length; i++) {
+      addMarker(data[i], function (itemData) {
+        //实例化信息窗体
+        var content = [];
+        content.push("<div class='sight'>");
+        content.push("<p class='title'><span>名称 : </span>"
+            + "<a href='/sight/"
+            + itemData.id
+            + "'>"
+            + itemData.name
+            + "</a>"
+            + "</p>");
+        content.push("<p class='description'><span>简介 : </span>"
+            + itemData.description
+            + "什么鬼人不来了大风黄色的"
+            + "</p>");
+        content.push("<a class='close' onclick='closeInfoWindow();'>x</a>")
+        content.push("</div>");
+        infoWindow = new AMap.InfoWindow({
+          isCustom: true,  //使用自定义窗体
+          content: content.join(""), offset: new AMap.Pixel(16, -50)
+        });
+        infoWindow.open(map, [itemData.longitude, itemData.latitude]);
+      });
+    }
+  });
+}
+
+function closeInfoWindow() {
+  infoWindow.close();
+}
+
+function initPlantsMarker() {
+  ajaxGet(GET_ALL_PLANTS_API, function (data) {
+    for (var i = 0; i < data.length; i++) {
+      addMarker(data[i]);
+    }
+  });
+}
+
+function initRoutesMarker() {
+
+}
+
+function addMarker(data, callback) {
+  marker = new AMap.Marker({
+    icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+    position: [data.longitude, data.latitude]
+  });
+  marker.setAnimation('AMAP_ANIMATION_DROP');
+  marker.on("click", function () {
+    callback(data);
+  });
+  marker.setMap(map);
+}
+
+function ajaxGet(url, callback) {
+  $.ajax({
+    url: url, type: 'GET', dataType: 'json', headers: {
+      "userName": getCookie(COOKIE_USER_NAME), 'password': getCookie(COOKIE_PASSWORD)
+    }, contentType: 'application/json; charset=utf-8', success: function (result) {
+      console.log(result);
+      callback(result);
+    }, error: function (error) {
+
+    }
+  });
+}
+
+function getCookie(name) {
+  var cookie = document.cookie;
+  if (cookie.length > 0) {
+    var start = cookie.indexOf(name + "=");
+    if (start !== -1) {
+      start = start + name.length + 1;
+      var end = cookie.indexOf(";", start);
+      if (end === -1) {
+        end = cookie.length;
+      }
+      return cookie.substring(start, end);
+    }
+  }
+  return "";
+}

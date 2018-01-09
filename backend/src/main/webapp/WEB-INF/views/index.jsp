@@ -11,6 +11,39 @@
 <jsp:include page="head.jsp"/>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <jsp:include page="main_nav.jsp"/>
+<style>
+    .sight {
+        background: #FFF;
+        padding: 8px 16px;
+        position: relative;
+        width: 250px;
+    }
+
+    .sight p {
+        margin: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    .sight span {
+        font-size: 14px;
+    }
+    .sight p.title {
+        font-size: 16px;
+    }
+
+    .sight p.description {
+        font-size: 12px;
+    }
+
+    .sight a.close {
+        font-size: 18px;
+        cursor: pointer;
+        position: absolute;
+        right: 4px;
+        top: 4px;
+    }
+</style>
 <div class="content-wrapper">
     <div class="container-fluid">
         <jsp:include page="bread_nav.jsp"/>
@@ -21,19 +54,9 @@
     </div>
     <jsp:include page="foot.jsp"/>
     <script type="text/javascript"
-            src="http://webapi.amap.com/maps?v=1.4.0&key=6ce14a4fe21aa2ee8937f25cbc3d5cd4&callback=init"></script>
-    <script>
-      function init() {
-        var map = new AMap.Map('map', {
-          resizeEnable: true, zoom: 18, center: [116.397428, 39.90923]
-        });
-        map.plugin(["AMap.ToolBar"], function () {
-          map.addControl(new AMap.ToolBar());
-        });
-      }
-    </script>
+            src="http://webapi.amap.com/maps?v=1.4.0&key=6ce14a4fe21aa2ee8937f25cbc3d5cd4&callback=initIndexMap"></script>
+    <script src="/statics/js/marker.js"></script>
 </div>
 </body>
-
 </html>
 
