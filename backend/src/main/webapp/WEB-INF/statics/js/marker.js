@@ -5,7 +5,6 @@ const API_BASE_URL = "http://localhost:8888";
 /*
  const API_BASE_URL = "http://127.0.0.1:8080";*/
 const GET_ALL_SIGHTS_API = API_BASE_URL + "/api/sights";
-const GET_ALL_PLANTS_API = API_BASE_URL + "/api/plants";
 const GET_ALL_ROUTES_API = API_BASE_URL + "/api/routes";
 
 //
@@ -23,7 +22,6 @@ function initIndexMap() {
     map.addControl(new AMap.ToolBar());
   });
   initSightsMarker();
-  //initPlantsMarker();
 }
 
 function initSightsMarker() {
@@ -58,14 +56,6 @@ function initSightsMarker() {
 
 function closeInfoWindow() {
   infoWindow.close();
-}
-
-function initPlantsMarker() {
-  ajaxGet(GET_ALL_PLANTS_API, function (data) {
-    for (var i = 0; i < data.length; i++) {
-      addMarker(data[i]);
-    }
-  });
 }
 
 function initRoutesMarker() {
