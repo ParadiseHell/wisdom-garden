@@ -1,3 +1,5 @@
 # WISDOM GARDEN
 
-professional practice for computer science and technology.
+Professional Practice For Computer Science And Technology.
+
+Oline : http://paradisehell.xyz:8080

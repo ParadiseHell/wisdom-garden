@@ -1,9 +1,9 @@
 /**
  * Created by chengtao on 12/28/17.
  */
-const API_BASE_URL = "http://localhost:8888";
+const API_BASE_URL = "http://paradisehell.xyz:8080";
 /*
- const API_BASE_URL = "http://127.0.0.1:8080";*/
+ const API_BASE_URL = "http://localhost:8888";*/
 const GET_ALL_SIGHTS_API = API_BASE_URL + "/api/sights";
 
 //
