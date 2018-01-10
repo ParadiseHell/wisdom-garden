@@ -17,7 +17,7 @@ var endLocation = [];
 //
 function initMap() {
   map = new AMap.Map('map', {
-    resizeEnable: true, zoom: 18, center: [116.397428, 39.90923]
+    resizeEnable: true, zoom: 18, center: [116.395, 39.9106]
   });
   map.plugin(["AMap.ToolBar"], function () {
     map.addControl(new AMap.ToolBar());
@@ -42,11 +42,8 @@ function initSightsMarker() {
             + itemData.name
             + "</a>"
             + "</p>");
-        content.push("<p class='description'><span>简介 : </span>"
-            + itemData.description
-            + "什么鬼人不来了大风黄色的"
-            + "</p>");
-        content.push("<a class='close' onclick='closeInfoWindow();'>x</a>")
+        content.push("<p class='description'><span>简介 : </span>" + itemData.description + "</p>");
+        content.push("<a class='close' onclick='closeInfoWindow();'>x</a>");
         content.push("</div>");
         infoWindow = new AMap.InfoWindow({
           isCustom: true,  //使用自定义窗体
